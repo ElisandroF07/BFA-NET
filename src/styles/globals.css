@@ -1,0 +1,16 @@
+*, html {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --color1: #ffffff;
+    --color2: #aaa;
+}
+
+body {
+    width: 100%;
+    height: 100dvh;
+}
