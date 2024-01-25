@@ -1,0 +1,75 @@
+.section_step1 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.step1_header {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: start;
+}
+.step1_header > .page_title {
+    width: 100%;
+    text-align: center;
+}
+
+.step1_body {
+    width: 100%;
+    height: 100%;
+    padding-top: 20px;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    flex-direction: column;
+    gap: 10px;
+}
+.step1_body > .basic_text {
+    width: 100%;
+    text-align: justify;
+    line-height: 20px;
+}
+
+.terms_checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 5px;
+}
+.terms_checkbox > .basic_text > a {
+    color: var(--color-focus);
+    text-decoration: none;
+}
+.terms_checkbox > input {
+    width: 14px;
+    height: 14px;
+    border: none;
+    outline: none;
+    background-color: var(--color-focus);
+}
+.step1_footer {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+
+/*»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»*/
+
+.step2 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    flex-direction: column;
+}
+

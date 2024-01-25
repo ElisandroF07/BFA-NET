@@ -1,16 +1,212 @@
+@font-face {
+    font-family: Inter_Light;
+    src: url(../../public/assets/fonts/Inter-Light.ttf);
+}
+@font-face {
+    font-family: Inter_Regular;
+    src: url(../../public/assets/fonts/Inter-Regular.ttf);
+}
+@font-face {
+    font-family: Inter_Medium;
+    src: url(../../public/assets/fonts/Inter-Medium.ttf);
+}
+@font-face {
+    font-family: Inter_SemiBold;
+    src: url(../../public/assets/fonts/Inter-SemiBold.ttf);
+}
+
 *, html {
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
     scroll-behavior: smooth;
+    font-family: Inter_Regular;
 }
 
 :root {
-    --color1: #ffffff;
-    --color2: #aaa;
+    --color-text: #292D32;
+    --color-body: #F8F8F8;
+    --color-cards: #ffffff;
+    --shadow-cards: 0px 0.589px 12.681px 0px rgba(129, 128, 128, 0.02), 0px 1.628px 35.06px 0px rgba(129, 128, 128, 0.04), 0px 3.919px 84.412px 0px rgba(129, 128, 128, 0.05), 0px 13px 280px 0px rgba(129, 128, 128, 0.07);
+    --color-focus: #E5553C;
+    --color-placeholder: #545454;
+    --border-input: 1px solid #D8D8D8;
+    --color-border: #d2d2d2;
 }
 
 body {
     width: 100%;
     height: 100dvh;
+}
+
+::placeholder {
+    font-family: Inter_Light;
+    font-size: 13px;
+    color: var(--color-placeholder);
+}
+
+.page_title {
+    font-family: Inter_Regular;
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--color-text);
+}
+
+.button_menu {
+    width: 30px;
+    height: 30px;
+    color: var(--color-body);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-items: center;
+    justify-content: center;
+}
+
+.input_phone {
+    width: 100%;
+    display: flex;
+    height: 45px;
+    padding: 0px 10px;
+    outline: none;
+    border: var(--border-input);
+    border-radius: 7px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+}
+
+.input_phone > p::after {
+    content: '';
+    width: 1px;
+    height: 14px;
+    background-color: var(--color-border);
+    position: absolute;
+    margin-left: 6px;
+    border-radius: 3px;
+}
+
+.input_phone > p {
+    font-family: Inter_Light;
+    font-weight: 200px;
+    font-size: 12px;
+}
+
+.input_phone > input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-family: Inter_Light;
+    font-weight: 200px;
+    font-size: 13px;
+}
+
+.button_back {
+    width: 30px;
+    min-width: 30px;
+    height: 30px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-body);
+}
+.button_back > svg {
+    fill: var(--color-text);
+    width: 14px;
+    height: 14px;
+}
+
+.bar_element {
+    height: 1.5px;
+    background-color: var(--color-text);
+    border-radius: 10px;
+}
+
+.bar_element:nth-child(1) {
+    width: 10px;
+    transform: translateX(-3px);
+}
+.bar_element:nth-child(2) {
+    width: 15px;
+}
+.bar_element:nth-child(3) {
+    width: 10px;
+    transform: translateX(3px);
+}
+
+.basic_text {
+    font-family: Inter_Light;
+    color: var(--color-text);
+    font-size: 13px;
+}
+
+.input_field {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+}
+.input_field > label {
+    font-family: Inter_Regular;
+    font-size: 12px;
+}
+.input_field > input {
+    width: 100%;
+    height: 45px;
+    padding: 0px 20px;
+    outline: none;
+    border: var(--border-input);
+    border-radius: 7px;
+    font-family: Inter_Light;
+    font-weight: 200px;
+    font-size: 13px;
+}
+
+.button_auth {
+    width: 100%;
+    height: 40px;
+    font-family: Inter_Light;
+    font-weight: 200px;
+    font-size: 13px;
+    color: var(--color-cards);
+    background-color: var(--color-focus);
+    border-radius: 7px;
+    border: none;
+    outline: none;
+}
+
+.button_next {
+    width: max-content;
+    height: 35px;
+    background-color: var(--color-focus);
+    border-radius: 7px;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px 20px;
+}
+.button_next > svg {
+    fill: var(--color-cards);
+    width: 14px;
+    height: 14px;
+}
+.button_next > p{
+    font-family: Inter_Light;
+    font-weight: 200px;
+    font-size: 13px;
+    color: var(--color-cards);
+    width: max-content;
 }
