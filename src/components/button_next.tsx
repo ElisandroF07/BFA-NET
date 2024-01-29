@@ -1,5 +1,7 @@
+"use client"
+
 import { FaArrowRight } from "react-icons/fa";
 
-export default function Button_Next() {
-    return <button className="button_next"><p>Avançar</p><FaArrowRight/></button>;
+export default function Button_Next({id}:{id: string}) {
+    return <button type="button" className="button_next" id={id}><p>Avançar</p><FaArrowRight/></button>;
 }

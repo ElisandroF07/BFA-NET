@@ -1,0 +1,152 @@
+.container_header {
+	display: grid;
+	grid-template-columns: 45px calc(100% - 90px) 45px;
+	grid-template-rows: max-content max-content;
+	align-items: center;
+	justify-items: center;
+  row-gap: 5px;
+}
+
+.title {
+	width: 100%;
+	text-align: center;
+}
+
+.buttonIconContainer {
+	background-color: #F7F7F7;
+	border-radius: 7px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  width: 38px;
+  height: 38px;
+}
+
+.iconInButton {
+  color: #292D32;
+}
+
+.title {
+  color: #292D32;
+  text-align: center;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 48px */
+  letter-spacing: -0.608px;
+}
+
+.subtitle {
+  grid-row: 2;
+  grid-column: span 3;
+  color: #292D32;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 192%; /* 30.72px */
+  letter-spacing: -0.16px;
+}
+
+.container_body {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 90px;
+  flex-flow: wrap;
+  gap: 20px;
+}
+
+.upload_container {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    min-width: 312px;
+}
+
+.upload_card {
+  width: 100%;
+  height: 200px;
+  border: 1px dashed var(--color-border);
+  border-radius: 15px;
+  display: grid;
+  grid-template-rows: max-content max-content max-content;
+  justify-items: center;
+  padding: 37px 10px 10px 10px;
+  cursor: pointer;
+}
+
+.upload_card > svg {
+  margin-bottom: 10px;
+}
+
+.button_upload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: max-content;
+  width: max-content;
+  padding: 3px 20px;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.container_footer {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  margin-top: 90px;
+}
+
+.next_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  padding: 7px 20px;
+  border-radius: 10px;
+  background: #E5553C;
+  gap: 10px;
+}
+
+.input_file {
+  display: none;
+}
+
+.simple_text {
+  color: #292D32;
+  text-align: center;
+  font-size: 14px;
+  font-family: Inter_Light;
+  font-weight: 200;
+  line-height: 192%; /* 30.72px */
+  letter-spacing: -0.16px;
+}
+
+.small {
+font-size: 12px;
+font-family: Inter_Light;
+}
+
+.simple_text.light {
+  color: #ffffff;
+}
+
+.next_button > svg {
+  fill: #fff;
+}
+
+.iconOutButton {
+  width: 60px;
+  fill: #E5553C;
+  height: 60px;
+}

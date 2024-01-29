@@ -1,4 +1,4 @@
-.auth_main_container {
+.auth_main_container, .second_auth_main_container {
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -6,7 +6,7 @@
 	justify-content: center;
 	background-color: var(--color-body);
 }
-.auth_principal_container {
+.auth_principal_container, .second_auth_principal_container {
 	width: 600px;
 	height: 500px;
 	display: flex;
@@ -19,16 +19,26 @@
 	box-shadow: var(--shadow-cards);
 	transition: .5s;
 }
+.second_auth_principal_container {
+	width: 807px;
+    height: 574px;
+}
 .auth_poster_card {
 	width: 300px;
 	height: 100%;
 	border-radius: 20px;
+	background-image: url('../../public/assets/images/poster_background.png');
 	background-size: cover;
 	background-repeat: no-repeat;
 	transition: .5s;
 }
 .auth_children_container {
 	width: 300px;
+	height: 100%;
+	padding: 10px 20px 10px 0px;
+}
+.second_auth_children_container {
+	width: 100%;
 	height: 100%;
 	padding: 10px 20px 10px 0px;
 }
@@ -45,6 +55,9 @@
 		width: 300px;
 		gap: 0px;
 	}
+	.second_auth_principal_container {
+		height: max-content;
+	}
 }
 
 @media screen and (max-width: 450px) {
@@ -52,6 +65,9 @@
 		box-shadow: none;
 		width: 100%;
 		background-color: var(--color-body);
+	}
+	.second_auth_principal_container {
+		height: 100%;
 	}
 	.auth_main_container {
 		display: initial;

@@ -1,6 +1,7 @@
+import Verification_Card from '@/components/verification_card'
 import '@/styles/auth-layout.css'
 
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default function FirstLayout({ children }: { children: React.ReactNode }) {
     return (
         <main className="auth_main_container">
             <section className="auth_principal_container">
@@ -11,6 +12,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
                     {children}
                 </div>
             </section>
+            <Verification_Card/>
         </main>
     )
 }

@@ -1,16 +1,7 @@
-"use client"
-
 import '@/styles/sign-in.css'
 import Link from 'next/link';
-import posterbg from '../../../../public/assets/images/poster_background.png'
-import { useEffect } from 'react';
 import Button_Auth from '@/components/button_auth';
-export default function SignIn() { {/* Função que retorna o formulário de login */}
-
-    useEffect(() => {
-        let auth_poster_card = document.querySelector('.auth_poster_card') as HTMLDivElement
-        auth_poster_card.style.backgroundImage = `url(${posterbg.src})`
-    }, [])
+export default function SignIn() { 
     
 	return (
 		<form className="signIn_form"> {/* Formulário de login */}

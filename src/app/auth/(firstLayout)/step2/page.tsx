@@ -1,20 +1,12 @@
-'use client'
+"use client"
 
 import '@/styles/open-account.css'
 import '@/styles/sign-in.css'
-import { useEffect } from "react"
-import posterbg from '../../../../../public/assets/images/poster_background_2.png'
 import Button_Next from "@/components/button_next"
-import Button_Back from "@/components/button_back"
 import Link from "next/link"
 import Button_Menu from '@/components/button_menu'
 
-export default function Step2() {
-
-    useEffect(() => {
-        let auth_poster_card = document.querySelector('.auth_poster_card') as HTMLDivElement
-        auth_poster_card.style.backgroundImage = `url(${posterbg.src})`
-    }, [])
+export default  function Step2() {
 
     return (
         <form className="step2"> {/* Formulário de login */}
@@ -27,18 +19,20 @@ export default function Step2() {
 			</div>
             <div className='form_body'> {/* Corpo do formulário */}
                 <div className="input_field">
-                   <label htmlFor="accessCode">Número de telefone</label>
+                   <label htmlFor="phoneNumber">Número de telefone</label>
                     <div className='input_phone'>
                         <p >+244</p>
                         <input
-                            name="accessCode"
+                            name="phoneNumber"
+                            maxLength={9}
                             placeholder="Insira o seu número de telefone "
                         />
                     </div>
                 </div> 
             </div>
+            <Link href="/auth/open-account/step3" className='link3'/>
             <div className="step1_footer"> {/* Rodapé do formulário */}
-                <Button_Next/>
+                <Button_Next id='step2_next'/>
             </div>
 		</form>
     )

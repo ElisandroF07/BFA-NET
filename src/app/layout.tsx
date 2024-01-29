@@ -6,11 +6,7 @@ export const metadata: Metadata = {
 	description: "Internet Banking Plataform",
 };
 
-export default function RootLayout({
-	children,
-}: Readonly<{
-	children: React.ReactNode;
-}>) {
+export default function RootLayout({children,}: Readonly<{ children: React.ReactNode;}>) {
 	return (
 		<html lang="pt-PT">
 			<body>{children}</body>
