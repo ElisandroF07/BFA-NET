@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import '@/styles/upload.css'
 import { IoCloudUpload } from "react-icons/io5";
 import Button_Next from "@/components/button_next";
@@ -9,10 +10,15 @@ import Button_Menu from "@/components/button_menu";
 
 export default function Step3() {
 
+	const router = useRouter()
 
-    function acenar() {
-        alert("Avanteeee")
-    }
+
+	useEffect(() => {
+		let button_step4 = document.querySelector('#step3_next') as HTMLButtonElement
+		button_step4.addEventListener('click', () => {
+			router.push('/auth/step4')
+		})
+	}, [])
 
     return (
         <div className="main_container">
