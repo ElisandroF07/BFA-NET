@@ -19,7 +19,7 @@
     overflow: hidden;
     width: 100%;
     background: var(--color-body);
-    border-radius: 20px;
+    border-radius: 12px;
     padding: 10px 20px 0px 20px;
 }
 .container form .form{
