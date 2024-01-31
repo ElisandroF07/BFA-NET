@@ -25,7 +25,7 @@ export default function Step4() {
 				</p>
 			</div>
 			<div className="info_body">
-				<form action="#">
+				<form action="##">
 					<div className="form first">
 						<div className="details personal">
 				
