@@ -83,11 +83,11 @@ export default function Step4() {
 				
 							</div>
 						</div>
-							<div className="buttons">
-								<Button_Next id={'step4'}/>
-							</div>
 					</div>
 				</form>
+				<div className="buttons">
+					<Button_Next id={'step4'}/>
+				</div>
 			</div>
     	</div>
     )

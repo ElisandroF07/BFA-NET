@@ -16,11 +16,13 @@
 }
 .container form{
     position: relative;
-    min-height: 450px;
     overflow: hidden;
+    width: 100%;
+    background: var(--color-body);
+    border-radius: 20px;
+    padding: 10px 20px 0px 20px;
 }
 .container form .form{
-    position: absolute;
     transition: 0.3s ease;
 }
 .container form .form.second{
@@ -88,16 +90,16 @@ form button:hover{
     background-color: #f26726;
 }
 
-form .buttons{
+.buttons{
+    margin-top: 30px;
+    width: 100%;
     display: flex;
-    align-items: left;
+    justify-content: flex-end;
 }
 
 .info_body {
     width: 100%;
-    background: var(--color-body);
-    border-radius: 20px;
-    padding: 10px 20px;
+    
     margin-top: 10px;
     height: max-content;
 }
@@ -117,5 +119,15 @@ form .buttons{
 @media (max-width: 550px) {
     form .fields .input-field{
         width: 100%;
+    }
+    .info_body {
+        height: 100%;
+    }
+    .container {
+        height: 100%;
+    }
+    form {
+        height: calc(100dvh - 170px);
+        border-radius: 12px;
     }
 }
