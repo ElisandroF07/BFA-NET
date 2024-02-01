@@ -1,0 +1,128 @@
+.step5_container {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.step5_left, .step5_right {
+    width: 50%;
+    height: max-content;
+    background-color: none;
+}
+
+.step5_left {
+    margin-top: 30px;
+}
+
+.step5_left > ul {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 20px;
+    list-style-type: none;
+    flex-direction: column;
+    padding-left: 30px;
+}
+
+.step5_left > ul > li > p {
+    font-family: Inter_Regular;
+    font-weight: 400;
+    display: inline;
+}
+
+.step5_right {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.qr_container {
+    width: 250px;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-cards);
+    border-radius: 15px;
+    padding: 20px 10px;
+    gap: 5px;
+    box-shadow: var(--shadow-cards);
+}
+
+.qr_container > h1 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: Inter_Regular;
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: start;
+}
+
+.download_links {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 5px 0px;
+}
+
+.download_links > a {
+    width: 47%;
+    height: 42px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.google_play {
+    background-image: url('../../public/assets/images/Google\ Play\ Black\ Border.svg');
+}
+
+.apple_store {
+    background-image: url('../../public/assets/images/App\ Store\ Black\ Border.svg');
+}
+
+@media  screen and (max-width: 600px) {
+    .step5_container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+    }
+    .step5_left, .step5_right {
+        width: 100%;
+        height: max-content;
+    }
+    .qr_container {
+        width: 90%;
+    }
+    .download_links > a {
+        width: 125px;
+        height: 48px;
+    }
+    .download_links {
+        margin: 15px 0px;
+    }
+    .qr_container {
+        padding: 25px;
+    }
+    .second_auth_children_container {
+        padding: 0px;
+    }
+}
+
+@media  screen and (max-width: 380px) {
+    .download_links > a {
+        width: 100px;
+        height: 39px;
+    }
+}
+@media  screen and (max-width: 300px) {
+    .download_links > a {
+        width: 82px;
+        height: 32px;
+    }
+}

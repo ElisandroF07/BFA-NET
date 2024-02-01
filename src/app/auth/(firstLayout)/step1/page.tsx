@@ -13,7 +13,7 @@ export default function Step1() {
     useEffect(() => {
         let button_next = document.querySelector('#step1_next') as HTMLButtonElement 
         button_next.addEventListener('click', () => {
-            router.push('/auth/open-account/step2')
+            router.push('/auth/step2')
         })
     }, [])
 

@@ -6,13 +6,20 @@ import Button_Menu from '@/components/button_menu'
 import Button_Next from '@/components/button_next'
 import '@/styles/info.css'
 import '@/styles/upload.css'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function Step4() {
 
+	const router = useRouter()
 
-    function acenar() {
-        alert("Avanteeee")
-    }
+
+	useEffect(() => {
+		let button_step4 = document.querySelector('#step4_next') as HTMLButtonElement
+		button_step4.addEventListener('click', () => {
+			router.push('/auth/step5')
+		})
+	}, [])
 
     return (
         <div className="container">
@@ -25,7 +32,7 @@ export default function Step4() {
 				</p>
 			</div>
 			<div className="info_body">
-				<form action="##">
+				<form action="#">
 					<div className="form first">
 						<div className="details personal">
 				
@@ -86,7 +93,7 @@ export default function Step4() {
 					</div>
 				</form>
 				<div className="buttons">
-					<Button_Next id={'step4'}/>
+					<Button_Next id={'step4_next'}/>
 				</div>
 			</div>
     	</div>
