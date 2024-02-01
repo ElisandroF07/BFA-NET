@@ -29,6 +29,7 @@
     --color-cards: #ffffff;
     --shadow-cards: 0px 0.589px 12.681px 0px rgba(129, 128, 128, 0.02), 0px 1.628px 35.06px 0px rgba(129, 128, 128, 0.04), 0px 3.919px 84.412px 0px rgba(129, 128, 128, 0.05), 0px 13px 280px 0px rgba(129, 128, 128, 0.07);
     --color-focus: #E5553C;
+    --color-focus2: #f58132;
     --color-placeholder: #545454;
     --border-input: 1px solid #D8D8D8;
     --color-border: #d2d2d2;
@@ -204,6 +205,33 @@ body {
     height: 14px;
 }
 .button_next > p{
+    font-family: Inter_Light;
+    font-weight: 200px;
+    font-size: 13px;
+    color: var(--color-cards);
+    width: max-content;
+}
+
+.button_home {
+    width: max-content;
+    height: 35px;
+    background-color: var(--color-focus2);
+    border-radius: 7px;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+.button_home > svg {
+    fill: var(--color-cards);
+    width: 14px;
+    height: 14px;
+}
+.button_home > p{
     font-family: Inter_Light;
     font-weight: 200px;
     font-size: 13px;
