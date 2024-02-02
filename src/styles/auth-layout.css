@@ -32,19 +32,39 @@
 	background-size: cover;
 	background-repeat: no-repeat;
 	transition: .5s;
+	position: relative;
+}
+.poster_logo {
+	position: absolute;
+	top: 7px;
+	left: 18px;
+	width: 120px;
 }
 .auth_children_container {
 	width: 300px;
 	height: 100%;
 	padding: 10px 20px 10px 0px;
+	position: relative;
+}
+.children_logo {
+	display: none;
+	width: 131px;
 }
 .second_auth_children_container {
 	width: 100%;
 	height: 100%;
 	padding: 10px;
+	position: relative;
 }
 
 @media screen and (max-width: 650px) {
+	.poster_logo {
+		display: none;
+	}
+	.children_logo {
+		display: initial;
+		height: 32px;
+	}
 	.auth_poster_card {
 		width: 0px;
 	}
@@ -59,19 +79,34 @@
 	.second_auth_principal_container {
 		height: max-content;
 	}
+	.page_title {
+		display: none;
+	}
+	.menu {
+		right: 4px;
+    	top: 55px;
+	}
 }
 
 @media screen and (max-width: 450px) {
+	.step1_body > p.basic_text {
+		line-height: 25px;
+	}
 	.auth_principal_container {
 		box-shadow: none;
 		width: 100%;
 		height: 100dvh;
 		background-color: var(--color-body);
+		box-shadow: var(--shadow-cards);
 	}
 	.second_auth_principal_container {
 		height: 100%;
 		border-radius: 0px;
 		margin: 0px;
+		padding-bottom: 10px;
+	}
+	.second_auth_main_container {
+		height: max-content;
 	}
 	.auth_main_container {
 		display: initial;

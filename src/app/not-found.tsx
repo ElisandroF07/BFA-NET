@@ -12,7 +12,7 @@ export default function NotFound() {
                 <div className="not_found_text_container">
                     <h1 className="not_found_title">Página não encontrada!</h1>
                     <p className="basic_text">Por favor, verifique o URL e tente novamente.<br/> Se o problema persistir, entre em contato com o suporte técnico.<br/> Agradecemos sua compreensão.</p>
-                    <Link href='/' className="button_home" id='not_found'><p>Voltar ao inicio</p></Link>  
+                    <Link href='/auth/sign-in' className="button_home" id='not_found'><p>Voltar ao inicio</p></Link>  
                 </div>
             </div>
             <svg className="not_found_logo" width="175" height="48" viewBox="0 0 175 48" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">

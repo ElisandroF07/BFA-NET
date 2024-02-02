@@ -1,16 +1,18 @@
 import '@/styles/sign-in.css'
 import Link from 'next/link';
 import Button_Auth from '@/components/button_auth';
+import Button_Menu from '@/components/button_menu';
+import Image from 'next/image';
+import logo from '../../../../../public/assets/images/logo.png'
+
 export default function SignIn() { 
+
 	return (
 		<form className="signIn_form">
-			<div className="form_header">
+            <div className="form_header">
+                <Image className='children_logo' src={logo} alt='logo'/>
 				<h1 className="page_title">Entre na sua conta</h1>
-				<button className="button_menu">
-					<span className="bar_element"></span>
-					<span className="bar_element"></span>
-					<span className="bar_element"></span>
-				</button>
+				<Button_Menu/>
 				<p className="basic_text">Introduza as suas credênciais</p>
 			</div>
             <div className='form_body'>

@@ -12,12 +12,12 @@ export default function Step3() {
 
 	const router = useRouter()
 
-
 	useEffect(() => {
 		let button_step4 = document.querySelector('#step3_next') as HTMLButtonElement
 		button_step4.addEventListener('click', () => {
 			router.push('/auth/step4')
 		})
+		
 	}, [])
 
     return (

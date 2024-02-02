@@ -1,19 +1,9 @@
-"use client"
-
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import Link from "next/link";
+import '@/styles/globals.css'
 
 export default function Home() {
 
-	const [isAuthenticated, setIsAuthenticated] = useState(false)
-	const router = useRouter();
-
-	if (isAuthenticated) {
-		return (
-			<h1>
-				Bem Vindo
-			</h1>
-		)
-	}
-	router.replace('/auth/sign-in')
+	return (
+		<Link href='/auth/sign-in' className="button_home" id='not_found'><p>Ir para login</p></Link>  
+	)
 }

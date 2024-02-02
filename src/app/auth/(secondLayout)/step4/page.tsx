@@ -1,6 +1,5 @@
 "use client"
 
-
 import Button_Back from '@/components/button_back'
 import Button_Menu from '@/components/button_menu'
 import Button_Next from '@/components/button_next'
@@ -12,7 +11,6 @@ import { useEffect } from 'react'
 export default function Step4() {
 
 	const router = useRouter()
-
 
 	useEffect(() => {
 		let button_step4 = document.querySelector('#step4_next') as HTMLButtonElement

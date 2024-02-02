@@ -8,12 +8,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import qr_code from '../../../../../public/assets/images/qr_code.svg'
 
-export default function Step5() {
+export default function Account_Step2() {
     return (
         <div className="container">
         	<div className="container_header">
 				<Button_Back/>
-				<h1 className="title">Abertura de contas </h1>
+				<h1 className="title">Estado da conta</h1>
 				<Button_Menu/>
 				<p className="subtitle basic_text">
 					Finalize o processo no BFA App.

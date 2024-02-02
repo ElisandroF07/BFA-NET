@@ -5,6 +5,8 @@ import { useEffect } from "react"
 import Button_Next from "@/components/button_next"
 import Button_Back from "@/components/button_back"
 import Link from "next/link"
+import Image from 'next/image'
+import logo from '../../../../../public/assets/images/logo.png'
 
 export default function Step1() {
 
@@ -15,11 +17,13 @@ export default function Step1() {
         button_next.addEventListener('click', () => {
             router.push('/auth/step2')
         })
+					
     }, [])
 
     return (
         <form className="section_step1">
             <div className="step1_header">
+                <Image className='children_logo' src={logo} alt='logo'/>
                 <h1 className="page_title">Antes de continuar</h1>
                 <Button_Back/>
             </div>

@@ -1,8 +1,11 @@
-import Link from "next/link";
+"use client"
+
+import { useRouter } from "next/navigation";
 import { FaAngleLeft } from "react-icons/fa";
 
 export default function Button_Back() {
-    return <Link href="/auth/sign-in" className="button_back">
-					<FaAngleLeft/>
-			</Link>
+
+	const router = useRouter()
+
+	return <button onClick={() => router.back()} className="button_back"><FaAngleLeft/></button>
 }

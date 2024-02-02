@@ -3,7 +3,7 @@ import Button_Next from "@/components/button_next";
 import '../styles/not-found.css'
 import Link from "next/link";
 
-export default function GlobalError() {
+export default function Error() {
     return (
         <main className="not_found">
             <div className="not_found_central">

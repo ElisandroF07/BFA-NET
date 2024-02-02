@@ -13,6 +13,7 @@
     grid-template-columns: calc(100% - 30px) 30px;
     grid-template-rows: max-content max-content;
     align-items: center;
+    row-gap: 7px;
 }
 .form_header > .basic_text {
     column-span: 2;

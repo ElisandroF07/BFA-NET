@@ -7,6 +7,9 @@ import Link from "next/link"
 import Button_Menu from '@/components/button_menu'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import ChildrenLogo from '@/components/children_logo'
+import Image from 'next/image'
+import logo from '../../../../../public/assets/images/logo.png'
 
 export default  function Step2() {
 
@@ -17,12 +20,21 @@ export default  function Step2() {
         button_auth.addEventListener('click', () => {
             router.push('/auth/step3')
         })
+
+        let menu = document.querySelector('.menu') as HTMLDivElement
+        let button_menu = document.querySelector('.button_menu') as HTMLButtonElement	
+        menu.style.opacity = '0';
+        menu.style.width = '0px'
+        menu.style.height = '0px'
+        button_menu.dataset.opened = 'false'						
+
+
     }, [])
 
     return (
         <form className="step2">
 			<div className="form_header">
-				
+				<Image className='children_logo' src={logo} alt='logo'/>
                     <h1 className="page_title">Criar conta</h1>
                     <Button_Menu/>
                 
