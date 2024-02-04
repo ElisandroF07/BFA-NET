@@ -36,7 +36,7 @@
 .step5_right {
     display: flex;
     align-items: flex-end;
-    justify-content: center;
+    justify-content: flex-end;
 }
 
 .qr_container {
@@ -47,8 +47,8 @@
     align-items: center;
     justify-content: center;
     background-color: var(--color-cards);
-    border-radius: 15px;
-    padding: 20px 10px;
+    border-radius: 20px;
+    padding: 20px 15px;
     gap: 5px;
     box-shadow: var(--shadow-cards);
 }
@@ -71,8 +71,8 @@
 }
 
 .download_links > a {
-    width: 47%;
-    height: 42px;
+    width: 43%;
+    height: 36px;
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -96,8 +96,11 @@
         width: 100%;
         height: max-content;
     }
+    .step5_right {
+        justify-content: center;
+    }
     .qr_container {
-        width: 90%;
+        width: 100%;
     }
     .download_links > a {
         width: 125px;
@@ -120,6 +123,7 @@
         height: 39px;
     }
 }
+
 @media  screen and (max-width: 300px) {
     .download_links > a {
         width: 82px;

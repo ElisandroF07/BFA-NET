@@ -25,9 +25,9 @@
 
 :root {
     --color-text: #292D32;
-    --color-body: #F8F8F8;
+    --color-body: #f1f1f5;
     --color-cards: #ffffff;
-    --shadow-cards: 0px 0.589px 12.681px 0px rgba(129, 128, 128, 0.02), 0px 1.628px 35.06px 0px rgba(129, 128, 128, 0.04), 0px 3.919px 84.412px 0px rgba(129, 128, 128, 0.05), 0px 13px 280px 0px rgba(129, 128, 128, 0.07);
+    --shadow-cards: 0 0 #0000,0 0 #0000,3px -5px 40px hsla(240,8%,82%,.34);
     --color-focus: #E5553C;
     --color-focus2: #f58132;
     --color-placeholder: #545454;

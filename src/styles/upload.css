@@ -150,3 +150,9 @@ font-family: Inter_Light;
   fill: #E5553C;
   height: 60px;
 }
+
+@media screen and (max-width: 748px) {
+  .upload_container {
+    width: 100%;
+  }
+}
