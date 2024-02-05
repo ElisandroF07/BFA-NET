@@ -5,34 +5,32 @@ import '@/styles/sign-in.css'
 import Button_Next from "@/components/button_next"
 import Link from "next/link"
 import Button_Menu from '@/components/button_menu'
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import ChildrenLogo from '@/components/children_logo'
 import Image from 'next/image'
 import logo from '../../../../../public/assets/images/logo.png'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+
+const Step2Schema = z.object({
+    phone: z.string().min(1, 'O número de telefone é obrigatório!').regex(/^9[0-9]{8}$/, 'Número de telefone inválido!').transform(phone => {
+        return phone.trim().toUpperCase()
+    })
+})
+
+type Step2Form = z.infer<typeof Step2Schema>
 
 export default  function Step2() {
 
-    const router = useRouter()
+    const { register, formState: { errors }, handleSubmit } = useForm<Step2Form>({
+        resolver: zodResolver(Step2Schema)
+    })
 
-    useEffect(() => {
-        let button_auth = document.querySelector('#step2_next') as HTMLButtonElement
-        button_auth.addEventListener('click', () => {
-            router.push('/auth/step3')
-        })
-
-        let menu = document.querySelector('.menu') as HTMLDivElement
-        let button_menu = document.querySelector('.button_menu') as HTMLButtonElement	
-        menu.style.opacity = '0';
-        menu.style.width = '0px'
-        menu.style.height = '0px'
-        button_menu.dataset.opened = 'false'						
-
-
-    }, [])
-
+    function submitForm(data: any) {
+        console.log(data)
+    }
+    
     return (
-        <form className="step2">
+        <form onSubmit={handleSubmit(submitForm)} className="step2">
 			<div className="form_header">
 				<Image className='children_logo' src={logo} alt='logo'/>
                     <h1 className="page_title">Criar conta</h1>
@@ -46,11 +44,12 @@ export default  function Step2() {
                     <div className='input_phone'>
                         <p >+244</p>
                         <input
-                            name="phoneNumber"
+                            {...register('phone')}
                             maxLength={9}
-                            placeholder="Insira o seu número de telefone "
+                            placeholder="Número de telefone "
                         />
                     </div>
+                    {errors.phone && <span className='input_error'>{errors.phone.message}</span>}
                 </div> 
             </div>
             <Link href="/auth/open-account/step3" className='link3'/>
