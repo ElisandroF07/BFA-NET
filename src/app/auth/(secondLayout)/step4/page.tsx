@@ -127,8 +127,8 @@ export default function Step4() {
 								</div>
 								<div className="input-field">
 									<label>Ocupação</label>
-									<select {...register('ocupation')}>
-										<option disabled selected>Selecione a ocupação</option>
+									<select defaultValue={"Selecione a ocupação"} {...register('ocupation')}>
+										<option disabled value={'Selecione a ocupação'}>Selecione a ocupação</option>
 										<option>Estudante</option>
 										<option>Empregado</option>
 										<option>Empreendedor</option>

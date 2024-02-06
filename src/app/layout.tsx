@@ -2,6 +2,7 @@
 
 import "@/styles/globals.css";
 import NextTopLoader from 'nextjs-toploader';
+import { Toaster } from "sonner";
 
 export default function RootLayout({children,}: Readonly<{ children: React.ReactNode;}>) {
 	return (
@@ -26,6 +27,9 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
           speed={200}
           shadow="0 0 10px orange,0 0 5px orange"/>
         {children}
+        <Toaster toastOptions={{
+    className: 'toaster_error',
+  }} position="top-right" closeButton duration={3500} richColors/>
       </body>
 		</html>
 	);

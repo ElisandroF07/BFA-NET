@@ -30,7 +30,7 @@ export default function Button_Menu() {
 					bar_elements[2].style.transform = 'translateX(-3px)'
 					menu.style.opacity = '1';
 					menu.style.width = '195px'
-					menu.style.height = '170px'
+					menu.style.height = '212px'
 					button_menu.dataset.opened = 'true'
 				}				
 

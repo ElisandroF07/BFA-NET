@@ -21,6 +21,7 @@ export default function Menu() {
     return (
         <div className="menu">
             <ul>
+                <li className="basic_text"><p onClick={()=>handleCLick('/auth/sign-in')}>Entrar</p></li>
                 <li className="basic_text"><p onClick={()=>handleCLick('/auth/step1')}>Criar uma conta</p></li>
                 <li className="basic_text"><p onClick={()=>handleCLick('/auth/recovery-step1')}>Recuperar credenciais</p></li>
                 <li className="basic_text"><p onClick={()=>handleCLick('/auth/account-state-step1')}>Estado da conta</p></li>

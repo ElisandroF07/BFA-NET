@@ -40,8 +40,8 @@ export default  function Step2() {
 			</div>
             <div className='form_body'>
                 <div className="input_field">
-                   <label htmlFor="phoneNumber">Número de telefone</label>
-                    <div className='input_phone'>
+                   <label>Número de telefone</label>
+                    <div id='phone' className='input_phone'>
                         <p >+244</p>
                         <input
                             {...register('phone')}

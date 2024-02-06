@@ -42,7 +42,7 @@ export default function Account_Step2() {
 							<p className="basic_text">
 								Aceda à opção Confirmar conta e escaneie o código qr abaixo.
 							</p>
-							<Image src={qr_code} alt='qr_code'/>
+							<Image src={qr_code} alt='qr_code' priority={true} />
 						</div>
 					</div>
 				</div>

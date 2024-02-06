@@ -66,7 +66,6 @@
     align-items: center;
     justify-content: center;
     gap: 20px;
-    min-width: 312px;
 }
 
 .upload_card {
@@ -79,10 +78,37 @@
   justify-items: center;
   padding: 37px 10px 10px 10px;
   cursor: pointer;
+  transition: .3s;
 }
+
+.upload_card > p {
+    transition: .3s;
+}
+
+.upload_card > p:nth-child(3) {
+  opacity: 0;
+  margin-top: -68px;
+  color: var(--color-focus);
+  font-size: 18px;
+} 
+
+.upload_card.ondrag {
+    transform: scale(1.06);
+    background: var(--color-focus3);
+    border-color: var(--color-focus);
+}
+
+.upload_card.ondrag > svg, .upload_card.ondrag > p:nth-child(2){
+  opacity: 0;
+}
+
+.upload_card.ondrag > p:nth-child(3) {
+  opacity: 1;
+} 
 
 .upload_card > svg {
   margin-bottom: 10px;
+  transition: .3s;
 }
 
 .button_upload {
