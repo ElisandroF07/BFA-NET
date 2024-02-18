@@ -1,0 +1,428 @@
+@font-face {
+    font-family: Inter_Light;
+    src: url(../../public/assets/fonts/Inter-Light.ttf);
+}
+@font-face {
+    font-family: Inter_Regular;
+    src: url(../../public/assets/fonts/Inter-Regular.ttf);
+}
+@font-face {
+    font-family: Inter_Medium;
+    src: url(../../public/assets/fonts/Inter-Medium.ttf);
+}
+@font-face {
+    font-family: Inter_SemiBold;
+    src: url(../../public/assets/fonts/Inter-SemiBold.ttf);
+}
+
+*, html {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: Inter_Regular;
+}
+
+:root {
+    --color-text: #232c44;
+    --color-link: #478099;
+    --color-body: #f8f9fd;
+    --color-cards: #ffffff;
+    --shadow-cards: 0 0 #0000,0 0 #0000,3px -5px 40px #cdcdd557;
+    --color-focus: #fc6423;
+    --color-focus3:#e5553c1e;
+    --color-focus2: #e65200;
+    --color-placeholder: #545454;
+    --border-input: 1px solid #D8D8D8;
+    --color-border: #d2d2d2;
+    --color-border2: #293746;
+    --color-border3: #cdd7f4;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+}
+
+::placeholder {
+    font-family: Inter_Regular;
+    font-size: 14px;
+    color: var(--color-placeholder);
+}
+
+
+.page_title {
+    font-family: Inter_Regular;
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--color-text);
+}
+
+.buttonMenu {
+    width: 35px;
+    height: 35px;
+    color: var(--color-body);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-items: center;
+    justify-content: center;
+}
+
+.input_phone {
+    width: 100%;
+    height: 50px;
+    padding: 0px 20px;
+    outline: none;
+    border: var(--border-input);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    
+}
+
+.input_phone > p::after {
+    content: '';
+    width: 1px;
+    height: 14px;
+    background-color: var(--color-border);
+    position: absolute;
+    margin-left: 12px;
+    border-radius: 3px;
+}
+
+.input_phone > p {
+    font-family: Inter_Regular;
+    font-size: 15px;
+    transition: .3s;
+}
+
+.input_phone > input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-family: Inter_Regular;
+    font-size: 15px;
+    transition: .3s;
+    padding-left: 12px;
+}
+.button_back {
+    width: 35px;
+    min-width: 30px;
+    height: 35px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-body);
+}
+.button_back > svg {
+    fill: var(--color-text);
+    width: 15px;
+    height: 15px;
+}
+
+.bar_element {
+    height: 1.5px;
+    background-color: var(--color-text);
+    border-radius: 10px;
+    transition: .3s;
+}
+
+.bar_element:nth-child(1) {
+    width: 10px;
+    transform: translateX(-3px);
+}
+.bar_element:nth-child(2) {
+    width: 15px;
+}
+.bar_element:nth-child(3) {
+    width: 10px;
+    transform: translateX(3px);
+}
+
+.menu {
+    width: 0px;
+    height: 0px;
+    opacity: 0;
+    background: var(--color-body);
+    border: var(--border-input);
+    border-radius: 7px;
+    position: absolute;
+    right: 13px;
+    top: 49px;
+    overflow: hidden;
+    transition: .3s;
+    padding: 5px;
+    z-index: 100;
+}
+.menu > ul {
+    list-style: none;
+}
+.menu > ul > li > p{
+    display: flex;
+    width: 100%;
+    height: 40px;
+    text-align: start;
+    padding-left: 15px;
+    color: var(--color-text);
+    text-decoration: none;
+    align-items: center;
+    justify-content: flex-start;
+    font-weight: 200;
+    transition: .3s;
+    border-radius: 7px;
+    cursor: pointer;
+}
+.menu > ul > li > p:hover {
+    background-color: var(--color-cards);
+    box-shadow: var(--shadow-cards);
+}
+
+.basic_text {
+    font-family: Inter_Light;
+    color: var(--color-text);
+    font-size: 13px;
+}
+
+.input_field {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 30px;
+}
+.input_field > label {
+    color: var(--color-text);
+    font-family: Inter_SemiBold;
+    font-size: 14px;
+}
+.input_field > input {
+    width: 100%;
+    height: 50px;
+    padding: 0px 20px;
+    outline: none;
+    border: var(--border-input);
+    border-radius: 10px;
+    font-family: Inter_Regular;
+    font-size: 15px;
+    transition: .3s;
+}
+
+.input_error {
+    font-size: 14px;
+    font-family: Inter_Regular;
+    color: red;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+}
+
+.input_error > svg {
+    width: 17px;
+    height: 17px;
+}
+.input_field > input:focus {
+    border-color: var(--color-focus);
+}
+input:-webkit-autofill {
+    background-color: transparent;
+}
+.button_auth {
+    width: 100%;
+    height: 45px;
+    font-family: Inter_SemiBold;
+    font-size: 15px;
+    color: var(--color-cards);
+    background-color: var(--color-focus);
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    transition: .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.button_auth:hover {
+    background-color: var(--color-focus2);
+}
+.button_auth.register {
+    border: var(--border-input);
+    background-color: var(--color-cards);
+    color: var(--color-text);
+    transition: .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;  
+}
+.button_auth.register:hover {
+    border-color: var(--color-focus3);
+    background-color: var(--color-focus3);
+    color: var(--color-focus);
+    transition: .3s;
+}
+.button_next {
+    width: 100%;
+    height: 40px;
+    background-color: var(--color-focus);
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px 20px;
+}
+.button_next > svg {
+    fill: var(--color-cards);
+    width: 14px;
+    height: 14px;
+}
+.button_next > p{
+    font-family: Inter_Light;
+    font-weight: 200px;
+    font-size: 13px;
+    color: var(--color-cards);
+    width: max-content;
+}
+
+.button_home {
+    width: max-content;
+    height: 35px;
+    background-color: var(--color-focus2);
+    border-radius: 7px;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+.button_home > svg {
+    fill: var(--color-cards);
+    width: 14px;
+    height: 14px;
+}
+.button_home > p{
+    font-family: Inter_Light;
+    font-weight: 200px;
+    font-size: 13px;
+    color: var(--color-cards);
+    width: max-content;
+}
+
+.uploader {
+    width: 100%;
+    height: max-content;
+    border-radius: 15px;
+    padding: 15px 15px;
+    transition: .3s;
+    border: var(--border-input);
+    background-color: var(--color-body);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+}
+.uploader .top {
+    width: 100%;
+    height: max-content;
+}
+.uploader .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+.uploader .top .text > img {
+    width: 60px;
+}
+.uploader .top .text {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: flex-start;
+    height: 100%;
+    width: max-content;
+}
+.uploader .top .text > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+.uploader .top .text > div > p:nth-child(1) {
+    font-family: Inter_Medium;
+    font-size: 14px;
+    max-width: 100px;
+    max-height: 20px;
+    overflow: hidden;
+    text-wrap: nowrap;
+    overflow: hidden;
+}
+.uploader .top .text > div > p:nth-child(2) {
+    font-family: Inter_Light;
+    font-size: 14px;
+}
+.uploader .top .end {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+.uploader .top .end > button {
+    border: none;
+    border-radius: 7px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.uploader .top .end > button > svg {
+    fill: var(--color-placeholder);
+    width: 10px;
+    height: 10px;
+}
+.uploader .top .end > p {
+    font-size: 14px;
+    font-family: Inter_Light;
+}
+
+.uploader .bottom {
+    width: 100%;
+    height: 0px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+button:disabled {
+    opacity: 0.5;
+}
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}

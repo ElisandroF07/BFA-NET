@@ -1,0 +1,31 @@
+.terms_form {
+    height: 470px;
+    overflow-y: scroll;
+}
+
+.terms_title {
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 18px;
+    color: var(--color-text);
+    font-family: Inter_Regular;
+    font-weight: 400;
+}
+
+form > .basic_text {
+    line-height: 27px;
+    margin-bottom: 40px;
+    width: 100%;
+    text-align: justify;
+}
+
+.terms_form::-webkit-scrollbar{
+       display: none;
+}
+
+@media screen and (max-width: 480px) {
+    .terms_form {
+    height: calc(100dvh - 170px + 55px);
+}
+}
