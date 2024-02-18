@@ -2,7 +2,8 @@
 
 import '@/styles/globals.css'
 import NextTopLoader from 'nextjs-toploader'
-
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Toaster } from 'sonner'
 
 export default function RootLayout({
@@ -31,6 +32,8 @@ export default function RootLayout({
           shadow="0 0 10px orange,0 0 5px orange"
         />
         {children}
+        <Analytics />
+        <SpeedInsights />
         <Toaster
           toastOptions={{
             className: 'toaster_error',
