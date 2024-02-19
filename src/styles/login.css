@@ -164,6 +164,7 @@
     font-family: Inter_Regular;
     line-height: 22px;
     color: var(--color-placeholder);
+    text-align: center;
 }
 .terms > p > a {
     text-decoration: underline;
