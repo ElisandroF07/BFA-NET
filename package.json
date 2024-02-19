@@ -11,14 +11,21 @@
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
     "@keyvaluesystems/react-stepper": "^1.0.4",
+    "@nextui-org/react": "^2.2.9",
+    "@nextui-org/system": "^2.0.15",
+    "@nextui-org/theme": "^2.1.17",
     "@vercel/analytics": "^1.2.0",
     "@vercel/speed-insights": "^1.0.10",
+    "autoprefixer": "^10.4.17",
     "axios": "^1.6.7",
+    "flowbite-react": "^0.7.2",
+    "framer-motion": "^11.0.5",
     "next": "14.1.0",
     "next-offline": "^5.0.5",
     "next-pwa": "^5.6.0",
     "nextjs-progressloader": "^1.1.0",
     "nextjs-toploader": "^1.6.4",
+    "postcss": "^8.4.35",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.50.0",
@@ -39,6 +46,7 @@
     "@types/react-dom": "^18",
     "eslint": "^8.56.0",
     "eslint-config-next": "14.1.0",
+    "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
 }

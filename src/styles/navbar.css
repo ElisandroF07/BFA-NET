@@ -1,0 +1,20 @@
+.max-w-\[1024px\] {
+    max-width: none !important;
+}
+
+.px-6 {
+    padding-left: 5rem !important;
+    padding-right: 5rem !important;
+}
+
+.navCont {
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 670px){
+    .px-6 {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+}

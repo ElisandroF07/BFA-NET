@@ -5,6 +5,7 @@ import NextTopLoader from 'nextjs-toploader'
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Toaster } from 'sonner'
+import {NextUIProvider} from "@nextui-org/react";
 
 export default function RootLayout({
   children,
@@ -31,7 +32,9 @@ export default function RootLayout({
           speed={200}
           shadow="0 0 10px orange,0 0 5px orange"
         />
-        {children}
+        <NextUIProvider>
+          {children}
+        </NextUIProvider>
         <Analytics />
         <SpeedInsights />
         <Toaster
