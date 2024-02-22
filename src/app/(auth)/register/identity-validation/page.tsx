@@ -18,9 +18,16 @@ const ACCEPTED_IMAGE_TYPES = [
   'image/png',
 ]
 
+interface FileState {
+  haveFile: boolean;
+  type: string;
+  name: string;
+  size: number;
+  file: File | null;
+}
+
 export default function IdentityValidation(){
 
-  const file = new File([], '')
   const useStore = useUserStore()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
@@ -33,19 +40,19 @@ export default function IdentityValidation(){
     stepsStore.setStep2(true)
   }, [])
 
-  const [selfie, setselfie] = useState({
+  const [selfie, setselfie] = useState<FileState>({
     haveFile: false,
     type: '',
     name: '',
     size: 0,
-    file: file
+    file: null
   })
-  const [selfieWithBI, setselfieWithBI] = useState({
+  const [selfieWithBI, setselfieWithBI] = useState<FileState>({
     haveFile: false,
     type: '',
     name: '',
     size: 0,
-    file: file
+    file: null
   })
 
   function validateForm(): boolean {
@@ -92,7 +99,9 @@ export default function IdentityValidation(){
   function uploadSelfie(): Promise<any> {
     setLoading(true)
     const formData = new FormData();
-    formData.append('image', selfie.file);
+    if (selfie.file) {
+      formData.append('image', selfie.file);
+    }
     return new Promise(async (resolve, reject) => {
       try {
         const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${useStore.phone}/SELFIE`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
@@ -112,7 +121,9 @@ export default function IdentityValidation(){
   function uploadSelfieBI(): Promise<any> {
     setLoading(true)
     const formData = new FormData();
-    formData.append('image', selfieWithBI.file);
+    if (selfieWithBI.file) {
+      formData.append('image', selfieWithBI.file);
+    }
     return new Promise(async (resolve, reject) => {
       try {
         const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${useStore.phone}/SELFIE_BI`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
@@ -171,7 +182,7 @@ export default function IdentityValidation(){
                   imageAlt="bi-frente"
                   imageType={selfie.type.replace('image/', '').trim()}
                   key={'uploader1'}
-                  handleClick={() => setselfie({ haveFile: false, type: '', name: '', size: 0, file: file })
+                  handleClick={() => setselfie({ haveFile: false, type: '', name: '', size: 0, file: null })
                   }
                 />
                   : 
@@ -182,7 +193,7 @@ export default function IdentityValidation(){
                   acceptedImageTypes={ACCEPTED_IMAGE_TYPES}
                   maxFileSize={MAX_FILE_SIZE}
                   setState={setselfie}
-                  file={file}
+                  file={null}
                 />
               }
             </div>
@@ -196,7 +207,7 @@ export default function IdentityValidation(){
                   imageType={selfieWithBI.type.replace('image/', '').trim()}
                   key={2}
                   handleClick={() =>
-                    setselfieWithBI({ haveFile: false, type: '', name: '', size: 0, file: file })
+                    setselfieWithBI({ haveFile: false, type: '', name: '', size: 0, file: null })
                   }
                 />
                 : 
@@ -207,7 +218,7 @@ export default function IdentityValidation(){
                   acceptedImageTypes={ACCEPTED_IMAGE_TYPES}
                   maxFileSize={MAX_FILE_SIZE}
                   setState={setselfieWithBI}
-                  file={file}
+                  file={null}
                 />
               }
             </div>
