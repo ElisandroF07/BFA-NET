@@ -8,7 +8,7 @@ interface IProps{
   inputId: string,
   inputName: string,
   maxFileSize: number,
-  file: File,
+  file: File | null,
   acceptedImageTypes: string[],
   setState: Dispatch<
     SetStateAction<{
@@ -16,7 +16,7 @@ interface IProps{
       type: string
       name: string
       size: number
-      file: File
+      file: File | null
     }>
   >
 }

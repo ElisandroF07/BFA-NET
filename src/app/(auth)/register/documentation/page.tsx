@@ -10,6 +10,7 @@ import axios from 'axios'
 import useUserStore from '@/contexts/stores/userStore'
 import useStepsStore from '@/contexts/stores/stepsStore'
 
+
 const MAX_FILE_SIZE: number = parseInt(process.env.MAX_FILE_SIZE ?? '5242880')
 const ACCEPTED_IMAGE_TYPES = [
   'image/jpeg',
@@ -18,12 +19,18 @@ const ACCEPTED_IMAGE_TYPES = [
   'image/png',
 ]
 
+interface FileState {
+  haveFile: boolean;
+  type: string;
+  name: string;
+  size: number;
+  file: File | null;
+}
 
 export default function Documentation(){
 
   const useStore = useUserStore()
   const router = useRouter()
-  const file = new File(['conteúdo do arquivo'], 'nome-do-arquivo.txt', { type: 'text/plain' });
   const stepsStore = useStepsStore()
 
   useEffect(()=>{
@@ -31,19 +38,19 @@ export default function Documentation(){
     stepsStore.setStep1(true)
   }, [])
 
-  const [frontFile, setFrontFile] = useState({
+  const [frontFile, setFrontFile] = useState<FileState>({
     haveFile: false,
     type: '',
     name: '',
     size: 0,
-    file: file
+    file: null
   })
-  const [backFile, setBackFile] = useState({
+  const [backFile, setBackFile] = useState<FileState>({
     haveFile: false,
     type: '',
     name: '',
     size: 0,
-    file: file
+    file: null
   })
   const [loading, setLoading] = useState(false)
 
@@ -97,7 +104,9 @@ export default function Documentation(){
   function uploadFront(): Promise<any> {
     setLoading(true)
     const formData = new FormData();
-    formData.append('image', frontFile.file);
+    if (frontFile.file) {
+      formData.append('image', frontFile.file);
+    }
     return new Promise(async (resolve, reject) => {
       try {
         const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${useStore.phone}/BI_FRENTE`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
@@ -117,7 +126,9 @@ export default function Documentation(){
   function uploadBack(): Promise<any> {
     setLoading(true)
     const formData = new FormData();
-    formData.append('image', backFile.file);
+    if (backFile.file) {
+      formData.append('image', backFile.file);
+    }
     return new Promise(async (resolve, reject) => {
       try {
         const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${useStore.phone}/BI_VERSO`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
@@ -176,7 +187,7 @@ export default function Documentation(){
                     imageAlt="bi-frente"
                     imageType={frontFile.type.replace('image/', '').trim()}
                     key={'1'}
-                    handleClick={() => setFrontFile({ haveFile: false, type: '', name: '', size: 0, file: file })}/> 
+                    handleClick={() => setFrontFile({ haveFile: false, type: '', name: '', size: 0, file: null })}/> 
                   : 
                   <UploadCard
                   inputId="i1"
@@ -185,7 +196,7 @@ export default function Documentation(){
                   acceptedImageTypes={ACCEPTED_IMAGE_TYPES}
                   maxFileSize={MAX_FILE_SIZE}
                   setState={setFrontFile}
-                  file={file}/>
+                  file={null}/>
               }
               </div>
               <div className="upload_container">
@@ -197,7 +208,7 @@ export default function Documentation(){
                     imageAlt="bi-verso"
                     imageType={backFile.type.replace('image/', '').trim()}
                     key={2}
-                    handleClick={() => setBackFile({ haveFile: false, type: '', name: '', size: 0, file: file })}/>
+                    handleClick={() => setBackFile({ haveFile: false, type: '', name: '', size: 0, file: null })}/>
                     : 
                   <UploadCard
                   inputId="i2"
@@ -205,7 +216,7 @@ export default function Documentation(){
                   inputName="image"
                   acceptedImageTypes={ACCEPTED_IMAGE_TYPES}
                   maxFileSize={MAX_FILE_SIZE}
-                  setState={setBackFile} file={file}/>
+                  setState={setBackFile} file={null}/>
                 }
               </div>
             </div>
