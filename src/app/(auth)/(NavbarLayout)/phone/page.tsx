@@ -44,7 +44,7 @@ export default function Phone() {
     setLoading(true)
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post("http://localhost:5000/verify-phone",data,{headers: {'Content-Type': 'application/json'}})
+        const response = await axios.post("https://bfa-nodejs-api.onrender.com/verify-phone",data,{headers: {'Content-Type': 'application/json'}})
         if (response.status === 201) {
           const {phone} = data
           useStore.updatePhone(phone)

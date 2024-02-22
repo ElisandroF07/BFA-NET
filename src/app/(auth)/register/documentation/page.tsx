@@ -23,7 +23,7 @@ export default function Documentation(){
 
   const useStore = useUserStore()
   const router = useRouter()
-  const file = new File([], '')
+  const file = new File(['conteúdo do arquivo'], 'nome-do-arquivo.txt', { type: 'text/plain' });
   const stepsStore = useStepsStore()
 
   useEffect(()=>{
@@ -100,7 +100,7 @@ export default function Documentation(){
     formData.append('image', frontFile.file);
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post(`http://localhost:5000/upload-image/${useStore.phone}/BI_FRENTE`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${useStore.phone}/BI_FRENTE`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         if (response.status === 201) {
           resolve(response.data.message)
         }
@@ -120,7 +120,7 @@ export default function Documentation(){
     formData.append('image', backFile.file);
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post(`http://localhost:5000/upload-image/${useStore.phone}/BI_VERSO`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${useStore.phone}/BI_VERSO`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         if (response.status === 201) {
           resolve(response.data.message)
         }

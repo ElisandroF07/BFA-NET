@@ -59,7 +59,7 @@ export default function Register() {
     setLoading(true)
     return new Promise(async (resolve, reject) => {
         try {
-          const response = await axios.post("http://localhost:5000/verify-otp", data,{ headers: { 'Content-Type': 'application/json' } })
+          const response = await axios.post("https://bfa-nodejs-api.onrender.com/verify-otp", data,{ headers: { 'Content-Type': 'application/json' } })
           if (response.status === 201) {
             resolve(response.data.message)
             router.push('/register/personal-data')
