@@ -174,7 +174,7 @@ export default function IdentityValidation(){
                   handleClick={() => setselfie({ haveFile: false, type: '', name: '', size: 0, file: file })
                   }
                 />
-                : 
+                  : 
                 <UploadCard
                   inputId="i1"
                   key={'upload_area2'}
