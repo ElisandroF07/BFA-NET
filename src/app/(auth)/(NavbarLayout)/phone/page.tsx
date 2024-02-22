@@ -48,6 +48,7 @@ export default function Phone() {
         if (response.status === 201) {
           const {phone} = data
           useStore.updatePhone(phone)
+          localStorage.setItem("phone", phone)
           resolve(response.data.message)
           router.push('/phone/verification')
         }

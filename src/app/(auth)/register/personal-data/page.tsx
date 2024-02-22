@@ -78,7 +78,7 @@ export default function PersonalData(){
 
   async function submitForm(data: FormType) {
     const {name, email, biNumber} = data
-    const phone = parseInt('244' + '948951028')
+    const phone = parseInt(localStorage.getItem("phone") ?? useStore.phone)
     const formatedData = JSON.stringify({
       name,
       email,

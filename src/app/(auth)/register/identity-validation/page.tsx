@@ -104,7 +104,7 @@ export default function IdentityValidation(){
     }
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${useStore.phone}/SELFIE`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${localStorage.getItem("phone") ?? useStore.phone}/SELFIE`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         if (response.status === 201) {
           resolve(response.data.message)
         }
@@ -126,7 +126,7 @@ export default function IdentityValidation(){
     }
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${useStore.phone}/SELFIE_BI`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${localStorage.getItem("phone") ?? useStore.phone}/SELFIE_BI`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         if (response.status === 201) {
           resolve(response.data.message)
         }
