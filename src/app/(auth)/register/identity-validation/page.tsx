@@ -31,7 +31,10 @@ export default function IdentityValidation(){
   const useStore = useUserStore()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-
+  let phone_number = ''
+  if (typeof window !== 'undefined') {
+    phone_number = localStorage.getItem("phone") ?? ''
+  }
   const stepsStore = useStepsStore()
 
   useEffect(()=>{
@@ -104,7 +107,7 @@ export default function IdentityValidation(){
     }
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${localStorage.getItem("phone") ?? useStore.phone}/SELFIE`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${phone_number ?? useStore.phone}/SELFIE`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         if (response.status === 201) {
           resolve(response.data.message)
         }
@@ -126,7 +129,7 @@ export default function IdentityValidation(){
     }
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${localStorage.getItem("phone") ?? useStore.phone}/SELFIE_BI`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${phone_number ?? useStore.phone}/SELFIE_BI`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         if (response.status === 201) {
           resolve(response.data.message)
         }

@@ -32,7 +32,10 @@ export default function Documentation(){
   const useStore = useUserStore()
   const router = useRouter()
   const stepsStore = useStepsStore()
-
+  let phone_number = ''
+  if (typeof window !== 'undefined') {
+    phone_number = localStorage.getItem("phone") ?? ''
+  }
   useEffect(()=>{
     stepsStore.setCurrent(1)
     stepsStore.setStep1(true)
@@ -109,7 +112,7 @@ export default function Documentation(){
     }
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${localStorage.getItem("phone") ?? useStore.phone}/BI_FRENTE`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${phone_number ?? useStore.phone}/BI_FRENTE`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         if (response.status === 201) {
           resolve(response.data.message)
         }
@@ -131,7 +134,7 @@ export default function Documentation(){
     }
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${localStorage.getItem("phone") ?? useStore.phone}/BI_VERSO`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload-image/${phone_number ?? useStore.phone}/BI_VERSO`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         if (response.status === 201) {
           resolve(response.data.message)
         }

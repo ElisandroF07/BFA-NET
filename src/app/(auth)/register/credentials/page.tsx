@@ -21,7 +21,7 @@ export default function PersonalData(){
   }, [])
 
   function submitForm(){
-    router.replace('/')
+    router.replace('/login')
   }
 
     return (

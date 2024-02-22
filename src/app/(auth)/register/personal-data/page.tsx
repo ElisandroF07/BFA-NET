@@ -50,7 +50,10 @@ export default function PersonalData(){
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const useStore = useUserStore()
-
+  let phone_number = ''
+  if (typeof window !== 'undefined') {
+    phone_number = localStorage.getItem("phone") ?? ''
+  }
 
 
   const {register, handleSubmit, formState: { errors },  } = useForm<FormType>({
@@ -78,7 +81,7 @@ export default function PersonalData(){
 
   async function submitForm(data: FormType) {
     const {name, email, biNumber} = data
-    const phone = parseInt(localStorage.getItem("phone") ?? useStore.phone)
+    const phone = parseInt(phone_number ?? useStore.phone)
     const formatedData = JSON.stringify({
       name,
       email,

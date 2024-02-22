@@ -49,6 +49,10 @@ export default function Register() {
   const [loading, setLoading] = useState(false)
   const useStore = useUserStore()
   const router = useRouter()
+  let phone = ''
+  if (typeof window !== 'undefined') {
+    phone = localStorage.getItem("phone") ?? ''
+  }
 
   const { handleSubmit, register } = useForm<FormType>({
     resolver: zodResolver(FormSchema),
@@ -78,7 +82,7 @@ export default function Register() {
     console.log(data)
     const { field1, field2, field3, field4, field5, field6 } = data;
     const formatedData = field1 + field2 + field3 + field4 + field5 + field6;
-    const body = JSON.stringify({phone: parseInt(localStorage.getItem("phone") ?? useStore.phone), otp_code: formatedData});
+    const body = JSON.stringify({phone: parseInt(phone ?? useStore.phone), otp_code: formatedData});
     toast.promise(APICall(body), {
       loading: 'Verificando...',
       success: (data) => {
@@ -118,6 +122,7 @@ export default function Register() {
         }
       })
     })
+  
   }, [])
 
   return (
@@ -126,7 +131,7 @@ export default function Register() {
         <div className="left">
         <Image src={business} alt="business" />
         <h1>Verifique a sua caixa de mensagens</h1>
-        <p>Enviamos um código de verificação para o seu número ({localStorage.getItem("phone") ?? useStore.phone}). </p>
+        <p>Enviamos um código de verificação para o seu número ({phone ?? useStore.phone}). </p>
         <Link href={'/register'}>Clique aqui para corrigir o número</Link>
         </div>
         <div className="right">
