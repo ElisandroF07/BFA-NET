@@ -8,7 +8,7 @@ import business from '../../../../../../public/assets/images/message.svg'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import useUserStore from '@/contexts/stores/userStore'
@@ -46,6 +46,7 @@ type FormType = z.infer<typeof FormSchema>
 
 export default function Register() {
 
+  const [loading, setLoading] = useState(false)
   const useStore = useUserStore()
   const router = useRouter()
 
@@ -54,31 +55,33 @@ export default function Register() {
   })
 
 
-  function APICall(body: any): Promise<any> {
+  function APICall(data: any): Promise<any> {
+    setLoading(true)
     return new Promise(async (resolve, reject) => {
         try {
-          const response = await axios.post("https://bfa-nodejs-api.onrender.com/verify-otp", body,{ headers: { 'Content-Type': 'application/json' } })
+          const response = await axios.post("http://localhost:5000/verify-otp", data,{ headers: { 'Content-Type': 'application/json' } })
           if (response.status === 201) {
             resolve(response.data.message)
+            router.push('/register/personal-data')
           }
         }
         catch(error: any){
           reject(error.response?.data.message)
         }
+        finally{
+          setLoading(false)
+        }
     })
   }
 
   async function submitForm(data: FormType) {
-    const verificationContainer = document.querySelector('.verification_container') as HTMLDivElement
+    console.log(data)
     const { field1, field2, field3, field4, field5, field6 } = data;
     const formatedData = field1 + field2 + field3 + field4 + field5 + field6;
     const body = JSON.stringify({phone: parseInt(useStore.phone), otp_code: formatedData});
     toast.promise(APICall(body), {
       loading: 'Verificando...',
       success: (data) => {
-        useStore.updateValidation(false)
-        verificationContainer.style.display = 'none'
-        router.push('/register/upload-id')
         return data;
       },
       error: (data)=> {
@@ -88,9 +91,7 @@ export default function Register() {
   }
 
   function reSend(){
-    const button = document.querySelector('#step2_next') as HTMLButtonElement
-    useStore.updateValidation(true)
-    button.click()
+    
   }
 
   useEffect(() => {
@@ -179,10 +180,10 @@ export default function Register() {
                 {...register('field6')}
               />
             </div>
-              <button type="submit" className="button_auth">
+              <button type="submit" disabled={loading} className="button_auth">
                 Verificar
               </button>
-              <div className='terms'><p>Não recebeu o código? <Link href="/phone">Renviar</Link>.</p></div>
+              <div className='terms'><p>Não recebeu o código?</p> <button onClick={reSend}>Renviar</button></div>
             </div>
           </form>
             <p className="basic_text not_found_footer">

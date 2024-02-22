@@ -158,6 +158,8 @@
     margin-top: 30px;
     width: 100%;
     height: max-content;
+    display: flex;
+    gap: 5px;
 }
 .terms > p {
     font-size: 14px;
@@ -166,6 +168,11 @@
     color: var(--color-placeholder);
 }
 .terms > p > a {
+    text-decoration: underline;
+    color: var(--color-link);
+    font-family: Inter_SemiBold;
+}
+.terms > button {
     text-decoration: underline;
     color: var(--color-link);
     font-family: Inter_SemiBold;

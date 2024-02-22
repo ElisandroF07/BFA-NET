@@ -6,6 +6,9 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import Uploader from '@/components/cards/uploader'
 import UploadCard from '@/components/cards/uploadCard'
+import axios from 'axios'
+import useUserStore from '@/contexts/stores/userStore'
+import useStepsStore from '@/contexts/stores/stepsStore'
 
 const MAX_FILE_SIZE: number = parseInt(process.env.MAX_FILE_SIZE ?? '5242880')
 const ACCEPTED_IMAGE_TYPES = [
@@ -15,38 +18,38 @@ const ACCEPTED_IMAGE_TYPES = [
   'image/png',
 ]
 
+
 export default function Documentation(){
 
-
+  const useStore = useUserStore()
   const router = useRouter()
+  const file = new File([], '')
+  const stepsStore = useStepsStore()
+
+  useEffect(()=>{
+    stepsStore.setCurrent(1)
+    stepsStore.setStep1(true)
+  }, [])
+
   const [frontFile, setFrontFile] = useState({
     haveFile: false,
     type: '',
-    name: 'Elisandro.png',
+    name: '',
     size: 0,
+    file: file
   })
   const [backFile, setBackFile] = useState({
     haveFile: false,
     type: '',
     name: '',
     size: 0,
+    file: file
   })
+  const [loading, setLoading] = useState(false)
 
-  function validateForm() {
-    const i1 = document.getElementById('i1') as HTMLInputElement
-    const i2 = document.getElementById('i2') as HTMLInputElement
-    if (i1.files?.length === 0 && i2.files?.length === 0) {
-      toast.warning('Faça upload das imagens para continuar!')
-    } else if (i1.files?.length === 0) {
-      toast.warning('Faça upload da parte frontal do BI!')
-    } else if (i2.files?.length === 0) {
-      toast.warning('Faça upload da parte frontal do BI!')
-    } else {
-      router.push('/auth/step4')
-    }
-  }
 
   useEffect(() => {
+    
     if (!backFile.haveFile) {
       const input = document.getElementById('i2') as HTMLInputElement
       if (input) {
@@ -55,7 +58,7 @@ export default function Documentation(){
         alert('Null')
       }
     } else {
-      /* empty */
+      
     }
   }, [backFile.haveFile])
 
@@ -64,13 +67,98 @@ export default function Documentation(){
       const input = document.getElementById('i1') as HTMLInputElement
       if (input) {
         input.value = ''
-      } else {
+        
+      } 
+      else {
         alert('Null')
       }
-    } else {
-      /* empty */
+    } 
+    else {
+      
     }
   }, [frontFile.haveFile])
+
+
+  function validateForm(): boolean {
+    if (!frontFile.haveFile && !backFile.haveFile) {
+      toast.error('Faça upload das imagens para continuar!')
+      return false
+    } else if (!frontFile.haveFile) {
+      toast.error('Faça upload da parte frontal do BI!')
+      return false
+    } else if (!backFile.haveFile) {
+      toast.error('Faça upload da parte frontal do BI!')
+      return false
+    } else {
+      return true
+    }
+  }
+
+  function uploadFront(): Promise<any> {
+    setLoading(true)
+    const formData = new FormData();
+    formData.append('image', frontFile.file);
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await axios.post(`http://localhost:5000/upload-image/${useStore.phone}/BI_FRENTE`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        if (response.status === 201) {
+          resolve(response.data.message)
+        }
+      } 
+      catch (error: any) {
+        reject(error.response?.data.message)
+      }
+      finally{
+        setLoading(false)
+      }
+    })
+  }
+
+  function uploadBack(): Promise<any> {
+    setLoading(true)
+    const formData = new FormData();
+    formData.append('image', backFile.file);
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await axios.post(`http://localhost:5000/upload-image/${useStore.phone}/BI_VERSO`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        if (response.status === 201) {
+          resolve(response.data.message)
+        }
+      } 
+      catch (error: any) {
+        reject(error.response?.data.message)
+      }
+      finally{
+        setLoading(false)
+      }
+    })
+  }
+
+  function formSubmit() {
+    if (validateForm()) {
+      toast.promise(uploadFront(), {
+        loading: 'Enviando...',
+        success: (data) => {
+          return data;
+        },
+        error: (data)=> {
+          return data},
+        });
+      toast.promise(uploadBack(), {
+        loading: 'Enviando...',
+        success: (data) => {
+          return data;
+        },
+        error: (data)=> {
+          return data},
+        });
+        router.push('/register/identity-validation')
+    }
+    else {
+      toast.warning('As imagens não foram enviadas.')
+    }
+  }
+
     return (
         <form className="login_form identity_verification">
             <div className="header_form">
@@ -80,59 +168,51 @@ export default function Documentation(){
             <div className="body_form">
             <div className="uploaders_container">
               <div className="upload_container">
-                        <p className="simple_text">Frente</p>
-                        {frontFile.haveFile ? (
-              <Uploader
-                fileName={frontFile.name}
-                fileSize={frontFile.size.toString()}
-                imageAlt="bi-frente"
-                imageType={frontFile.type.replace('image/', '').trim()}
-                key={'uploader1'}
-                handleClick={() =>
-                  setFrontFile({ haveFile: false, type: '', name: '', size: 0 })
+                <p className="simple_text">Frente</p>
+                {frontFile.haveFile ? 
+                  <Uploader
+                    fileName={frontFile.name}
+                    fileSize={frontFile.size.toString()}
+                    imageAlt="bi-frente"
+                    imageType={frontFile.type.replace('image/', '').trim()}
+                    key={'1'}
+                    handleClick={() => setFrontFile({ haveFile: false, type: '', name: '', size: 0, file: file })}/> 
+                  : 
+                  <UploadCard
+                  inputId="i1"
+                  key={'upload_area1'}
+                  inputName="image"
+                  acceptedImageTypes={ACCEPTED_IMAGE_TYPES}
+                  maxFileSize={MAX_FILE_SIZE}
+                  setState={setFrontFile}
+                  file={file}/>
+              }
+              </div>
+              <div className="upload_container">
+                <p className="simple_text">Verso</p>
+                {backFile.haveFile ? 
+                  <Uploader
+                    fileName={backFile.name}
+                    fileSize={backFile.size.toString()}
+                    imageAlt="bi-verso"
+                    imageType={backFile.type.replace('image/', '').trim()}
+                    key={2}
+                    handleClick={() => setBackFile({ haveFile: false, type: '', name: '', size: 0, file: file })}/>
+                    : 
+                  <UploadCard
+                  inputId="i2"
+                  key={'upload_area2'}
+                  inputName="image"
+                  acceptedImageTypes={ACCEPTED_IMAGE_TYPES}
+                  maxFileSize={MAX_FILE_SIZE}
+                  setState={setBackFile} file={file}/>
                 }
-              />
-                        ) : (
-              <UploadCard
-                inputId="i1"
-                key={'upload_area2'}
-                inputName="identityCardFrontImage"
-                acceptedImageTypes={ACCEPTED_IMAGE_TYPES}
-                maxFileSize={MAX_FILE_SIZE}
-                setState={setFrontFile}
-              />
-                        )}
-                      </div>
-                      <div className="upload_container">
-                        <p className="simple_text">Verso</p>
-                        {backFile.haveFile ? (
-              <Uploader
-                fileName={backFile.name}
-                fileSize={backFile.size.toString()}
-                imageAlt="bi-verso"
-                imageType={backFile.type.replace('image/', '').trim()}
-                key={2}
-                handleClick={() =>
-                  setBackFile({ haveFile: false, type: '', name: '', size: 0 })
-                }
-              />
-                        ) : (
-              <UploadCard
-                inputId="i2"
-                key={'upload_area2'}
-                inputName="identityCardBackImage"
-                acceptedImageTypes={ACCEPTED_IMAGE_TYPES}
-                maxFileSize={MAX_FILE_SIZE}
-                setState={setBackFile}
-              />
-                        )}
-                      </div>
+              </div>
             </div>
-              
-              <button type="submit"  className="button_auth">
-                Avançar
-              </button>
-            </div>
-          </form>
+            <button type="button" disabled={loading} onClick={formSubmit} className="button_auth">
+              Avançar
+            </button>
+          </div>
+        </form>
     )
 }

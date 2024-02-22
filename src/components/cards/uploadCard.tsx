@@ -1,39 +1,32 @@
 'use client'
 
-import {
-  ChangeEventHandler,
-  Dispatch,
-  DragEventHandler,
-  SetStateAction,
-} from 'react'
+import {ChangeEventHandler, Dispatch, DragEventHandler, SetStateAction} from 'react'
 import { IoCloudUpload } from 'react-icons/io5'
 import { toast } from 'sonner'
 
-export default function UploadCard({
-  inputId,
-  inputName,
-  maxFileSize,
-  acceptedImageTypes,
-  setState,
-}: {
-  inputId: string
-  inputName: string
-  maxFileSize: number
-  acceptedImageTypes: string[]
+interface IProps{
+  inputId: string,
+  inputName: string,
+  maxFileSize: number,
+  file: File,
+  acceptedImageTypes: string[],
   setState: Dispatch<
     SetStateAction<{
       haveFile: boolean
       type: string
       name: string
       size: number
+      file: File
     }>
   >
-}) {
+}
+
+export default function UploadCard({inputId, inputName, maxFileSize, acceptedImageTypes, setState}: IProps) {
+
   function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     const uploadArea = event.currentTarget as HTMLDivElement
     const input = uploadArea.querySelector('.input_file') as HTMLInputElement
     input.click()
-    console.log(input.id)
   }
 
   function handleDragOver(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -59,15 +52,18 @@ export default function UploadCard({
           description: 'São aceites os formatos: PNG, JPEG, JPEG e WEBP',
         })
         input.value = ''
-      } else if (file.size > maxFileSize) {
+      } 
+      else if (file.size > maxFileSize) {
         toast.error('O tamanho máximo do ficheiro é 5MB!')
         input.value = ''
-      } else {
+      } 
+      else {
         setState({
           haveFile: true,
           name: file.name,
           size: file.size,
           type: file.type,
+          file: input.files[0]
         })
         toast.success('Upload concluido!')
       }
@@ -81,7 +77,6 @@ export default function UploadCard({
     uploadArea.classList.remove('ondrag')
     if (event.dataTransfer && event.dataTransfer.files.length > 0) {
       const file = event.dataTransfer.files[0]
-
       if (!acceptedImageTypes.includes(file.type)) {
         toast.error('Formato não suportado!', {
           description: 'São aceites os formatos: PNG, JPEG, JPEG e WEBP',
@@ -100,6 +95,7 @@ export default function UploadCard({
           name: file.name,
           size: file.size,
           type: file.type,
+          file: input.files[0]
         })
         toast.success('Upload concluido!')
       }
@@ -112,8 +108,7 @@ export default function UploadCard({
       onClick={handleClick}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
-    >
+      onDrop={handleDrop}>
       <IoCloudUpload className="iconOutButton" />
       <p className="simple_text">
         Arraste e solte o seu arquivo ou clique <br /> para fazer upload.

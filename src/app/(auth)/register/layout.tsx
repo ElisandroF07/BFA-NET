@@ -8,6 +8,8 @@ import {Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Navba
 import Stepper from '@keyvaluesystems/react-stepper'
 import ConfirmExitModal from '@/components/modals/confirmExit'
 import { useDisclosure } from '@nextui-org/react'
+import useStepsStore from '@/contexts/stores/stepsStore';
+
 
 interface RegisterProps{
   children: React.ReactNode
@@ -16,6 +18,7 @@ interface RegisterProps{
 export default function AccountVerification({children}: RegisterProps) {
 
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  const stepsStore = useStepsStore()
 
   const styles = {
     LineSeparator: () => ({
@@ -88,23 +91,23 @@ export default function AccountVerification({children}: RegisterProps) {
             steps={[
               {
                 stepLabel: "Dados pessoais",
-                completed: true,
+                completed: stepsStore.step1,
               },
               {
                 stepLabel: "Documentação",
-                completed: true,
+                completed: stepsStore.step2,
               }
               ,
               {
                 stepLabel: "Validação de identidade",
-                completed: true,
+                completed: stepsStore.step3,
               },
               {
                 stepLabel: "Credenciais",
-                completed: false,
+                completed: stepsStore.step4,
               },
             ]}
-            currentStepIndex={3}
+            currentStepIndex={stepsStore.current}
             styles={styles}
           />
           </div>
@@ -114,7 +117,7 @@ export default function AccountVerification({children}: RegisterProps) {
             orientation="horizontal"
             steps={[
               {
-                completed: true,
+                completed: false,
               },
               {
                 completed: false,
@@ -126,7 +129,7 @@ export default function AccountVerification({children}: RegisterProps) {
                 completed: false,
               }
             ]}
-            currentStepIndex={1}
+            currentStepIndex={0}
             styles={styles}
           />
             {children}

@@ -379,8 +379,8 @@ input:-webkit-autofill {
 .uploader .top .text > div > p:nth-child(1) {
     font-family: Inter_Medium;
     font-size: 14px;
-    max-width: 100px;
     max-height: 20px;
+    max-width: 150px;
     overflow: hidden;
     text-wrap: nowrap;
     overflow: hidden;
@@ -405,6 +405,7 @@ input:-webkit-autofill {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    border: var(--border-input);
 }
 .uploader .top .end > button > svg {
     fill: var(--color-placeholder);

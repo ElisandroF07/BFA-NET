@@ -15,11 +15,7 @@ interface IProps {
   handleClick: () => void
 }
 
-export default function Uploader({
-  imageType,
-  imageAlt,
-  fileName,
-  fileSize,
+export default function Uploader({imageType, imageAlt, fileName, fileSize,
   handleClick,
 }: IProps) {
   return (
@@ -29,16 +25,16 @@ export default function Uploader({
           <Image
             src={
               imageType === 'png'
-                ? png
-                : imageType === 'jpg'
-                  ? jpg
-                  : imageType === 'jpeg'
-                    ? jpeg
-                    : imageType === 'webp'
-                      ? webp
-                      : imageType === 'svg'
-                        ? svg
-                        : jpg
+              ? png
+              : imageType === 'jpg'
+              ? jpg
+              : imageType === 'jpeg'
+              ? jpeg
+              : imageType === 'webp'
+              ? webp
+              : imageType === 'svg'
+              ? svg
+              : jpg
             }
             width={60}
             alt={imageAlt}
