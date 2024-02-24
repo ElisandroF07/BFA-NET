@@ -161,12 +161,13 @@ export default function Documentation(){
       toast.promise(uploadBack(), {
         loading: 'Enviando...',
         success: (data) => {
+          router.push('/register/identity-validation')
           return data;
         },
         error: (data)=> {
           return data},
         });
-        router.push('/register/identity-validation')
+      
     }
     else {
       toast.warning('As imagens não foram enviadas.')

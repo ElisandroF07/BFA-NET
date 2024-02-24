@@ -156,12 +156,13 @@ export default function IdentityValidation(){
       toast.promise(uploadSelfieBI(), {
         loading: 'Enviando...',
         success: (data) => {
+          router.push('/register/credentials')
           return data;
         },
         error: (data)=> {
           return data},
         });
-        router.push('/register/credentials')
+        
     }
     else {
       toast.warning('As imagens não foram enviadas.')
