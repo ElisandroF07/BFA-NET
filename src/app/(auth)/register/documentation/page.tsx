@@ -113,7 +113,7 @@ export default function Documentation(){
     return new Promise(async (resolve, reject) => {
       try {
         const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload/${phone_number ?? useStore.phone}/1`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
-        if (response.status === 201) {
+        if (response.status === 200) {
           resolve(response.data.message)
         }
       } 
@@ -135,7 +135,7 @@ export default function Documentation(){
     return new Promise(async (resolve, reject) => {
       try {
         const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload/${phone_number ?? useStore.phone}/2`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
-        if (response.status === 201) {
+        if (response.status === 200) {
           resolve(response.data.message)
         }
       } 
