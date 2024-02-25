@@ -117,19 +117,19 @@ export default function AccountVerification({children}: RegisterProps) {
             orientation="horizontal"
             steps={[
               {
-                completed: false,
+                completed: stepsStore.step1,
               },
               {
-                completed: false,
+                completed: stepsStore.step2,
               },
               {
-                completed: false,
+                completed: stepsStore.step3,
               },
               {
-                completed: false,
+                completed: stepsStore.step4,
               }
             ]}
-            currentStepIndex={0}
+            currentStepIndex={stepsStore.current}
             styles={styles}
           />
             {children}
