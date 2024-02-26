@@ -6,18 +6,21 @@ import jpg from '../../../public/assets/images/JPG.svg'
 import jpeg from '../../../public/assets/images/JPEG.svg'
 import webp from '../../../public/assets/images/WEBP.svg'
 import svg from '../../../public/assets/images/SVG.svg'
+import { RefObject } from 'react'
+
 
 interface IProps {
   imageType: string
   imageAlt: string
   fileName: string
   fileSize: string
+  imageRef: RefObject<HTMLImageElement>,
+  file: File
   handleClick: () => void
 }
 
-export default function Uploader({imageType, imageAlt, fileName, fileSize,
-  handleClick,
-}: IProps) {
+export default function Uploader({imageType, imageAlt, fileName, imageRef, fileSize, file, handleClick}: IProps) {
+
   return (
     <div className="uploader">
       <div className="top">
@@ -50,6 +53,7 @@ export default function Uploader({imageType, imageAlt, fileName, fileSize,
           </button>
         </div>
       </div>
+      <Image ref={imageRef} src={URL.createObjectURL(file || new File([], ''))} alt={'image'} width={0} height={0} style={{visibility: "hidden", opacity: "0", position: "absolute", top: "0px", left: "0px"}}/>
     </div>
   )
 }

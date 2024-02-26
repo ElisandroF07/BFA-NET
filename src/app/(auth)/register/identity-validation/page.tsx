@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import '@/styles/upload.css'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
@@ -9,6 +9,7 @@ import UploadCard from '@/components/cards/uploadCard'
 import useUserStore from '@/contexts/stores/userStore'
 import axios from 'axios'
 import useStepsStore from '@/contexts/stores/stepsStore'
+import * as faceapi from 'face-api.js';
 
 const MAX_FILE_SIZE: number = parseInt(process.env.MAX_FILE_SIZE ?? '5242880')
 const ACCEPTED_IMAGE_TYPES = [
@@ -31,6 +32,8 @@ export default function IdentityValidation(){
   const useStore = useUserStore()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const idCardRef = useRef<HTMLImageElement>(null)
+  const selfieRef = useRef<HTMLImageElement>(null);
   let phone_number = ''
   if (typeof window !== 'undefined') {
     phone_number = localStorage.getItem("phone") ?? ''
@@ -40,7 +43,37 @@ export default function IdentityValidation(){
   useEffect(()=>{
     stepsStore.setCurrent(2)
     stepsStore.setStep1(true)
-    stepsStore.setStep2(true)
+    stepsStore.setStep2(true);
+
+    (async () => {
+      await faceapi.nets.ssdMobilenetv1.loadFromUri('/models');
+      await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
+      await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
+      await faceapi.nets.faceRecognitionNet.loadFromUri('/models');
+      await faceapi.nets.faceExpressionNet.loadFromUri('/models');
+      let idCard
+      let idSelfie
+      if (idCardRef.current){
+        const idCardFacedetection = await faceapi.detectSingleFace(idCardRef.current,
+          new faceapi.TinyFaceDetectorOptions())
+          .withFaceLandmarks().withFaceDescriptor();
+        idCard = idCardFacedetection
+      }
+
+      if (selfieRef.current){
+        const selfieFacedetection = await faceapi.detectSingleFace(selfieRef.current,
+          new faceapi.TinyFaceDetectorOptions())
+          .withFaceLandmarks().withFaceDescriptor();
+        idSelfie = selfieFacedetection
+      }
+
+      if(idCard && idSelfie){
+        const distance = faceapi.euclideanDistance(idCard.descriptor, idSelfie.descriptor);
+        console.log(distance);
+      }
+
+    })();
+
   }, [])
 
   const [selfie, setselfie] = useState<FileState>({
@@ -186,6 +219,8 @@ export default function IdentityValidation(){
                   imageAlt="bi-frente"
                   imageType={selfie.type.replace('image/', '').trim()}
                   key={'uploader1'}
+                  imageRef={idCardRef}
+                  file={selfie.file || new File([], '')}
                   handleClick={() => setselfie({ haveFile: false, type: '', name: '', size: 0, file: null })
                   }
                 />
@@ -210,9 +245,9 @@ export default function IdentityValidation(){
                   imageAlt="bi-verso"
                   imageType={selfieWithBI.type.replace('image/', '').trim()}
                   key={2}
-                  handleClick={() =>
-                    setselfieWithBI({ haveFile: false, type: '', name: '', size: 0, file: null })
-                  }
+                  imageRef={selfieRef}
+                  file={selfieWithBI.file || new File([], '')}
+                  handleClick={() => setselfieWithBI({ haveFile: false, type: '', name: '', size: 0, file: null })}
                 />
                 : 
                 <UploadCard

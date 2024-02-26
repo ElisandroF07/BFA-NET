@@ -1,6 +1,7 @@
 "use client"
 
 import '@/styles/modal.css'
+import { useRouter } from 'next/navigation'
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
 
 interface IProps {
@@ -9,6 +10,8 @@ interface IProps {
 }
 
 export default function ConfirmExitModal({isOpen, onOpenChange}:IProps) {
+  const router = useRouter()
+
     return (
         <Modal 
         backdrop="opaque" 
@@ -50,7 +53,9 @@ export default function ConfirmExitModal({isOpen, onOpenChange}:IProps) {
                 <Button color="primary" variant="light" onPress={onClose}>
                   Não, cancelar
                 </Button>
-                <Button color="danger" variant='solid' onPress={onClose}>
+                <Button color="danger" variant='solid' onPress={onClose} onClick={()=>{
+                  router.push('/phone')
+                }}>
                 Sim, tenho a certeza
                 </Button>
               </ModalFooter>
