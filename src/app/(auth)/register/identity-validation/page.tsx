@@ -140,7 +140,7 @@ export default function IdentityValidation(){
     }
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload/${phone_number ?? useStore.phone}/3`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload/${phone_number ?? useStore.phone}/4`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         if (response.status === 200) {
           resolve(response.data.message)
         }
@@ -162,7 +162,7 @@ export default function IdentityValidation(){
     }
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload/${phone_number ?? useStore.phone}/4`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload/${phone_number ?? useStore.phone}/2`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         if (response.status === 200) {
           resolve(response.data.message)
         }
@@ -211,7 +211,7 @@ export default function IdentityValidation(){
         <div className="body_form">
         <div className="uploaders_container">
           <div className="upload_container">
-              <p className="simple_text">Selfie simples</p>
+              <p className="simple_text">Selfie com BI</p>
               {selfie.haveFile ? 
                 <Uploader
                   fileName={selfie.name}
@@ -237,7 +237,7 @@ export default function IdentityValidation(){
               }
             </div>
             <div className="upload_container">
-              <p className="simple_text">Selfie segurando o seu BI</p>
+              <p className="simple_text">Verso do BI</p>
               {selfieWithBI.haveFile ? 
                 <Uploader
                   fileName={selfieWithBI.name}

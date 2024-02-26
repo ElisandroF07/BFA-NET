@@ -35,6 +35,7 @@ export default function Documentation(){
   const stepsStore = useStepsStore()
   const idCardRef = useRef<HTMLImageElement>(null)
   const selfieRef = useRef<HTMLImageElement>(null)
+  const [success, setSuccess] = useState(false)
   const [frontFile, setFrontFile] = useState<FileState>({
     haveFile: false,
     type: '',
@@ -50,138 +51,12 @@ export default function Documentation(){
     file: null
   })
   const [loading, setLoading] = useState(false)
-
   let phone_number = ''
 
-  if (typeof window !== 'undefined') {
-    phone_number = localStorage.getItem("phone") ?? ''
-  }
-
   useEffect(()=>{
-
     stepsStore.setCurrent(1);
     stepsStore.setStep1(true);
-
-    
-
   }, [])
-
-  async function testRegex(regex: RegExp) {
-    let biNumber = ''
-    let haveBiNumber = false
-    const response = await Tesseract.recognize(URL.createObjectURL(frontFile.file || new File([], '')));
-    const words  =response.data.words
-    if (words) {
-      words.forEach(word => {
-        if (regexBI.test(word.text)) {
-          biNumber = word.text
-          haveBiNumber = true
-          return
-        }
-      })
-    }
-    else {
-      toast.error('Envie uma imagem do seu BI')
-    }
-    if (haveBiNumber) {
-      return {haveBiNumber, biNumber}
-    }
-    else {
-      return {haveBiNumber, biNumber}
-    }
-  }
-
-  async function verify() {
-
-    const response = await testRegex(regexBI)
-    
-
-    setLoading(true);
-    
-    //Aqui a função está a carregar os modelos necessários para funcionar corretamente
-    (async () => {
-
-      
-      
-      setLoading(false)
-      
-
-      // await faceapi.nets.ssdMobilenetv1.loadFromUri('/models');
-      // await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
-      // await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
-      // await faceapi.nets.faceRecognitionNet.loadFromUri('/models');
-      // await faceapi.nets.faceExpressionNet.loadFromUri('/models');
-
-      // let idCard
-      // let idSelfie
-
-      // //Aqui a função está a verificar se há um rosto na foto do BI e se a imagem está nítida
-      // if (idCardRef.current){
-      //   const idCardFacedetection = await faceapi.detectSingleFace(idCardRef.current,
-      //     new faceapi.TinyFaceDetectorOptions())
-      //     .withFaceLandmarks().withFaceDescriptor();
-      //   idCard = idCardFacedetection
-      //   if (!idCardFacedetection) {
-      //     toast.error('A imagem do BI necessita ser nítida!')
-      //   }
-      // }
-
-      // //Aqui a função está a verificar se há um rosto na selfie enviada e se a imagem está nítida
-      // if (selfieRef.current){
-      //   const selfieFacedetection = await faceapi.detectSingleFace(selfieRef.current,
-      //     new faceapi.TinyFaceDetectorOptions())
-      //     .withFaceLandmarks().withFaceDescriptor();
-      //   idSelfie = selfieFacedetection
-      //   if (!idSelfie) {
-      //     toast.error('Envie uma selfie mais nítida!')
-      //   }
-      // }
-
-      // //Aqui a função está a comparar os rostos com inteligência artifical 
-      // if(idCard && idSelfie){
-      //   const distance = faceapi.euclideanDistance(idCard.descriptor, idSelfie.descriptor);
-      //   console.log(distance);
-      //   //Aqui ela verifica a diferenca/distância entre os rostos, varia de  0 à 1, se for 0 os rostos são iguais, se for 1 são diferentes
-      //   if (distance < 0.5) {
-      //     //Aqui verificamos se a diferença for menor que 0.5, significa que o os rostos pertencem à mesma pesoa
-      //     setLoading(false)
-      //     toast.success('Identidade validada com sucesso!')
-
-
-
-      //     // toast.promise(uploadFront(), {
-      //     //   loading: 'Carregando...',
-      //     //   success: (data) => {
-      //     //     return data;
-      //     //   },
-      //     //   error: (data)=> {
-      //     //     return data},
-      //     //   });
-      //     // toast.promise(uploadBack(), {
-      //     //   loading: 'Carregando...',
-      //     //   success: (data) => {
-      //     //     router.push('/register/identity-validation')
-      //     //     return data;
-      //     //   },
-      //     //   error: (data)=> {
-      //     //     return data},
-      //     //   });
-      //   }
-      //   else {
-      //     setLoading(false)
-      //     toast.error('Não foi possível validar a sua identidade!')
-      //     toast.warning('Envie imagens autênticas.')
-      //   }
-      // }
-      // else {
-      //   toast.error('Não foi possível validar a sua identidade!')
-      //   setLoading(false)
-      // }
-
-    })();
-  }
-
-
 
   useEffect(() => {
     
@@ -199,7 +74,6 @@ export default function Documentation(){
 
   useEffect(() => {
     const filePath = URL.createObjectURL(frontFile.file || new File([], ''))
-    console.log(filePath);
     
     if (!frontFile.haveFile) {
       const input = document.getElementById('i1') as HTMLInputElement
@@ -216,6 +90,149 @@ export default function Documentation(){
     }
   }, [frontFile.haveFile])
 
+  useEffect(()=>{
+    if (success) {
+      toast.promise(uploadFront(), {
+        loading: 'Analisando BI...',
+        success: (data: any) => {
+          return data;
+        },
+        error: (data: any)=> {
+          return data},
+        });
+      toast.promise(uploadBack(), {
+        loading: 'Analisando BI...',
+        success: (data: any) => {
+          router.push('/identity-validation')
+          return data;
+        },
+        error: (data: any)=> {
+          return data},
+        });
+    }
+  }, [success])
+
+  if (typeof window !== 'undefined') {
+    phone_number = localStorage.getItem("phone") ?? ''
+  }
+
+  function compareBI (bi1: string, bi2: string) {
+    console.log(bi1, bi2)
+    if (bi1.toLocaleUpperCase() === bi2.toLocaleUpperCase()) return true
+    else return false
+  }
+
+  async function getBI(){
+    const response = await axios.get(`http://localhost:5000/getBI/${phone_number || useStore.phone}`)
+    if (response.data.biNumber){
+      return response.data.biNumber
+    }
+    else {
+      return null
+    }
+  }
+
+  function testRegex(regex: RegExp) {
+    setLoading(true)
+    let biNumber = ''
+    let scanned = false
+    return new Promise(async (resolve, reject) => {
+      const response = await Tesseract.recognize(URL.createObjectURL(frontFile.file || new File([], '')));
+      const words = response.data.words
+
+      if (words) {
+        words.forEach(async word => {
+          if (regexBI.test(word.text)) {
+            biNumber = word.text
+            scanned = true
+          }
+        })
+      } 
+      else {
+        toast.error('Envie uma imagem do seu BI')
+        setLoading(false)
+      }
+
+      if (scanned) {
+        const response = await getBI()
+        if (response) {
+          const isSame = compareBI(response, biNumber)
+          if (isSame) {
+            resolve('BI validado com sucesso!')
+          }
+          else {
+            reject('BI Diferente!')
+          }
+        }
+        else {
+          reject('Não foi possível verificar o seu BI!')
+        }
+        
+      }
+      else {
+        reject('Não foi possível validar o seu BI!')
+      }
+      setLoading(false)
+    })
+  }
+
+  async function validateFaces(){
+    setLoading(true);
+      await faceapi.nets.ssdMobilenetv1.loadFromUri('/models');
+      await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
+      await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
+      await faceapi.nets.faceRecognitionNet.loadFromUri('/models');
+      await faceapi.nets.faceExpressionNet.loadFromUri('/models');
+      let idCard
+      let idSelfie
+
+      if (idCardRef.current){
+        const idCardFacedetection = await faceapi.detectSingleFace(idCardRef.current, new faceapi.TinyFaceDetectorOptions())
+        .withFaceLandmarks()
+        .withFaceDescriptor();
+        idCard = idCardFacedetection
+        if (!idCardFacedetection) {
+          toast.error('A imagem do BI necessita ser nítida!')
+          setLoading(false)
+        }
+      }
+
+      if (selfieRef.current){
+        const selfieFacedetection = await faceapi.detectSingleFace(selfieRef.current, new faceapi.TinyFaceDetectorOptions())
+        .withFaceLandmarks()
+        .withFaceDescriptor();
+        idSelfie = selfieFacedetection
+        if (!idSelfie) {
+          toast.error('Envie uma selfie mais nítida!')
+          setLoading(false)
+        }
+      }
+
+      if(idCard && idSelfie){
+        const distance = faceapi.euclideanDistance(idCard.descriptor, idSelfie.descriptor);
+        console.log(distance);
+        if (distance < 0.5) {
+          toast.success('Reconhecimento facial!')
+          verify()
+        }
+        else {       
+          toast.warning('Envie imagens autênticas.')
+          setLoading(false)
+        }
+      }
+  }
+
+  async function verify() {
+    toast.promise(testRegex(regexBI), {
+    loading: 'Analisando BI...',
+    success: (data: any) => {
+      setSuccess(true)
+      return data;
+    },
+    error: (data: any)=> {
+      return data},
+    });
+  }
 
   function validateForm(): boolean {
     if (!frontFile.haveFile && !backFile.haveFile) {
@@ -262,7 +279,7 @@ export default function Documentation(){
     }
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload/${phone_number ?? useStore.phone}/2`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload/${phone_number ?? useStore.phone}/5`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         if (response.status === 200) {
           resolve(response.data.message)
         }
@@ -276,9 +293,9 @@ export default function Documentation(){
     })
   }
 
-  function formSubmit() {
+  async function formSubmit() {
     if (validateForm()) {
-      verify()
+      await validateFaces()
     }
     else {
       
