@@ -34,9 +34,9 @@ export default function IdentityValidation(){
   const [loading, setLoading] = useState(false)
   const idCardRef = useRef<HTMLImageElement>(null)
   const selfieRef = useRef<HTMLImageElement>(null);
-  let phone_number = ''
+  let email = ''
   if (typeof window !== 'undefined') {
-    phone_number = localStorage.getItem("phone") ?? ''
+    email = localStorage.getItem("email") ?? ''
   }
   const stepsStore = useStepsStore()
 
@@ -140,7 +140,7 @@ export default function IdentityValidation(){
     }
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post(`http://localhost:5000/upload/${phone_number ?? useStore.phone}/4`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        const response = await axios.post(`http://localhost:5000/upload/${email ?? useStore.email}/4`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         if (response.status === 200) {
           resolve(response.data.message)
         }
@@ -162,7 +162,7 @@ export default function IdentityValidation(){
     }
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post(`http://localhost:5000/upload/${phone_number ?? useStore.phone}/2`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        const response = await axios.post(`http://localhost:5000/upload/${email ?? useStore.email}/2`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         if (response.status === 200) {
           resolve(response.data.message)
         }

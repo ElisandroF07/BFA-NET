@@ -5,13 +5,42 @@ import picture from '../../../../../public/assets/images/Certification-bro.svg'
 import Image from 'next/image'
 import {useRouter} from 'next/navigation'
 import useStepsStore from '@/contexts/stores/stepsStore'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { FaArrowRight } from 'react-icons/fa6'
+import axios from 'axios'
+import useUserStore from '@/contexts/stores/userStore'
+import { toast } from 'sonner'
 
 
 export default function PersonalData(){
 
   const router = useRouter()
   const stepsStore = useStepsStore()
+  const useStore = useUserStore()
+  const [loading, setLoading] = useState(false)
+  let email_address = ''
+  if (typeof window !== 'undefined') {
+    email_address = localStorage.getItem("email") ?? ''
+  }
+
+  async function APICall():Promise<any> {
+    setLoading(true)
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await axios.get(`http://localhost:5000/generateCredentials/${email_address || useStore.email}`)
+        if (response.status === 201) {
+          resolve(response.data.message)
+        }
+        else {
+          reject(response.data.message)
+        }
+      } 
+      catch {
+        reject('Erro interno! Tente novamente mais tarde.')
+        setLoading(false)
+      }
+    })
+  }
 
   useEffect(()=>{
     stepsStore.setCurrent(3)
@@ -21,7 +50,16 @@ export default function PersonalData(){
   }, [])
 
   function submitForm(){
-    router.replace('/login')
+    toast.promise(APICall(), {
+      loading: 'Gerando e enviando...',
+      success: (data) => {
+        router.replace('/login')
+        return data;
+      },
+      error: (data)=> {
+        return data},
+      }); 
+    
   }
 
     return (
@@ -33,11 +71,11 @@ export default function PersonalData(){
             <div className="body_form">
               <div className="container_body">
                 <Image src={picture} alt="" />
-                <h1>As suas informações estão sendo verificadas</h1>
-                <p>Brevemente enviaremos para o seu telemóvel verificado as suas credenciais de acesso ao BFA NET. Posteriormente poderá alterá-las.</p>
+                <h1>Finalizando! </h1>
+                <p>Estamos gerando as suas credenciais de acesso ao BFA NET. As credenciais serão enviadas para o seu email, posteriormente poderá alterá-las.</p>
               </div>
-              <button type="button" onClick={submitForm} className="button_auth">
-                Finalizar
+              <button type="button" onClick={submitForm} disabled={loading} className="button_auth">
+                {!loading ? <>Obter credenciais <FaArrowRight style={{width: "20px", height: "20px", color: "var(--color-cards)", marginLeft: "10px"}}/></> : <>Validando</>}
               </button>
             </div>
           </form>

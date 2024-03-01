@@ -9,18 +9,20 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import InfoError from '@/components/others/infoError'
+import axios from 'axios'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
 const loginSchema = z.object({
-  membershipNumber: z
+  membership_number: z
     .string({
       required_error: 'O campo não pode estar vazio!',
     })
     .min(1, 'O número de adesão é obrigatório!')
-    .regex(/^[0-9]{8}$/, 'Número de adesão inválido!')
     .transform((information) => {
       return information.trim().toUpperCase()
     }),
-  accessCode: z
+  access_code: z
     .string({
       required_error: 'O código de acesso é obrigatório!',
     })
@@ -30,20 +32,50 @@ const loginSchema = z.object({
     }),
 })
 
-type LoginType = z.infer<typeof loginSchema>
+type FormType = z.infer<typeof loginSchema>
 
 export default function Login() {
+
+  const [loading, setLoading] = useState(false)
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginType>({
+  } = useForm<FormType>({
     resolver: zodResolver(loginSchema),
   })
 
-  async function createUser(data: unknown) {
-    console.log(data)
+  async function APICall(data: any):Promise<any> {
+    setLoading(true)
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await axios.post("http://localhost:5000/login", data, {headers: {'Content-Type': 'application/json'}})
+        if (response.status === 201) {
+          resolve("Autenticado com sucesso!")
+        }
+        else {
+          reject(response.data.message)
+        }
+      } 
+      catch {
+        reject('Erro interno! Tente novamente mais tarde.')
+      }
+      finally{
+        setLoading(false)
+      }
+    })
+  }
+
+  async function submitForm(data: FormType) {
+    toast.promise(APICall(data), {
+      loading: 'Autenticando...',
+      success: (data) => {
+        return data;
+      },
+      error: (data)=> {
+        return data},
+      });
   }
 
   return (
@@ -55,35 +87,35 @@ export default function Login() {
         <p>Introduza as sua credenciais para ter acesso ao BFA NET.</p>
         </div>
         <div className="right">
-          <form onSubmit={handleSubmit(createUser)} className="login_form">
+          <form onSubmit={handleSubmit(submitForm)} className="login_form">
             <div className="header_form">
               <h1>Faça login na sua conta</h1>
               <p>Ainda não tem uma conta? <Link href={'/register'}>Criar conta</Link></p>
             </div>
             <div className="body_form">
               <div className="input_field">
-              <label htmlFor="membershipNumber">Número de adesão</label>
+              <label htmlFor="membership_number">Número de adesão</label>
                 <input
                   placeholder="Nome ou número de adesão"
-                  {...register('membershipNumber')}
+                  {...register('membership_number')}
                 />
-                {errors.membershipNumber && (
-                  <InfoError message={errors.membershipNumber.message} />
+                {errors.membership_number && (
+                  <InfoError message={errors.membership_number.message} />
                 )}
               </div>
               <div className="input_field">
-              <label htmlFor="membershipNumber">Código de acesso</label>
+              <label htmlFor="membership_number">Código de acesso</label>
                 <input
                   type="password"
                   placeholder="Insira o seu código de acesso "
-                  {...register('accessCode')}
+                  {...register('access_code')}
                 />
-                {errors.accessCode && (
-                  <InfoError message={errors.accessCode.message} />
+                {errors.access_code && (
+                  <InfoError message={errors.access_code.message} />
                 )}
               </div>
-              <button type="submit" className="button_auth">
-                Entrar
+              <button type="submit" disabled={loading} className="button_auth">
+                {!loading ? <>Entrar</> : <>Autenticando...</>}
               </button>
               <div className='terms'><p>Esta plataforma é protegida pelo Google ReCaptcha e as <Link href="/forgot-password">Políticas de Privacidade</Link> são aplicáveis.</p></div>
             </div>

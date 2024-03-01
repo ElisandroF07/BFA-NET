@@ -51,7 +51,7 @@ export default function Documentation(){
     file: null
   })
   const [loading, setLoading] = useState(false)
-  let phone_number = ''
+  let email = ''
 
   useEffect(()=>{
     stepsStore.setCurrent(1);
@@ -113,7 +113,7 @@ export default function Documentation(){
   }, [success])
 
   if (typeof window !== 'undefined') {
-    phone_number = localStorage.getItem("phone") ?? ''
+    email = localStorage.getItem("email") ?? ''
   }
 
   function compareBI (bi1: string, bi2: string) {
@@ -123,7 +123,7 @@ export default function Documentation(){
   }
 
   async function getBI(){
-    const response = await axios.get(`http://localhost:5000/getBI/${phone_number || useStore.phone}`)
+    const response = await axios.get(`http://localhost:5000/getBI/${email || useStore.email}`)
     if (response.data.biNumber){
       return response.data.biNumber
     }
@@ -211,7 +211,7 @@ export default function Documentation(){
       if(idCard && idSelfie){
         const distance = faceapi.euclideanDistance(idCard.descriptor, idSelfie.descriptor);
         console.log(distance);
-        if (distance < 0.5) {
+        if (distance < 0.4) {
           toast.success('Reconhecimento facial!')
           verify()
         }
@@ -257,7 +257,7 @@ export default function Documentation(){
     }
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post(`http://localhost:5000/upload/${phone_number ?? useStore.phone}/1`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        const response = await axios.post(`http://localhost:5000/upload/${email ?? useStore.email}/1`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         if (response.status === 200) {
           resolve(response.data.message)
         }
@@ -279,7 +279,7 @@ export default function Documentation(){
     }
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post(`http://localhost:5000/upload/${phone_number ?? useStore.phone}/5`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        const response = await axios.post(`http://localhost:5000/upload/${email ?? useStore.email}/5`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         if (response.status === 200) {
           resolve(response.data.message)
         }

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import '@/styles/globals.css'
 import '@/styles/phone_verification.css'
-import business from '../../../../../../public/assets/images/message.svg'
+import business from '../../../../../../public/assets/images/Celebration-amico.svg'
 import { FaArrowRight } from 'react-icons/fa6'
 
 export default function Register() {

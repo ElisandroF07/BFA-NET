@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import '@/styles/globals.css'
 import '@/styles/phone_verification.css'
-import business from '../../../../../../public/assets/images/message.svg'
+import business from '../../../../../../public/assets/images/403 Error Forbidden-pana.svg'
 import { FaArrowRight } from 'react-icons/fa6'
 
 export default function Register() {
@@ -14,14 +14,14 @@ export default function Register() {
       <div className="home_body">
         <div className="left">
         <Image src={business} alt="business" />
-        <h1>400! Link de verificação inválido!</h1>
+        <h1>403! Link de verificação inválido!</h1>
         <p>O link acessado é inválido! </p>
         </div>
         <div className="right">
           <form className="login_form">
             <div className="header_form">
               <h1>Link de verificação inválido!</h1>
-              <p>O link de verificação é inválido!</p>
+              <p>Isto occore quando o link já foi acessado uma vez!</p>
             </div>
             <div className="body_form">
             

@@ -72,9 +72,12 @@ export default function PersonalData(){
           resolve(response.data.message)
           router.push('/register/documentation')
         }
+        else {
+          reject(response.data.message)
+        }
       } 
-      catch (error: any) {
-        reject(error.response?.data.message)
+      catch {
+        reject('Erro interno! Tente novamente mais tarde.')
       }
       finally{
         setLoading(false)
@@ -90,9 +93,9 @@ export default function PersonalData(){
     const email = email_address ?? useStore.email
     const formatedData = JSON.stringify({
       name,
-      birthDate: parsedBirthDate,
       biNumber,
-      email
+      email,
+      birthDate: parsedBirthDate,
     })
   
     toast.promise(APICall(formatedData), {
