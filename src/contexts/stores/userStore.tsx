@@ -1,22 +1,22 @@
 import {create}  from 'zustand'
 
 type State = {
-  phone: string,
+  email: string,
   bi_number: string,
   validation: boolean,
 }
   
 type Action = {
-  updatePhone: (phone: State['phone']) => void,
+  updateEmail: (email: State['email']) => void,
   updateBi: (bi_number: State['bi_number']) => void,
   updateValidation: (validation: State['validation']) => void
 }
 
 const useUserStore = create<State & Action>((set) => ({
-  phone: '',
+  email: '',
   bi_number: '',
   validation: false,
-  updatePhone: (phone) => set(() => ({ phone: phone })),
+  updateEmail: (email) => set(() => ({ email: email })),
   updateBi: (bi_number) => set(() => ({ bi_number: bi_number })),
   updateValidation: (validation) => set(() => ({ validation: validation })),
 }))

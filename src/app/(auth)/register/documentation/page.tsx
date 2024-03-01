@@ -93,7 +93,7 @@ export default function Documentation(){
   useEffect(()=>{
     if (success) {
       toast.promise(uploadFront(), {
-        loading: 'Analisando BI...',
+        loading: 'Enviando a imagem do BI...',
         success: (data: any) => {
           return data;
         },
@@ -101,9 +101,9 @@ export default function Documentation(){
           return data},
         });
       toast.promise(uploadBack(), {
-        loading: 'Analisando BI...',
+        loading: 'Enviando a selfie...',
         success: (data: any) => {
-          router.push('/identity-validation')
+          router.push('/register/identity')
           return data;
         },
         error: (data: any)=> {
@@ -257,7 +257,7 @@ export default function Documentation(){
     }
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload/${phone_number ?? useStore.phone}/1`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        const response = await axios.post(`http://localhost:5000/upload/${phone_number ?? useStore.phone}/1`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         if (response.status === 200) {
           resolve(response.data.message)
         }
@@ -279,7 +279,7 @@ export default function Documentation(){
     }
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post(`https://bfa-nodejs-api.onrender.com/upload/${phone_number ?? useStore.phone}/5`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        const response = await axios.post(`http://localhost:5000/upload/${phone_number ?? useStore.phone}/5`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         if (response.status === 200) {
           resolve(response.data.message)
         }

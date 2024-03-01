@@ -81,7 +81,7 @@ export default function Home() {
           <h1>Rumo ao crescimento financeiro </h1>
           <p>No BFA NET, oferecemos uma plataforma online avançada para você acessar sua conta bancária de forma rápida, segura e conveniente. Com a BFA NET, você pode gerenciar suas finanças, realizar pagamentos, transferências e muito mais, tudo com o máximo de facilidade e praticidade.</p>
           <div className="buttons">
-            <Link href='/phone'><p>Adira já</p><FaArrowRight/></Link>
+            <Link href='/email'><p>Adira já</p><FaArrowRight/></Link>
             <Link href="/login"><p>Entrar</p><FaArrowRight/></Link>
           
           </div>

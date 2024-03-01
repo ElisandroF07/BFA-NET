@@ -63,7 +63,7 @@ export default function RegisterInfoModal({isOpen, onOpenChange}:IProps) {
                 <p>Por favor, esteja ciente de que, para garantir a segurança de sua conta, <strong>todas as informações fornecidas devem ser claras, válidas e legíveis</strong>. Caso contrário, a conta não poderá ser criada. Agradecemos sua colaboração e compreensão!</p>
               </ModalBody>
               <ModalFooter>
-                <Button color="warning" radius='sm' variant="flat" onPress={onClose}>
+                <Button color="danger" radius='sm' variant="flat" onPress={onClose}>
                     Fechar
                 </Button>
               </ModalFooter>

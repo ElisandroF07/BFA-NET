@@ -9,7 +9,6 @@ import { z } from "zod";
 import InfoError from '@/components/others/infoError';
 import useUserStore from '@/contexts/stores/userStore';
 import { useEffect, useState } from 'react';
-import useStepsStore from '@/contexts/stores/stepsStore';
 
 const FormSchema = z.object({
   name: z
@@ -25,14 +24,18 @@ const FormSchema = z.object({
 					return word[0].toLocaleUpperCase().concat(word.substring(1))
 				})
 		}),
-  email: z.string({
-      required_error: 'O email é obrigatório!',
+    birthDate: z.string()
+    .refine((value) => {
+      const date = new Date(value);
+      return !isNaN(date.getTime());
+    }, {
+      message: 'A data de nascimento deve estar no formato válido (DD/MM/AAAA)',
+      path: ['birthDate'],
     })
-    .min(1, 'O email é obrigatório!')
-    .regex(/^[a-z|A-Z|0-9._-]+@[a-z|A-Z|0-9.-]+\.[a-zA-Z]{2,}$/, 'O email digitado é inválido!')
-    .transform((information) => {
-      return information.trim().toUpperCase()
-    }),
+    .transform((value) => {
+      return new Date(value);
+    }), 
+    
   biNumber: z
     .string({
       required_error: 'O número do BI é obrigatório!',
@@ -50,9 +53,9 @@ export default function PersonalData(){
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const useStore = useUserStore()
-  let phone_number = ''
+  let email_address = ''
   if (typeof window !== 'undefined') {
-    phone_number = localStorage.getItem("phone") ?? ''
+    email_address = localStorage.getItem("email") ?? ''
   }
 
 
@@ -64,7 +67,7 @@ export default function PersonalData(){
     setLoading(true)
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post("https://bfa-nodejs-api.onrender.com/personal-data", data, {headers: {'Content-Type': 'application/json'}})
+        const response = await axios.post("http://localhost:5000/personal-data", data, {headers: {'Content-Type': 'application/json'}})
         if (response.status === 201) {
           resolve(response.data.message)
           router.push('/register/documentation')
@@ -80,14 +83,18 @@ export default function PersonalData(){
   }
 
   async function submitForm(data: FormType) {
-    const {name, email, biNumber} = data
-    const phone = parseInt(phone_number ?? useStore.phone)
+    const {name, birthDate, biNumber} = data
+
+    const parsedBirthDate = new Date(birthDate)
+
+    const email = email_address ?? useStore.email
     const formatedData = JSON.stringify({
       name,
-      email,
+      birthDate: parsedBirthDate,
       biNumber,
-      phone
+      email
     })
+  
     toast.promise(APICall(formatedData), {
       loading: 'Enviando...',
       success: (data) => {
@@ -117,14 +124,14 @@ export default function PersonalData(){
         )}
         </div>
         <div className="input_field">
-        <label htmlFor="email">Endereço de email</label>
+        <label htmlFor="email">Data de nascimento</label>
         <input
-          type="email"
-          placeholder="Insira o seu endereço de email "
-          {...register('email')}
+          type="date"
+          placeholder="Insira a sua data de nascimento "
+          {...register('birthDate')}
         />
-        {errors.email && (
-          <InfoError message={errors.email.message} />
+        {errors.birthDate && (
+          <InfoError message={errors.birthDate.message} />
         )}
         </div>
         <div className="input_field">

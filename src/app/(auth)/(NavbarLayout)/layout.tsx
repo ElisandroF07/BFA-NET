@@ -31,7 +31,7 @@ export default function NavbarLayout({children}:{children: React.ReactNode}) {
                     </Link>
                     </NavbarItem>
                     <NavbarItem>
-                    <Link href="/phone" className='text-color-text' size='md' aria-current="page">
+                    <Link href="/email" className='text-color-text' size='md' aria-current="page">
                         Aderir
                     </Link>
                     </NavbarItem>
@@ -58,7 +58,7 @@ export default function NavbarLayout({children}:{children: React.ReactNode}) {
                     </Link>
                     </NavbarItem>
                     <NavbarItem>
-                    <Link href="/phone" className='text-color-text' size='md' aria-current="page">
+                    <Link href="/email" className='text-color-text' size='md' aria-current="page">
                         Aderir
                     </Link>
                     </NavbarItem>

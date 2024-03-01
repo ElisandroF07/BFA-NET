@@ -18,18 +18,18 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 const FormSchema = z.object({
-  phone: z
+  email: z
     .string()
-    .min(1, 'O número de telefone é obrigatório!')
-    .regex(/^9[0-9]{8}$/, 'Número de telefone inválido!')
-    .transform((phone) => {
-      return phone.trim().toUpperCase()
+    .min(1, 'O email é obrigatório!')
+    .email('Email inválido! Corrija o email')
+    .transform((email) => {
+      return email.trim().toLowerCase()
     }),
 })
 
 type FormType = z.infer<typeof FormSchema>
 
-export default function Phone() {
+export default function Email() {
 
   const router = useRouter()
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -40,19 +40,19 @@ export default function Phone() {
     resolver: zodResolver(FormSchema),
   })
 
-  function APICall(data: any): Promise<any> {
+  function APICall(data: FormType): Promise<any> {
     setLoading(true)
+    let {email} = data
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post("http://localhost:5000/verify-phone",data,{headers: {'Content-Type': 'application/json'}})
+        const response = await axios.get(`http://localhost:5000/sendEmail/${email}`)
         if (response.status === 201) {
-          const {phone} = data
-          useStore.updatePhone(phone)
+          useStore.updateEmail(email)
           if (typeof window !== 'undefined') {
-            localStorage.setItem("phone", phone)
+            localStorage.setItem("email", email)
           }
           resolve(response.data.message)
-          router.push('/phone/verification')
+          router.push('/email/verification')
         }
       } 
       catch (error: any) {
@@ -94,22 +94,19 @@ export default function Phone() {
               <p>Já tem uma conta? <Link href={'/login'}>Fazer login</Link></p>
             </div>
             <div className="body_form">
-              <div className="input_field">
-              <label htmlFor="phone">Número de telefone</label>
-                <div id="phone" className="input_phone">
-                  <p>+244</p>
-                  <input
-                    {...register('phone')}
-                    maxLength={9}
-                    type='text'
-                    placeholder="Número de telefone "/>
-                </div>
-                {errors.phone && (
-                  <InfoError message={errors.phone.message} />
+            <div className="input_field">
+              <label htmlFor="email">Endereço de email</label>
+              <input
+                type="email"
+                placeholder="Insira o seu endereço de email "
+                {...register("email")}
+              />
+              {errors.email && (
+                  <InfoError message={errors.email.message} />
                 )}
               </div>
               <button type="submit" disabled={loading} className="button_auth">
-                Enviar código
+                Verificar email
               </button>
               <div className='terms'><p>Ao criar uma conta, você estará confirmando que leu e aceitou as nossas <Link href="/privacy-policies">Políticas de Privacidade e Termos de Uso</Link>.</p></div>
             </div>
