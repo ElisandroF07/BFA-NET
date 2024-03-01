@@ -12,33 +12,26 @@ import axios from 'axios'
 import InfoError from '@/components/others/infoError'
 import useUserStore from '@/contexts/stores/userStore'
 import { toast } from 'sonner'
+import { log } from 'console'
 
 const FormSchema = z.object({
-  accessCode: z
-  .string({
-    required_error: 'O código de acesso é obrigatório!',
-  })
-  .min(1, 'O código de acesso é obrigatório!')
-  .regex(/^[0-9]{6}$/, 'O código de acesso deve ter 6 digitos!')
-  .transform((information) => {
-    return information.trim().toUpperCase()
-  }),
-  confirmAcessCode: z
-  .string({
-    required_error: 'O código de acesso é obrigatório!',
-  })
-  .min(1, 'O código de acesso é obrigatório!')
-  .regex(/^[0-9]{6}$/, 'O código de acesso deve ter 6 digitos!')
-  .transform((information) => {
-    return information.trim().toUpperCase()
-  }),
-})
+  accessCode: z.string().min(1, 'O campo não pode estar vazio!').regex(/^[0-9]{6}$/, 'O código de acesso deve ser composto por 6 digitos!'),
+  confirmAccessCode: z.string().min(1, 'O campo não pode estar vazio!').regex(/^[0-9]{6}$/, 'O código de acesso deve ser composto por 6 digitos!'),
+}).refine(data => data.accessCode === data.confirmAccessCode, {
+  message: 'Os campos deves ser iguais',
+  path: ['confirmAccessCode'],
+});
 
 type FormType = z.infer<typeof FormSchema>
 
 export default function ForgotPassword() {
 
   const useStore = useUserStore()
+
+  let email_local = ''
+  if (typeof window !== 'undefined') {
+    email_local = localStorage.getItem("email") ?? ''
+  }
 
   const {register, formState: { errors }, handleSubmit} = useForm<FormType>({
     resolver: zodResolver(FormSchema),
@@ -47,11 +40,12 @@ export default function ForgotPassword() {
   function APICall(data: any): Promise<any> {
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post("https://bfa-nodejs-api.onrender.com/verify-phone",data,{headers: {'Content-Type': 'application/json'}})
+        const response = await axios.post("http://localhost:5000/setAccessCode",data,{headers: {'Content-Type': 'application/json'}})
         if (response.status === 201) {
-          const {phone} = data
-          useStore.updatePhone(phone)
           resolve(response.data.message)
+        }
+        else {
+          reject(response.data.message)
         }
       } 
       catch (error: any) {
@@ -63,11 +57,19 @@ export default function ForgotPassword() {
   }
 
   async function submitForm(data: FormType) {
-    const verificationContainer = document.querySelector('.verification_container') as HTMLDivElement
-    toast.promise(APICall(data), {
+
+    const {accessCode, confirmAccessCode} = data
+    let email = email_local || useStore.email
+    const formatedData = JSON.stringify({
+      accessCode,
+      confirmAccessCode,
+      email
+    })
+    console.log(email);
+    
+    toast.promise(APICall(formatedData), {
       loading: 'Enviando...',
       success: (data) => {
-        verificationContainer.style.display = 'flex'
         return data;
       },
       error: (data)=> {
@@ -106,10 +108,10 @@ export default function ForgotPassword() {
                 <input
                   type="password"
                   placeholder="Insira novamente o seu novo código de acesso "
-                  {...register('confirmAcessCode')}
+                  {...register('confirmAccessCode')}
                 />
-                {errors.confirmAcessCode && (
-                  <InfoError message={errors.confirmAcessCode.message} />
+                {errors.confirmAccessCode && (
+                  <InfoError message={errors.confirmAccessCode.message} />
                 )}
               </div>
               <button type="submit" className="button_auth">

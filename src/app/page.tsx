@@ -38,7 +38,7 @@ export default function Home() {
             </Link>
           </NavbarItem>
           <NavbarItem>
-            <Link href="/phone" className='text-color-text' size='md' aria-current="page">
+            <Link href="/email" className='text-color-text' size='md' aria-current="page">
               Aderir
             </Link>
           </NavbarItem>

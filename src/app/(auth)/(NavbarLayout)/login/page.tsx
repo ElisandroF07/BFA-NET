@@ -12,6 +12,9 @@ import InfoError from '@/components/others/infoError'
 import axios from 'axios'
 import { useState } from 'react'
 import { toast } from 'sonner'
+import { Router } from 'next/router'
+import { useRouter } from 'next/navigation'
+import useUserStore from '@/contexts/stores/userStore'
 
 const loginSchema = z.object({
   membership_number: z
@@ -37,6 +40,8 @@ type FormType = z.infer<typeof loginSchema>
 export default function Login() {
 
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
+  const useStore = useUserStore()
 
   const {
     register,
@@ -67,10 +72,42 @@ export default function Login() {
     })
   }
 
+  function APICall2(membership_number: string): Promise<any> {
+    setLoading(true)
+    return new Promise(async (resolve, reject) => {
+        try {
+          useStore.updateMembershipNumber(membership_number)
+          if (typeof window !== 'undefined') {
+            localStorage.setItem("membership_number", membership_number)
+          }
+          const response = await axios.get(`http://localhost:5000/2fa/${membership_number}`)
+          if (response.status === 201) {
+            resolve(response.data.message)
+          }
+        }
+        catch(error: any){
+          reject(error.response?.data.message)
+        }
+        finally{
+          setLoading(false)
+        }
+    })
+  }
+
   async function submitForm(data: FormType) {
+    const {membership_number} = data
     toast.promise(APICall(data), {
       loading: 'Autenticando...',
       success: (data) => {
+        toast.promise(APICall2(membership_number), {
+          loading: 'Enviando email...',
+          success: (data) => {
+            router.push('/login/verification')
+            return data;
+          },
+          error: (data)=> {
+            return data},
+          });
         return data;
       },
       error: (data)=> {

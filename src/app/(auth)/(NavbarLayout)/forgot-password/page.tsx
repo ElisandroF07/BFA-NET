@@ -12,14 +12,16 @@ import axios from 'axios'
 import InfoError from '@/components/others/infoError'
 import useUserStore from '@/contexts/stores/userStore'
 import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 const FormSchema = z.object({
-  phone: z
+  email: z
     .string()
-    .min(1, 'O número de telefone é obrigatório!')
-    .regex(/^9[0-9]{8}$/, 'Número de telefone inválido!')
-    .transform((phone) => {
-      return phone.trim().toUpperCase()
+    .min(1, 'O email é obrigatório!')
+    .email('Email inválido! Corrija o email')
+    .transform((email) => {
+      return email.trim().toLowerCase()
     }),
 })
 
@@ -27,36 +29,45 @@ type FormType = z.infer<typeof FormSchema>
 
 export default function ForgotPassword() {
 
+  const router = useRouter()
   const useStore = useUserStore()
+  const [loading, setLoading] = useState(false)
 
   const {register, formState: { errors }, handleSubmit} = useForm<FormType>({
     resolver: zodResolver(FormSchema),
   })
 
-  function APICall(data: any): Promise<any> {
+  function APICall(data: FormType): Promise<any> {
+    setLoading(true)
+    let {email} = data
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.post("https://bfa-nodejs-api.onrender.com/verify-phone",data,{headers: {'Content-Type': 'application/json'}})
+        const response = await axios.get(`http://localhost:5000/resetPassword/${email}`)
         if (response.status === 201) {
-          const {phone} = data
-          useStore.updatePhone(phone)
+          useStore.updateEmail(email)
+          if (typeof window !== 'undefined') {
+            localStorage.setItem("email", email)
+          }
           resolve(response.data.message)
+        }
+        else {
+          reject(response.data.message)
         }
       } 
       catch (error: any) {
         reject(error.response?.data.message)
       }
       finally{
+        setLoading(false)
       }
     })
   }
 
   async function submitForm(data: FormType) {
-    const verificationContainer = document.querySelector('.verification_container') as HTMLDivElement
     toast.promise(APICall(data), {
       loading: 'Enviando...',
       success: (data) => {
-        verificationContainer.style.display = 'flex'
+        router.push('/forgot-password/verification')
         return data;
       },
       error: (data)=> {
@@ -79,22 +90,19 @@ export default function ForgotPassword() {
               <p>Já lembrou o seu código de acesso? <Link href={'/login'}>Fazer login</Link></p>
             </div>
             <div className="body_form">
-              <div className="input_field">
-              <label htmlFor="phone">Número de telefone</label>
-                <div id="phone" className="input_phone">
-                  <p>+244</p>
-                  <input
-                    {...register('phone')}
-                    maxLength={9}
-                    type='text'
-                    placeholder="Número de telefone "/>
-                </div>
-                {errors.phone && (
-                  <InfoError message={errors.phone.message} />
+            <div className="input_field">
+              <label htmlFor="email">Endereço de email</label>
+              <input
+                type="text"
+                placeholder="Insira o seu endereço de email "
+                {...register("email")}
+              />
+              {errors.email && (
+                  <InfoError message={errors.email.message} />
                 )}
               </div>
-              <button type="submit" className="button_auth">
-                Enviar código
+              <button type="submit" disabled={loading} className="button_auth">
+                Verificar email
               </button>
               <div className='terms'><p>Ao utilizar a plataforma, você estará confirmando que leu e aceitou as nossas <Link href="/privacy-policies">Políticas de Privacidade e Termos de Uso</Link>.</p></div>
             </div>

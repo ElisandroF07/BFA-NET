@@ -10,7 +10,7 @@ import axios from 'axios'
 import useUserStore from '@/contexts/stores/userStore'
 import { toast } from 'sonner'
 
-export default function Register() {
+export default function Verification() {
 
   const [loading, setLoading] = useState(false)
   const useStore = useUserStore()
