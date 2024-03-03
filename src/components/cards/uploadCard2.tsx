@@ -26,7 +26,7 @@ interface IProps {
 	>;
 }
 
-export default function UploadCard({
+export default function UploadCard2({
 	inputId,
 	inputName,
 	maxFileSize,
@@ -130,7 +130,7 @@ export default function UploadCard({
 				id={inputId}
 				onChange={handleChange}
 				accept="image/*"
-				capture="environment"
+				capture="user"
 			/>
 		</div>
 	);
