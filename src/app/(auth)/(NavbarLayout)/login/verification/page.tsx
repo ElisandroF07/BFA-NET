@@ -1,194 +1,95 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import Image from 'next/image'
-import '@/styles/globals.css'
-import '@/styles/phone_verification.css'
-import business from '../../../../../../public/assets/images/Two factor authentication-pana.svg'
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect } from 'react'
-import axios from 'axios'
-
-import useUserStore from '@/contexts/stores/userStore'
-import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
-
-const FormSchema = z.object({
-  field1: z
-    .string()
-    .min(1, 'O campo não pode estar vazio!')
-    .max(1, 'Apenas é aceite 1 dígito'),
-  field2: z
-    .string()
-    .min(1, 'O campo não pode estar vazio!')
-    .max(1, 'Apenas é aceite 1 dígito'),
-  field3: z
-    .string()
-    .min(1, 'O campo não pode estar vazio!')
-    .max(1, 'Apenas é aceite 1 dígito'),
-  field4: z
-    .string()
-    .min(1, 'O campo não pode estar vazio!')
-    .max(1, 'Apenas é aceite 1 dígito'),
-  field5: z
-    .string()
-    .min(1, 'O campo não pode estar vazio!')
-    .max(1, 'Apenas é aceite 1 dígito'),
-  field6: z
-    .string()
-    .min(1, 'O campo não pode estar vazio!')
-    .max(1, 'Apenas é aceite 1 dígito'),
-})
-
-type FormType = z.infer<typeof FormSchema>
+import useUserStore from "@/contexts/stores/userStore";
+import "@/styles/globals.css";
+import "@/styles/phone_verification.css";
+import axios from "axios";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { toast } from "sonner";
+import business from "../../../../../../public/assets/images/Two factor authentication-pana.svg";
 
 export default function TwoFactorAuthentication() {
+	const [loading, setLoading] = useState(false);
+	const useStore = useUserStore();
 
-  const useStore = useUserStore()
-  const router = useRouter()
+	let membership_number = "";
+	if (typeof window !== "undefined") {
+		membership_number = localStorage.getItem("membership_number") ?? "";
+	}
 
-  const { handleSubmit, register } = useForm<FormType>({
-    resolver: zodResolver(FormSchema),
-  })
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+function  APICall(): Promise<any> {
+		setLoading(true);
+		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
+return  new Promise(async (resolve, reject) => {
+			try {
+				const response = await axios.get(
+					`http://localhost:5000/2fa/${
+						membership_number || useStore.membership_number
+					}`,
+				);
+				if (response.status === 201) {
+					resolve(response.data.message);
+				}
+			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+}  catch (error: any) {
+				reject(error.response?.data.message);
+			} finally {
+				setLoading(false);
+			}
+		});
+	}
 
+	async function resendEmail() {
+		toast.promise(APICall(), {
+			loading: "Reenviando email...",
+			success: (data) => {
+				return data;
+			},
+			error: (data) => {
+				return data;
+			},
+		});
+	}
 
-  function APICall(body: any): Promise<any> {
-    return new Promise(async (resolve, reject) => {
-        try {
-          const response = await axios.post("https://bfa-nodejs-api.onrender.com/verify-otp", body,{ headers: { 'Content-Type': 'application/json' } })
-          if (response.status === 201) {
-            resolve(response.data.message)
-          }
-        }
-        catch(error: any){
-          reject(error.response?.data.message)
-        }
-    })
-  }
-
-  async function submitForm(data: FormType) {
-    const verificationContainer = document.querySelector('.verification_container') as HTMLDivElement
-    const { field1, field2, field3, field4, field5, field6 } = data;
-    const formatedData = field1 + field2 + field3 + field4 + field5 + field6;
-    const body = JSON.stringify({phone: parseInt(useStore.phone), otp_code: formatedData});
-    toast.promise(APICall(body), {
-      loading: 'Verificando...',
-      success: (data) => {
-        useStore.updateValidation(false)
-        verificationContainer.style.display = 'none'
-        router.push('/register/upload-id')
-        return data;
-      },
-      error: (data)=> {
-        return data},
-    });
-      
-  }
-
-  function reSend(){
-    const button = document.querySelector('#step2_next') as HTMLButtonElement
-    useStore.updateValidation(true)
-    button.click()
-  }
-
-  useEffect(() => {
-    const phoneFragments = document.querySelectorAll(
-      '.phone_fragment',
-    ) as NodeListOf<HTMLInputElement>
-
-    function focusNext() {
-      const phone = document.querySelector(
-        'input[data-checked="false"]',
-      ) as HTMLInputElement
-      if (phone) {
-        phone.focus()
-      }
-    }
-
-    phoneFragments.forEach((phone) => {
-      phone.addEventListener('keyup', () => {
-        if (phone.value) {
-          phone.dataset.checked = 'true'
-          focusNext()
-        } else {
-          phone.dataset.checked = 'false'
-        }
-      })
-    })
-  }, [])
-
-  return (
-    <div className='home_main'>
-      <div className="home_body">
-        <div className="left">
-        <Image src={business} alt="business" />
-        <h1>Autenticação de dois fatores</h1>
-        <p>Enviamos um código de verificação para o seu número.</p>
-        </div>
-        <div className="right">
-          <form onSubmit={handleSubmit(submitForm)} className="login_form">
-            <div className="header_form">
-              <h1>Verifique o seu número</h1>
-              <p>Introduza o código enviado para o seu telemóvel. <Link href={'/'}>Quer sair?</Link></p>
-            </div>
-            <div className="body_form">
-            <div className="fragments_container">
-              <input
-                type="text"
-                data-checked="false"
-                className="phone_fragment"
-                maxLength={1}
-                {...register('field1')}
-              />
-              <input
-                type="text"
-                data-checked="false"
-                className="phone_fragment"
-                maxLength={1}
-                {...register('field2')}
-              />
-              <input
-                type="text"
-                data-checked="false"
-                className="phone_fragment"
-                maxLength={1}
-                {...register('field3')}
-              />
-              <input
-                type="text"
-                data-checked="false"
-                className="phone_fragment"
-                maxLength={1}
-                {...register('field4')}
-              />
-              <input
-                type="text"
-                data-checked="false"
-                className="phone_fragment"
-                maxLength={1}
-                {...register('field5')}
-              />
-              <input
-                type="text"
-                data-checked="false"
-                className="phone_fragment"
-                maxLength={1}
-                {...register('field6')}
-              />
-            </div>
-              <button type="submit" className="button_auth">
-                Verificar
-              </button>
-              <div className='terms'><p>Não recebeu o código? <Link href="/phone">Renviar</Link>.</p></div>
-            </div>
-          </form>
-            <p className="basic_text not_found_footer">
-              © 2024 Banco de Fomento Angola
-          </p>
-        </div>
-      </div>
-    </div>
-  )
+	return (
+		<div className="home_main">
+			<div className="home_body">
+				<div className="left">
+					<Image src={business} alt="business" />
+					<h1>Autenticação de dois fatores</h1>
+					<p>Enviamos um código de verificação para a sua caixa de entrada.</p>
+				</div>
+				<div className="right">
+					<form className="login_form">
+						<div className="header_form">
+							<h1>Autenticação de dois fatores</h1>
+							<p>
+								Foi enviado um email para o seu endereço, acesse e verifique o
+								seu email. <Link href={"/login"}>Voltar</Link>
+							</p>
+						</div>
+						<div className="body_form">
+							<button
+								type="button"
+								onClick={resendEmail}
+								disabled={loading}
+								className="button_auth"
+							>
+								Reenviar
+							</button>
+							<div className="terms">
+								<p>Verifique o seu correio eletrônico.</p>
+							</div>
+						</div>
+					</form>
+					<p className="basic_text not_found_footer">
+						© 2024 Banco de Fomento Angola
+					</p>
+				</div>
+			</div>
+		</div>
+	);
 }

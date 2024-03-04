@@ -1,0 +1,196 @@
+.privateMainContainer {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-cards);
+    display: grid;
+    grid-template-columns: 250px calc(100% - 250px);
+    grid-template-rows: 45px calc(100% - 45px);
+    padding: 0px 20px 20px 0px;
+    margin: 0px;
+}
+.privateHeader {
+    background-color: var(--color-cards);
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: Inter_Regular;
+    font-size: 14px;
+    padding: 10px 0px 10px 0px;
+}
+.privateHeader > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.privateNavbar {
+    grid-column: 1;
+    grid-row: span 2;
+    background-color: var(--color-cards);
+    padding: 0px 10px;
+    position: relative;
+}
+.privateNavbar > .svg {
+    width: 144px;
+    height: 60px;
+}
+.searchBar {
+    margin-top: 10px;
+    width: 100%;
+    height: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #efefef;
+    border-radius: 7px;
+    padding: 0px 5px;
+}
+.searchBar > input {
+    width: 80%;
+    height: 40px;
+    outline: none;
+    background-color: transparent;
+    padding-left: 5px;
+    font-size: 14px;
+    font-family: Inter_Regular;
+    color: var(--color-text);
+}
+::placeholder {
+    color: var(--color-placeholder);
+    font-size: 14px;
+    font-family: Inter_Regular;
+}
+.searchBar > button {
+    width: 32px;
+    height: 32px;
+    background-color: #fff;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.searchBar > button  > svg {
+    color: #D8D8D8;
+    width: 20px;
+    height: 20px;
+}
+.privateChildrenContainer {
+    grid-column: 2;
+    grid-row: 2;
+    background-color: #f3f3f3;
+    border-radius: 15px;
+    overflow: hidden;
+    padding: 20px ;
+}
+.navlist {
+    width: 100%;
+    height: max-content;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.listTitle {
+    margin-top: 20px;
+    font-size: 14px;
+    font-family: Inter_Regular;
+    color: var(--color-text);
+}
+.navlist > li {
+    width: 100%;
+    height: 40px;
+    border-radius: 7px;
+}
+.navlist > li > button {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: Inter_Regular;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 15px;
+    gap: 20px;
+}
+.navlist > li > button > svg {
+    width: 24px;
+    height: 24px;
+}
+.navlist > li > button[data-active="true"] {
+    background-color: var(--color-focus3);
+    color: var(--color-focus);
+}
+.separator {
+    width: 100%;
+    height: 0.5px;
+    background-color: #efefef;
+    margin: 10px 0px;
+}
+
+.account {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    padding: 0px 10px;
+    height: max-content;
+}
+.account > .separator {
+    background-color: #dbdbdb;
+}
+.accountCard {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: flex-start;
+    position: relative;
+    margin-top: 10px;
+}
+.accountCard > img {
+    width: 50px;
+    height: 50px;
+    border-radius: 7px;
+    margin-right: 5px;
+}
+.accountCard > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.accountCard > div > h1 {
+    width: max-content;
+    font-size: 15px;
+    font-family: Inter_Regular;
+}
+.accountCard > div > p {
+    width: max-content;
+    font-size: 13px;
+    font-family: Inter_Light;
+}
+.accountCard > .exit {
+    position: absolute;
+    right: 0px;
+}
+.accountCard > .exit > button {
+    width: 30px;
+    height: 30px;
+    background-color: rgb(200, 1, 1);
+    color: var(--color-cards);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.accountCard > .exit > button > svg {
+    width: 20px;
+    height: 20px;
+}

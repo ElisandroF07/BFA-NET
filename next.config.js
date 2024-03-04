@@ -1,5 +1,5 @@
 const withPWA = require('next-pwa');
-const {nextui} = require("@nextui-org/react");
+const { nextui } = require("@nextui-org/react");
 
 module.exports = {
   reactStrictMode: false,
@@ -14,7 +14,6 @@ module.exports = withPWA({
 
 module.exports = {
   content: [
-    // ...
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
