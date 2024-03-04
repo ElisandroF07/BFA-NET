@@ -26,7 +26,7 @@ function  APICall(): Promise<any> {
 return  new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.get(
-					`http://localhost:5000/resetPassword/${email}`,
+					`https://bfa-nodejs-api.onrender.com/resetPassword/${email}`,
 				);
 				if (response.status === 201) {
 					resolve(response.data.message);

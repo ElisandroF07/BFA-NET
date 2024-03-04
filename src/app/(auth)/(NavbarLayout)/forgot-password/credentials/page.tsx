@@ -60,7 +60,7 @@ function  APICall(data: any): Promise<any> {
 return  new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post(
-					"http://localhost:5000/setAccessCode",
+					"https://bfa-nodejs-api.onrender.com/setAccessCode",
 					data,
 					{ headers: { "Content-Type": "application/json" } },
 				);

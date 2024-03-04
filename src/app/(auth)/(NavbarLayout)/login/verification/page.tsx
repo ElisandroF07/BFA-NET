@@ -26,7 +26,7 @@ function  APICall(): Promise<any> {
 return  new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.get(
-					`http://localhost:5000/2fa/${
+					`https://bfa-nodejs-api.onrender.com/2fa/${
 						membership_number || useStore.membership_number
 					}`,
 				);
