@@ -51,7 +51,7 @@ function  APICall(data: FormType): Promise<any> {
 return  new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.get(
-					`http://localhost:5000/sendEmail/${email}`,
+					`https://bfa-nodejs-api.onrender.com/sendEmail/${email}`,
 				);
 				if (response.status === 201) {
 					useStore.updateEmail(email);

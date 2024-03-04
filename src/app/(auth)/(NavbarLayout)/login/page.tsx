@@ -56,7 +56,7 @@ async  function APICall(data: any): Promise<any> {
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
 return  new Promise(async (resolve, reject) => {
 			try {
-				const response = await axios.post("http://localhost:5000/login", data, {
+				const response = await axios.post("https://bfa-nodejs-api.onrender.com/login", data, {
 					headers: { "Content-Type": "application/json" },
 				});
 				if (response.status === 201) {
@@ -83,7 +83,7 @@ return  new Promise(async (resolve, reject) => {
 					localStorage.setItem("membership_number", membership_number);
 				}
 				const response = await axios.get(
-					`http://localhost:5000/2fa/${membership_number}`,
+					`https://bfa-nodejs-api.onrender.com/2fa/${membership_number}`,
 				);
 				if (response.status === 201) {
 					resolve(response.data.message);

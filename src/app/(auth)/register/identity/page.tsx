@@ -153,7 +153,7 @@ function  uploadSelfie(): Promise<any> {
 return  new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post(
-					`http://localhost:5000/upload/${email ?? useStore.email}/4`,
+					`https://bfa-nodejs-api.onrender.com/upload/${email ?? useStore.email}/4`,
 					formData,
 					{ headers: { "Content-Type": "multipart/form-data" } },
 				);
@@ -180,7 +180,7 @@ function  uploadSelfieBI(): Promise<any> {
 return  new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post(
-					`http://localhost:5000/upload/${email ?? useStore.email}/2`,
+					`https://bfa-nodejs-api.onrender.com/upload/${email ?? useStore.email}/2`,
 					formData,
 					{ headers: { "Content-Type": "multipart/form-data" } },
 				);
