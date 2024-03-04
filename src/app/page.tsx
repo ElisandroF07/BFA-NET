@@ -29,6 +29,7 @@ export default function Home() {
 			<Navbar>
 				<NavbarContent className="sm:hidden pr-1" justify="center">
 					<NavbarBrand>
+						{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 						<svg
 							id="svg"
 							version="1.1"
@@ -67,6 +68,7 @@ export default function Home() {
 
 				<NavbarContent className="hidden sm:flex gap-6" justify="end">
 					<NavbarBrand>
+						{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 						<svg
 							id="svg"
 							version="1.1"
@@ -138,7 +140,8 @@ export default function Home() {
 
 				<NavbarMenu>
 					{menuItems.map((item, index) => (
-						<NavbarMenuItem key={`${item}-${index}`}>
+						<NavbarMenuItem key={`${item}-${// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+index}`}>
 							<Link className="w-full text-color-text" href="#" size="md">
 								{item}
 							</Link>

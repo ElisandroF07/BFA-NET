@@ -1,5 +1,3 @@
-"use client";
-
 import { FaArrowRight } from "react-icons/fa";
 
 export default function ButtonNext({ id }: { id: string }) {

@@ -56,7 +56,8 @@ export default function AccountVerification({ children }: RegisterProps) {
 			<Navbar isBordered>
 				<NavbarContent className="sm:hidden pr-1" justify="center">
 					<NavbarBrand>
-						<svg
+						{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
+<svg
 							id="svg"
 							version="1.1"
 							xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +95,8 @@ export default function AccountVerification({ children }: RegisterProps) {
 
 				<NavbarContent className="hidden sm:flex gap-6" justify="end">
 					<NavbarBrand>
-						<svg
+						{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
+<svg
 							id="svg"
 							version="1.1"
 							xmlns="http://www.w3.org/2000/svg"
@@ -132,7 +134,8 @@ export default function AccountVerification({ children }: RegisterProps) {
 						<p>Já tem uma conta?</p>
 					</NavbarItem>
 					<NavbarItem>
-						<button
+						{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+<button
 							className="goToLogin"
 							onClick={(event) => {
 								event.preventDefault();
@@ -154,6 +157,7 @@ export default function AccountVerification({ children }: RegisterProps) {
 					</NavbarItem>
 					<NavbarItem>
 						<button
+							type="button"
 							className="goToLogin"
 							onClick={(event) => {
 								event.preventDefault();

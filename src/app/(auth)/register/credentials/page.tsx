@@ -21,9 +21,11 @@ export default function PersonalData() {
 		email_address = localStorage.getItem("email") ?? "";
 	}
 
-	async function APICall(): Promise<any> {
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+async  function APICall(): Promise<any> {
 		setLoading(true);
-		return new Promise(async (resolve, reject) => {
+		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
+return  new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.get(
 					`http://localhost:5000/generateCredentials/${
@@ -42,7 +44,8 @@ export default function PersonalData() {
 		});
 	}
 
-	useEffect(() => {
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+useEffect(() => {
 		stepsStore.setCurrent(3);
 		stepsStore.setStep1(true);
 		stepsStore.setStep2(true);

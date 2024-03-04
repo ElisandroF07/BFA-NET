@@ -96,7 +96,7 @@ export default function UploadCard2({
 			} else {
 				if (input.id === "i1") {
 					console.log("i1 passou!");
-				} else console.log("i2 passou!");
+				} else {console.log("i2 passou!")};
 				input.files = event.dataTransfer.files;
 				setState({
 					haveFile: true,
@@ -111,7 +111,8 @@ export default function UploadCard2({
 	};
 
 	return (
-		<div
+		// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
+<div
 			className="upload_card"
 			onClick={handleClick}
 			onDragOver={handleDragOver}

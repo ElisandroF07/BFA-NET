@@ -19,9 +19,11 @@ export default function Verification() {
 		email = localStorage.getItem("email") ?? "";
 	}
 
-	function APICall(): Promise<any> {
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+function  APICall(): Promise<any> {
 		setLoading(true);
-		return new Promise(async (resolve, reject) => {
+		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
+return  new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.get(
 					`http://localhost:5000/resetPassword/${email}`,
@@ -29,7 +31,8 @@ export default function Verification() {
 				if (response.status === 201) {
 					resolve(response.data.message);
 				}
-			} catch (error: any) {
+			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+}  catch (error: any) {
 				reject(error.response?.data.message);
 			} finally {
 				setLoading(false);

@@ -1,5 +1,3 @@
-"use client";
-
 import "@/styles/globals.css";
 import "@/styles/phone_verification.css";
 import Image from "next/image";

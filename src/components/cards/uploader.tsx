@@ -54,7 +54,7 @@ export default function Uploader({
 					</div>
 				</div>
 				<div className="end">
-					<button onClick={handleClick}>
+					<button type="button" onClick={handleClick}>
 						<FaX />
 					</button>
 				</div>

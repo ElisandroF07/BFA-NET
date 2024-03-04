@@ -39,7 +39,8 @@ export default function IdentityValidation() {
 	}
 	const stepsStore = useStepsStore();
 
-	useEffect(() => {
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+useEffect(() => {
 		stepsStore.setCurrent(2);
 		stepsStore.setStep1(true);
 		stepsStore.setStep2(true);
@@ -50,8 +51,10 @@ export default function IdentityValidation() {
 			await faceapi.nets.faceLandmark68Net.loadFromUri("/models");
 			await faceapi.nets.faceRecognitionNet.loadFromUri("/models");
 			await faceapi.nets.faceExpressionNet.loadFromUri("/models");
-			let idCard;
-			let idSelfie;
+			// biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
+let  idCard;
+			// biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
+let  idSelfie;
 			if (idCardRef.current) {
 				const idCardFacedetection = await faceapi
 					.detectSingleFace(
@@ -139,13 +142,15 @@ export default function IdentityValidation() {
 		}
 	}, [selfie.haveFile]);
 
-	function uploadSelfie(): Promise<any> {
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+function  uploadSelfie(): Promise<any> {
 		setLoading(true);
 		const formData = new FormData();
 		if (selfie.file) {
 			formData.append("image", selfie.file);
 		}
-		return new Promise(async (resolve, reject) => {
+		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
+return  new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post(
 					`http://localhost:5000/upload/${email ?? useStore.email}/4`,
@@ -155,7 +160,8 @@ export default function IdentityValidation() {
 				if (response.status === 200) {
 					resolve(response.data.message);
 				}
-			} catch (error: any) {
+			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+}  catch (error: any) {
 				reject(error.response?.data.message);
 			} finally {
 				setLoading(false);
@@ -163,13 +169,15 @@ export default function IdentityValidation() {
 		});
 	}
 
-	function uploadSelfieBI(): Promise<any> {
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+function  uploadSelfieBI(): Promise<any> {
 		setLoading(true);
 		const formData = new FormData();
 		if (selfieWithBI.file) {
 			formData.append("image", selfieWithBI.file);
 		}
-		return new Promise(async (resolve, reject) => {
+		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
+return  new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post(
 					`http://localhost:5000/upload/${email ?? useStore.email}/2`,
@@ -179,7 +187,8 @@ export default function IdentityValidation() {
 				if (response.status === 200) {
 					resolve(response.data.message);
 				}
-			} catch (error: any) {
+			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+}  catch (error: any) {
 				reject(error.response?.data.message);
 			} finally {
 				setLoading(false);

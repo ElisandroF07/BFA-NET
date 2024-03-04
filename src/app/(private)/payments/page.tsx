@@ -44,7 +44,7 @@ export default function Dashboard() {
 			<div className="payments_body">
 				{selectedPage === "0" && <PType0 />}
 				{selectedPage === "1" && <PType1 />}
-				{selectedPage === "2" && <></>}
+				{selectedPage === "2" && <p>Olá</p>}
 			</div>
 			<div className="payments_lateral" />
 		</div>

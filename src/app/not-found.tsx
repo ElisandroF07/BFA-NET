@@ -17,6 +17,7 @@ export default function NotFound() {
 			<Navbar isBordered isBlurred>
 				<NavbarContent className="sm:hidden pr-1" justify="center">
 					<NavbarBrand>
+						{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 						<svg
 							id="svg"
 							version="1.1"
@@ -55,6 +56,7 @@ export default function NotFound() {
 
 				<NavbarContent className="hidden sm:flex gap-6" justify="end">
 					<NavbarBrand>
+						{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 						<svg
 							id="svg"
 							version="1.1"
@@ -159,6 +161,7 @@ export default function NotFound() {
 			<main className="not_found">
 				<div className="not_found_central">
 					<div className="not_found_svg_container">
+						{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							data-name="Layer 1"

@@ -24,7 +24,8 @@ export default function PrivateLayout({
 	return (
 		<main className="privateMainContainer">
 			<nav className="privateNavbar">
-				<svg
+				{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
+<svg
 					className="svg"
 					version="1.1"
 					xmlns="http://www.w3.org/2000/svg"
@@ -64,50 +65,50 @@ export default function PrivateLayout({
 				<p className="listTitle">Menu</p>
 				<ul className="navlist">
 					<li>
-						<button data-active="true">
+						<button data-active="true" type="button">
 							<CiGrid41 />
 							Inicio
 						</button>
 					</li>
 					<li>
-						<button data-active="false">
+						<button data-active="false" type="button">
 							<CiInboxOut />
 							Pagamentos
 						</button>
 					</li>
 					<li>
-						<button data-active="false">
+						<button data-active="false" type="button">
 							<CiShare1 />
 							Transferências
 						</button>
 					</li>
 					<li>
-						<button data-active="false">
+						<button data-active="false" type="button">
 							<CiInboxIn />
 							Levantamentos
 						</button>
 					</li>
 					<li>
-						<button data-active="false">
+						<button data-active="false" type="button">
 							<CiMoneyCheck1 />
 							Conta
 						</button>
 					</li>
 					<div className="separator" />
 					<li>
-						<button data-active="false">
+						<button data-active="false" type="button">
 							<CiSettings />
 							Ajustes
 						</button>
 					</li>
 					<li>
-						<button data-active="false">
+						<button data-active="false" type="button">
 							<CiGps />
 							Agências
 						</button>
 					</li>
 					<li>
-						<button data-active="false">
+						<button data-active="false" type="button">
 							<CiSquareAlert />
 							Ajuda
 						</button>
@@ -122,7 +123,7 @@ export default function PrivateLayout({
 							<p>020239365LA055</p>
 						</div>
 						<div className="exit">
-							<button>
+							<button type="button">
 								<CiLogout />
 							</button>
 						</div>

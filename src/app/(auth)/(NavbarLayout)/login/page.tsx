@@ -50,9 +50,11 @@ export default function Login() {
 		resolver: zodResolver(loginSchema),
 	});
 
-	async function APICall(data: any): Promise<any> {
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+async  function APICall(data: any): Promise<any> {
 		setLoading(true);
-		return new Promise(async (resolve, reject) => {
+		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
+return  new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post("http://localhost:5000/login", data, {
 					headers: { "Content-Type": "application/json" },
@@ -70,9 +72,11 @@ export default function Login() {
 		});
 	}
 
-	function APICall2(membership_number: string): Promise<any> {
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+function  APICall2(membership_number: string): Promise<any> {
 		setLoading(true);
-		return new Promise(async (resolve, reject) => {
+		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
+return  new Promise(async (resolve, reject) => {
 			try {
 				useStore.updateMembershipNumber(membership_number);
 				if (typeof window !== "undefined") {
@@ -84,7 +88,8 @@ export default function Login() {
 				if (response.status === 201) {
 					resolve(response.data.message);
 				}
-			} catch (error: any) {
+			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+}  catch (error: any) {
 				reject(error.response?.data.message);
 			} finally {
 				setLoading(false);

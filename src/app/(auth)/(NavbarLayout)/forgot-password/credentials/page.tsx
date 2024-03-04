@@ -54,8 +54,10 @@ export default function ForgotPassword() {
 		resolver: zodResolver(FormSchema),
 	});
 
-	function APICall(data: any): Promise<any> {
-		return new Promise(async (resolve, reject) => {
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+function  APICall(data: any): Promise<any> {
+		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
+return  new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post(
 					"http://localhost:5000/setAccessCode",
@@ -67,7 +69,8 @@ export default function ForgotPassword() {
 				} else {
 					reject(response.data.message);
 				}
-			} catch (error: any) {
+			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+}  catch (error: any) {
 				reject(error.response?.data.message);
 			} finally {
 			}

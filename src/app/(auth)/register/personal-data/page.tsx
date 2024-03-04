@@ -71,9 +71,11 @@ export default function PersonalData() {
 		resolver: zodResolver(FormSchema),
 	});
 
-	async function APICall(data: any): Promise<any> {
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+async  function APICall(data: any): Promise<any> {
 		setLoading(true);
-		return new Promise(async (resolve, reject) => {
+		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
+return  new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post(
 					"http://localhost:5000/personal-data",

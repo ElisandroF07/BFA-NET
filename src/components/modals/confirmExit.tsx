@@ -12,8 +12,10 @@ import {
 import { useRouter } from "next/navigation";
 
 interface IProps {
-	isOpen: any;
-	onOpenChange: any;
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+isOpen: any;
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+onOpenChange: any;
 }
 
 export default function ConfirmExitModal({ isOpen, onOpenChange }: IProps) {

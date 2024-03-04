@@ -15,7 +15,7 @@ export default function Pay_type_1() {
 					<h1>Selecione o serviço</h1>
 					<div className="searchBar">
 						<input type="text" placeholder="Pesquise..." />
-						<button>
+						<button type="button">
 							<CiSearch />
 						</button>
 					</div>

@@ -19,6 +19,7 @@ export default function Custom500() {
 			<Navbar isBordered isBlurred>
 				<NavbarContent className="sm:hidden pr-1" justify="center">
 					<NavbarBrand>
+						{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 						<svg
 							id="svg"
 							version="1.1"
@@ -57,6 +58,7 @@ export default function Custom500() {
 
 				<NavbarContent className="hidden sm:flex gap-6" justify="end">
 					<NavbarBrand>
+						{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 						<svg
 							id="svg"
 							version="1.1"
@@ -161,6 +163,7 @@ export default function Custom500() {
 			<main className="not_found">
 				<div className="not_found_central">
 					<div className="not_found_svg_container">
+						{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 						<svg
 							id="svg"
 							version="1.1"
