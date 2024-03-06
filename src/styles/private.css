@@ -16,7 +16,7 @@
     align-items: center;
     justify-content: space-between;
     font-family: Inter_Regular;
-    font-size: 14px;
+    font-size: 1rem;
     padding: 10px 0px 10px 0px;
 }
 .privateHeader > div {
@@ -53,13 +53,13 @@
     outline: none;
     background-color: transparent;
     padding-left: 5px;
-    font-size: 14px;
+    font-size: 1rem;
     font-family: Inter_Regular;
     color: var(--color-text);
 }
 ::placeholder {
     color: var(--color-placeholder);
-    font-size: 14px;
+    font-size: 1rem;
     font-family: Inter_Regular;
 }
 .searchBar > button {
@@ -71,6 +71,8 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition: .3s;
+    outline: none;
 }
 .searchBar > button  > svg {
     color: #D8D8D8;
@@ -95,7 +97,7 @@
 }
 .listTitle {
     margin-top: 20px;
-    font-size: 14px;
+    font-size: 1rem;
     font-family: Inter_Regular;
     color: var(--color-text);
 }
@@ -109,7 +111,7 @@
     height: 100%;
     background-color: transparent;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 1rem;
     font-family: Inter_Regular;
     color: var(--color-text);
     display: flex;
@@ -117,12 +119,18 @@
     justify-content: flex-start;
     padding-left: 15px;
     gap: 20px;
+    outline: none;
+    transition: .3s;
+}
+.navlist > li > button:hover {
+    background-color: var(--color-body);
 }
 .navlist > li > button > svg {
     width: 24px;
     height: 24px;
 }
 .navlist > li > button[data-active="true"] {
+    transition: .3s;
     background-color: var(--color-focus3);
     color: var(--color-focus);
 }
@@ -154,11 +162,13 @@
     position: relative;
     margin-top: 10px;
 }
-.accountCard > img {
+.layoutProfile{
     width: 50px;
     height: 50px;
-    border-radius: 7px;
+    border-radius: 50px;
     margin-right: 5px;
+    background-image: url(../../public/assets/images/profi.jpg);
+    background-size: cover;
 }
 .accountCard > div {
     display: flex;
@@ -168,12 +178,12 @@
 }
 .accountCard > div > h1 {
     width: max-content;
-    font-size: 15px;
+    font-size: 1.02rem;
     font-family: Inter_Regular;
 }
 .accountCard > div > p {
     width: max-content;
-    font-size: 13px;
+    font-size: 0.9rem;
     font-family: Inter_Light;
 }
 .accountCard > .exit {

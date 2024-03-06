@@ -22,13 +22,13 @@
     justify-content: flex-start;
 }
 .payments_header > .top > h1 {
-    font-family: Inter_Regular;
-    font-size: 26px;
+    font-family: Inter_SemiBold;
+    font-size: 2rem;
     color: var(--color-text);
 }
 .payments_header > .top > p {
     font-family: Inter_Regular;
-    font-size: 14px;
+    font-size: 1.1rem;
     color: var(--color-text);
 }
 .payments_header > .bottom {
@@ -53,15 +53,15 @@
 }
 .payments_header > .bottom > div > h2 {
     font-family: Inter_Light;
-    font-size: 14px;
+    font-size: 1rem;
 }
 .payments_header > .bottom > div > p {
     font-family: Inter_Regular;
-    font-size: 14px;
+    font-size: 1rem;
 }
 .payments_header > .bottom > div > select {
     font-family: Inter_Regular;
-    font-size: 14px;
+    font-size: 1rem;
     background-color: transparent;
     outline: none;
     margin: 0;

@@ -41,6 +41,8 @@
     --color-border: #d2d2d2;
     --color-border2: #293746;
     --color-border3: #cdd7f4;
+    --text-regular: 1rem;
+    --text-big: 1.5rem;
 }
 
 body {
@@ -54,7 +56,7 @@ div[data-overlay-container="true"] {
 
 ::placeholder {
     font-family: Inter_Regular;
-    font-size: 14px;
+    font-size: 1rem;
     color: var(--color-placeholder);
 }
 
@@ -62,7 +64,7 @@ div[data-overlay-container="true"] {
 .page_title {
     font-family: Inter_Regular;
     font-weight: 500;
-    font-size: 24px;
+    font-size: 2.4rem;
     color: var(--color-text);
 }
 
@@ -106,7 +108,7 @@ div[data-overlay-container="true"] {
 
 .input_phone > p {
     font-family: Inter_Regular;
-    font-size: 15px;
+    font-size: 1rem;
     transition: .3s;
 }
 
@@ -116,7 +118,7 @@ div[data-overlay-container="true"] {
     border: none;
     outline: none;
     font-family: Inter_Regular;
-    font-size: 15px;
+    font-size: 1rem;
     transition: .3s;
     padding-left: 12px;
 }
@@ -198,7 +200,7 @@ div[data-overlay-container="true"] {
 .basic_text {
     font-family: Inter_Light;
     color: var(--color-text);
-    font-size: 13px;
+    font-size: 0.9rem;
 }
 
 .input_field {
@@ -214,7 +216,7 @@ div[data-overlay-container="true"] {
 .input_field > label {
     color: var(--color-text);
     font-family: Inter_SemiBold;
-    font-size: 14px;
+    font-size: 1rem;
 }
 .input_field > input {
     width: 100%;
@@ -224,12 +226,12 @@ div[data-overlay-container="true"] {
     border: var(--border-input);
     border-radius: 10px;
     font-family: Inter_Regular;
-    font-size: 15px;
+    font-size: 1.1rem;
     transition: .3s;
 }
 
 .input_error {
-    font-size: 14px;
+    font-size: 1rem;
     font-family: Inter_Regular;
     color: red;
     display: flex;
@@ -252,7 +254,7 @@ input:-webkit-autofill {
     width: 100%;
     height: 45px;
     font-family: Inter_SemiBold;
-    font-size: 15px;
+    font-size: 1rem;
     color: var(--color-cards);
     background-color: var(--color-focus);
     border-radius: 10px;
@@ -303,7 +305,7 @@ input:-webkit-autofill {
 .button_next > p{
     font-family: Inter_Light;
     font-weight: 200px;
-    font-size: 13px;
+    font-size: 0.9rem;
     color: var(--color-cards);
     width: max-content;
 }
@@ -330,7 +332,7 @@ input:-webkit-autofill {
 .button_home > p{
     font-family: Inter_Light;
     font-weight: 200px;
-    font-size: 13px;
+    font-size: 0.9rem;
     color: var(--color-cards);
     width: max-content;
 }
@@ -378,7 +380,7 @@ input:-webkit-autofill {
 }
 .uploader .top .text > div > p:nth-child(1) {
     font-family: Inter_Medium;
-    font-size: 14px;
+    font-size: 1rem;
     max-height: 20px;
     max-width: 150px;
     overflow: hidden;
@@ -387,7 +389,7 @@ input:-webkit-autofill {
 }
 .uploader .top .text > div > p:nth-child(2) {
     font-family: Inter_Light;
-    font-size: 14px;
+    font-size: 1rem;
 }
 .uploader .top .end {
     display: flex;
@@ -413,7 +415,7 @@ input:-webkit-autofill {
     height: 10px;
 }
 .uploader .top .end > p {
-    font-size: 14px;
+    font-size: 1rem;
     font-family: Inter_Light;
 }
 

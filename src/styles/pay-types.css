@@ -17,7 +17,7 @@
 }
 .pt1_container > .top > h1 {
     font-family: Inter_Regular;
-    font-size: 14px;
+    font-size: 1rem;
     color: var(--color-text);
     text-align: center;
     width: 30%;
@@ -33,7 +33,7 @@
 .pt1_container > .bottom > .left {
     width: 30%;
     height: 100%;
-    font-size: 14px;
+    font-size: 1rem;
     font-family: Inter_Regular;
     display: flex;
     flex-direction: column;
