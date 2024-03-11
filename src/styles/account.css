@@ -9,7 +9,6 @@
 }
 .account_header {
     background-color: transparent;
-    /*box-shadow: var(--shadow-cards);*/
     border-radius: 14px;
     grid-row: 1;
     grid-column: 1;
@@ -234,4 +233,27 @@
     font-size: 1rem;
     font-weight: 500;
     border-radius: 8px;
+}
+
+/*»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»*/
+.cards.bottom {
+    background-color: var(--color-cards);
+    border-radius: 15px;
+    padding: 30px;
+    width: 100%;
+    flex: 1;
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+.cards.bottom > .left {
+    grid-column: 1;
+}
+.cards.bottom > .right {
+    grid-column: 2;
+}
+.cards.bottom > .right > img {
+    width: 400px;
+    height: 254px;
 }

@@ -1,25 +1,23 @@
 "use client";
 
-import PayServices from "@/components/paymentTypes/pay_services";
-import PType1 from "@/components/paymentTypes/pay_services";
-import PType0 from "@/components/paymentTypes/pay_default";
+import "@/styles/transfers.css";
 import LateralCard from "@/components/cards/requestCard";
-import RequestCard from "@/components/cards/requestCard";
-import "@/styles/payments.css";
 import { useState } from "react";
-import PayDefault from "@/components/paymentTypes/pay_default";
-import PayReference from "@/components/paymentTypes/pay_reference";
-import PayState from "@/components/paymentTypes/pay_state";
+import TransferDefault from "@/components/transferTypes/transfer_default";
+import TransferWallet from "@/components/transferTypes/transfer_wallet";
+import TransferInterbanc from "@/components/transferTypes/tranfer_interbanc";
+import TransferIntrabanc from "@/components/transferTypes/transfer_intrabanc";
+import TransferInternational from "@/components/transferTypes/transfer_international";
 
-export default function Payments() {
+export default function Transfers() {
 	const [selectedPage, setSelectedPage] = useState("0");
 
 	return (
-		<div className="payments_container">
-			<div className="payments_header">
+		<div className="transfers_container">
+			<div className="transfers_header">
 				<div className="top">
-					<h1>Pagamentos</h1>
-					<p>Pague onde estiver.</p>
+					<h1>Transferências</h1>
+					<p>Movimente o seu dineiro livremente.</p>
 				</div>
 				<div className="bottom">
 					<div>
@@ -31,7 +29,7 @@ export default function Payments() {
 						<p>Kz 832.540,00</p>
 					</div>
 					<div>
-						<h2>Selecione o tipo de pagamento</h2>
+						<h2>Selecione o tipo de transferência</h2>
 						<select
 							name="payment_type"
 							id="payment_type"
@@ -40,22 +38,25 @@ export default function Payments() {
 							<option value="Selecione" selected disabled>
 								Selecione
 							</option>
-							<option value="1">Pagamento de serviços</option>
-							<option value="2">Pagamento ao estado</option>
-							<option value="3">Pagamento por referência</option>
+							<option value="1">Transferência interbancária</option>
+							<option value="2">Transferência intrabancária</option>
+							<option value="3">Transferência internacional</option>
+							<option value="4">Carregamento de carteira digital</option>
 						</select>
 					</div>
 				</div>
 			</div>
-			<div className="payments_body">
-				{selectedPage === "0" && <PayDefault />}
-				{selectedPage === "1" && <PayServices />}
-				{selectedPage === "2" && <PayState/>}
-				{selectedPage === "3" && <PayReference/>}
+			<div className="transfers_body">
+				{selectedPage === "0" && <TransferDefault />}
+				{selectedPage === "1" && <TransferInterbanc />}
+				{selectedPage === "2" && <TransferIntrabanc/>}
+				{selectedPage === "3" && <TransferInternational/>}
+				{selectedPage === "4" && <TransferWallet/>}
 			</div>
-			<div className="payments_lateral" >
-				<h1 className="title">Últimos pagamentos</h1>
-				<div className="separator"/>
+			<div className="transfers_lateral" >
+				<div className="top">
+					<h1 className="title">Transferências enviadas</h1>
+					<div className="separator"/>
 					<div className="requests">
 						<LateralCard text1="45.000,00 Kz" text2="Paratus" text3="12/09/2023" text4="Internet Service"/>
 						<LateralCard text1="12.000 USD" text2="Vercel" text3="11/09/2023" text4="Premium Cloud Storage"/>
@@ -63,13 +64,21 @@ export default function Payments() {
 						<LateralCard text1="12.000 USD" text2="Vercel" text3="11/09/2023" text4="Premium Cloud Storage"/>
 						<LateralCard text1="45.000,00 Kz" text2="Paratus" text3="12/09/2023" text4="Internet Service"/>
 						<LateralCard text1="12.000 USD" text2="Vercel" text3="11/09/2023" text4="Premium Cloud Storage"/>
-						<LateralCard text1="45.000,00 Kz" text2="Paratus" text3="12/09/2023" text4="Internet Service"/>
-						<LateralCard text1="12.000 USD" text2="Vercel" text3="11/09/2023" text4="Premium Cloud Storage"/>
-						<LateralCard text1="45.000,00 Kz" text2="Paratus" text3="12/09/2023" text4="Internet Service"/>
-						<LateralCard text1="12.000 USD" text2="Vercel" text3="11/09/2023" text4="Premium Cloud Storage"/>
-						<LateralCard text1="45.000,00 Kz" text2="Paratus" text3="12/09/2023" text4="Internet Service"/>
-						<LateralCard text1="12.000 USD" text2="Vercel" text3="11/09/2023" text4="Premium Cloud Storage"/>
 					</div>
+				</div>
+				<div className="bottom">
+					<h1 className="title">Transferências recebidas</h1>
+					<div className="separator"/>
+					<div className="requests">
+						<LateralCard text1="45.000,00 Kz" text2="Paratus" text3="12/09/2023" text4="Internet Service"/>
+						<LateralCard text1="12.000 USD" text2="Vercel" text3="11/09/2023" text4="Premium Cloud Storage"/>
+						<LateralCard text1="45.000,00 Kz" text2="Paratus" text3="12/09/2023" text4="Internet Service"/>
+						<LateralCard text1="12.000 USD" text2="Vercel" text3="11/09/2023" text4="Premium Cloud Storage"/>
+						<LateralCard text1="45.000,00 Kz" text2="Paratus" text3="12/09/2023" text4="Internet Service"/>
+						<LateralCard text1="12.000 USD" text2="Vercel" text3="11/09/2023" text4="Premium Cloud Storage"/>
+
+					</div>
+				</div>
 				</div>
 		</div>
 	);

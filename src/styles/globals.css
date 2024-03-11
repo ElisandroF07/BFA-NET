@@ -453,3 +453,67 @@ input:-webkit-autofill:active{
     height: 24px;
     color: #000;
 }
+
+.lateralCard {
+    width: 100%;
+    max-height: 90px;
+    height: 80px;
+    min-height: 80px;
+    position: relative;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: .3s;
+    box-shadow: 1px 1px 1px transparent;
+  }
+  .lateralCard:hover {
+    border: var(--border-input);
+    box-shadow: var(--shadow-cards);
+  }
+  .lateralCard > p {
+    position: absolute;
+  }
+  .lateralCard > p:nth-child(1) {
+    top: 10px;
+    left: 10px;
+  }
+  .lateralCard > p:nth-child(2) {
+    top: 10px;
+    right: 10px;
+  }
+  .lateralCard > p:nth-child(3) {
+    bottom: 10px;
+    left: 10px;
+  }
+  .lateralCard > p:nth-child(4) {
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+  .circle {
+    width: 7px;
+    height: 7px;
+    border-radius: 7px;
+  }
+   .requests {
+    overflow-y: scroll !important; 
+    flex: 1;
+}
+ .requests::-webkit-scrollbar {
+    display: none !important;
+}
+.btnService[data-active="true"] {
+    background-color: var(--color-focus3);
+    color: var(--color-focus);
+}
+.btnService:hover {
+    border: var(--border-input);
+}
+.btnService{
+    cursor: pointer;
+    border: 1px solid transparent;
+}

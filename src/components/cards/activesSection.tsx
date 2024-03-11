@@ -1,13 +1,13 @@
 import useUserStore from "@/contexts/stores/userStore";
 import { FaAngleLeft } from "react-icons/fa6";
 
-export default function ManageInfoSection(){
+export default function ActivesSection(){
 
   const store = useUserStore()
   return (
     <div className="manageInfoContainer">
       {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-    <div className="top" onClick={()=>{store.updateValidation("options")}}><button type="button"><FaAngleLeft/></button><p>Gerir informações</p></div>
+    <div className="top" onClick={()=>{store.updateValidation("options")}}><button type="button"><FaAngleLeft/></button><p>Ativos</p></div>
       <div className="bottom">
       <div className="input_field">
         <label htmlFor="email">Nome Completo</label>

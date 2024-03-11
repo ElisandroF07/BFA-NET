@@ -1,24 +1,16 @@
 "use client"
 
-
 import ButtonIcon from "@/components/buttons/buttonIcon";
 import "@/styles/private.css";
-import { CiBellOff } from "react-icons/ci";
-import { CiSearch } from "react-icons/ci";
-import { CiGrid41 } from "react-icons/ci";
-import { CiInboxOut } from "react-icons/ci";
-import { CiMoneyCheck1 } from "react-icons/ci";
-import { CiSettings } from "react-icons/ci";
-import { CiGps } from "react-icons/ci";
-import { CiSquareAlert } from "react-icons/ci";
-import { CiInboxIn } from "react-icons/ci";
-import { CiCloudOn } from "react-icons/ci";
-import { CiShare1 } from "react-icons/ci";
-import { CiLogout } from "react-icons/ci";
-import profile from "../../../public/assets/images/profi.jpg";
+import { CiBellOff, CiReceipt, CiGrid41, CiInboxOut, CiMoneyCheck1, CiSettings, CiGps, CiSquareAlert, CiInboxIn, CiCloudOn, CiShare1, CiLogout } from "react-icons/ci";
 import { useEffect, useState } from "react";
 import Dashboard from "@/components/pages/dashboard/page";
 import Account from "@/components/pages/account/page";
+import Payments from "@/components/pages/payments/page";
+import Support from "@/components/pages/support/page";
+import Consults from "@/components/pages/consults/page";
+import Upmoney from "@/components/pages/upmoney/page";
+import Transfers from "@/components/pages/transfers/page";
 
 export default function PrivateLayout() {
 
@@ -26,26 +18,54 @@ export default function PrivateLayout() {
 
 	useEffect(()=>{
 		const buttons = document.querySelectorAll(".btn[data-active]") as NodeListOf<HTMLButtonElement>
+		const item_list = document.querySelectorAll('.btn') as NodeListOf<HTMLButtonElement>;
+		const shadow = document.querySelector('.shadow') as HTMLDivElement
+
+		for(const item of item_list){
+				if (item.dataset.active === "true") {
+						shadow.style.transition = '.5s';
+						shadow.style.transform = `translate(${item.getBoundingClientRect().x + 7}px, ${item.getBoundingClientRect().y + 18}px)`;
+						shadow.style.height = `${item.getBoundingClientRect().height - 35}px`;
+				}
+		}
+
+		for (const button of buttons){
+			button.addEventListener("mouseover", ()=>{
+			shadow.style.transform = `translate(${button.getBoundingClientRect().x + 7}px, ${button.getBoundingClientRect().y + 18}px)`;
+			shadow.style.height = `${button.getBoundingClientRect().height - 35}px`;
+			})
+		}
+
+		for (const button of buttons){
+			button.addEventListener("mouseleave", ()=>{
+				for(const item of item_list){
+						if (item.dataset.active === "true") {
+								shadow.style.transition = '.5s';
+								shadow.style.transform = `translate(${item.getBoundingClientRect().x + 7}px, ${item.getBoundingClientRect().y + 18}px)`;
+								shadow.style.height = `${item.getBoundingClientRect().height - 35}px`;
+						}
+				}
+			})
+		}
 
 		function update(button: HTMLButtonElement){
-			// biome-ignore lint/complexity/noForEach: <explanation>
-			buttons.forEach((btn)=>{
+			for (const btn of buttons){
 				btn.dataset.active = "false"
-			})
+			}
 			button.dataset.active = "true"
 		}
 
-		// biome-ignore lint/complexity/noForEach: <explanation>
-		buttons.forEach((button: HTMLButtonElement)=>{
+		for(const button of buttons){
 			button.addEventListener("click", ()=>{
 				update(button)
 				setPage(button.dataset.page || '')
 			})
-		})
-	}, [])
+		}
+	})
 
 	return (
 		<main className="privateMainContainer">
+			<div className="shadow"/>
 			<nav className="privateNavbar">
 				{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 				<svg
@@ -94,6 +114,12 @@ export default function PrivateLayout() {
 						</button>
 					</li>
 					<li>
+						<button className="btn" data-active="false" data-page="Consultas" type="button">
+							<CiReceipt  />
+							Consultas
+						</button>
+					</li>
+					<li>
 						<button className="btn" data-active="false"  data-page="Pagamentos" type="button">
 							<CiInboxOut />
 							Pagamentos
@@ -131,9 +157,9 @@ export default function PrivateLayout() {
 						</button>
 					</li>
 					<li>
-						<button className="btn" data-active="false"  data-page="Ajuda" type="button">
+						<button className="btn" data-active="false"  data-page="Suporte" type="button">
 							<CiSquareAlert />
-							Ajuda
+							Suporte
 						</button>
 					</li>
 				</ul>
@@ -167,7 +193,7 @@ export default function PrivateLayout() {
 				</div>
 			</header>
 			<section className="privateChildrenContainer">{
-				page === "Dashboard" ? <Dashboard/> : page === "Conta" ? <Account/> : null
+				page === "Dashboard" ? <Dashboard/> : page === "Conta" ? <Account/> : page === "Pagamentos" ? <Payments/> : page === "Suporte" ? <Support/> : page === "Consultas" ? <Consults/> : page === "Levantamentos" ? <Upmoney/> : page === "Transferências" ? <Transfers/> : null
 			}</section>
 		</main>
 	);

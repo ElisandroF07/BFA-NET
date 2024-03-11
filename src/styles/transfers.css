@@ -1,4 +1,4 @@
-.payments_container {
+.transfers_container {
     width: 100%;
     height: 100%;
     display: grid;
@@ -7,31 +7,31 @@
     row-gap: 20px;
     column-gap: 20px;
 }
-.payments_header {
+.transfers_header {
     background-color: transparent;
     /*box-shadow: var(--shadow-cards);*/
     border-radius: 14px;
     grid-row: 1;
     grid-column: 1;
 }
-.payments_header > .top {
+.transfers_header > .top {
     width: 100%;
     height: 40%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
-.payments_header > .top > h1 {
+.transfers_header > .top > h1 {
     font-family: Inter_SemiBold;
     font-size: 2rem;
     color: var(--color-text);
 }
-.payments_header > .top > p {
+.transfers_header > .top > p {
     font-family: Inter_Regular;
     font-size: 1.1rem;
     color: var(--color-text);
 }
-.payments_header > .bottom {
+.transfers_header > .bottom {
     margin-top: 10px;
     width: 100%;
     height: 55%;
@@ -40,7 +40,7 @@
     justify-content: flex-start;
     gap: 20px;
 }
-.payments_header > .bottom > div {
+.transfers_header > .bottom > div {
     width: max-content;
     height: 90%;
     border-radius: 12px;
@@ -52,16 +52,16 @@
     gap: 5px;
     background-color: var(--color-cards);
 }
-.payments_header > .bottom > div > h2 {
+.transfers_header > .bottom > div > h2 {
     font-family: Inter_Regular;
     font-size: 1rem;
 }
-.payments_header > .bottom > div > p {
+.transfers_header > .bottom > div > p {
     font-family: Inter_Regular;
     font-weight: 600;
     font-size: 1rem;
 }
-.payments_header > .bottom > div > select {
+.transfers_header > .bottom > div > select {
     font-family: Inter_Regular;
     font-size: 1rem;
     background-color: transparent;
@@ -69,17 +69,17 @@
     margin: 0;
     padding: 0; 
 }
-.payments_header > .bottom > div > select::-ms-expand {
+.transfers_header > .bottom > div > select::-ms-expand {
     display: none; /* esconde a seta do select no IE 10 e 11 */
   }
-.payments_body {
+.transfers_body {
     background-color: var(--color-cards);
     /*box-shadow: var(--shadow-cards);*/
     border-radius: 14px;
     grid-column: 1;
     grid-row: 2;
 }
-.payments_lateral {
+.transfers_lateral {
     background-color: var(--color-cards);
     border-radius: 15px;
     padding: 20px;
@@ -89,10 +89,16 @@
     flex-direction: column;
     gap: 4%;
 }
-.payments_lateral > .requests {
+.transfers_lateral > .top, .transfers_lateral > .bottom {
+    height: 48%;
+    display: flex;
+    flex-direction: column;
+}
+
+.transfers_lateral > .requests {
     overflow-y: scroll;
     flex: 1;
 }
-.payments_lateral > .requests::-webkit-scrollbar {
+.transfers_lateral > .requests::-webkit-scrollbar {
     display: none;
 }

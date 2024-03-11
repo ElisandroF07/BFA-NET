@@ -5,10 +5,15 @@ import { CiImport, CiLocationArrow1 } from "react-icons/ci";
 import OptionsSection from "@/components/cards/optionsSecton";
 import { useState } from "react";
 import ManageInfoSection from "@/components/cards/manageInfoSection";
+import { useStore } from "zustand";
+import useUserStore from "@/contexts/stores/userStore";
+import CardsSection from "@/components/cards/cardsSection";
+import SecuritySection from "@/components/cards/securitySection";
+import ActivesSection from "@/components/cards/activesSection";
 
 export default function Account() {
 
-	const [component, setComponent] = useState("options")
+	const store = useUserStore()
 
 	return (
 		<div className="account_container">
@@ -23,9 +28,12 @@ export default function Account() {
 					<div className="image" />
 					<h1>Elisandro Canjeque da Paixao Franco</h1>
 					<p>Conta Particular</p>
-					{component === "options" ? <OptionsSection/> 
-					: component === "manageInfo" ? <ManageInfoSection setComponent={setComponent}/> 
-					: <></>}
+					{store.validation === "options" ? <OptionsSection/> 
+					: store.validation === "manageInfo" ? <ManageInfoSection/> 
+					: store.validation === "cards" ? <CardsSection/>
+					: store.validation === "security" ? <SecuritySection/> 
+					: store.validation === "actives" ? <ActivesSection/> : <></>
+				}
 				</div>
 			</div>
 			<div className="account_lateral">
