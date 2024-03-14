@@ -1,19 +1,18 @@
 "use client";
 
-import "@/styles/account.css";
-import { CiImport, CiLocationArrow1 } from "react-icons/ci";
-import OptionsSection from "@/components/cards/optionsSecton";
-import { useState } from "react";
-import ManageInfoSection from "@/components/cards/manageInfoSection";
-import { useStore } from "zustand";
-import useUserStore from "@/contexts/stores/userStore";
-import CardsSection from "@/components/cards/cardsSection";
-import SecuritySection from "@/components/cards/securitySection";
 import ActivesSection from "@/components/cards/activesSection";
+import CardsSection from "@/components/cards/cardsSection";
+import ManageInfoSection from "@/components/cards/manageInfoSection";
+import OptionsSection from "@/components/cards/optionsSecton";
+import SecuritySection from "@/components/cards/securitySection";
+import useUserStore from "@/contexts/stores/userStore";
+import "@/styles/account.css";
+import { useState } from "react";
+import { CiImport, CiLocationArrow1 } from "react-icons/ci";
+import { useStore } from "zustand";
 
 export default function Account() {
-
-	const store = useUserStore()
+	const store = useUserStore();
 
 	return (
 		<div className="account_container">
@@ -28,17 +27,24 @@ export default function Account() {
 					<div className="image" />
 					<h1>Elisandro Canjeque da Paixao Franco</h1>
 					<p>Conta Particular</p>
-					{store.validation === "options" ? <OptionsSection/> 
-					: store.validation === "manageInfo" ? <ManageInfoSection/> 
-					: store.validation === "cards" ? <CardsSection/>
-					: store.validation === "security" ? <SecuritySection/> 
-					: store.validation === "actives" ? <ActivesSection/> : <></>
-				}
+					{store.validation === "options" ? (
+						<OptionsSection />
+					) : store.validation === "manageInfo" ? (
+						<ManageInfoSection />
+					) : store.validation === "cards" ? (
+						<CardsSection />
+					) : store.validation === "security" ? (
+						<SecuritySection />
+					) : store.validation === "actives" ? (
+						<ActivesSection />
+					) : (
+						<></>
+					)}
 				</div>
 			</div>
 			<div className="account_lateral">
 				<h1 className="title">Minha conta</h1>
-				<div className="separator"/>
+				<div className="separator" />
 				<div className="infoContainer">
 					<div>
 						<h1>Número da conta</h1>
@@ -82,12 +88,34 @@ export default function Account() {
 					</div>
 					<div>
 						<h1>Estado</h1>
-						<p style={{display: "flex", alignItems: "center", justifyContent: "center"}}><div className="round" style={{width: "10px", height: "10px", borderRadius: "10px", backgroundColor: "#11aa11", marginRight: "10px"}}/>Ativa</p>
+						<p
+							style={{
+								display: "flex",
+								alignItems: "center",
+								justifyContent: "center",
+							}}
+						>
+							<div
+								className="round"
+								style={{
+									width: "10px",
+									height: "10px",
+									borderRadius: "10px",
+									backgroundColor: "#11aa11",
+									marginRight: "10px",
+								}}
+							/>
+							Ativa
+						</p>
 					</div>
 				</div>
-				<div className="separator"/>
-				<p className="pLink">Enviar para email <CiLocationArrow1/></p>
-				<p className="pLink">Salvar como PDF <CiImport/></p>
+				<div className="separator" />
+				<p className="pLink">
+					Enviar para email <CiLocationArrow1 />
+				</p>
+				<p className="pLink">
+					Salvar como PDF <CiImport />
+				</p>
 			</div>
 		</div>
 	);

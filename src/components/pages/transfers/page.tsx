@@ -1,13 +1,13 @@
 "use client";
 
-import "@/styles/transfers.css";
 import LateralCard from "@/components/cards/requestCard";
-import { useState } from "react";
-import TransferDefault from "@/components/transferTypes/transfer_default";
-import TransferWallet from "@/components/transferTypes/transfer_wallet";
 import TransferInterbanc from "@/components/transferTypes/tranfer_interbanc";
-import TransferIntrabanc from "@/components/transferTypes/transfer_intrabanc";
+import TransferDefault from "@/components/transferTypes/transfer_default";
 import TransferInternational from "@/components/transferTypes/transfer_international";
+import TransferIntrabanc from "@/components/transferTypes/transfer_intrabanc";
+import TransferWallet from "@/components/transferTypes/transfer_wallet";
+import "@/styles/transfers.css";
+import { useState } from "react";
 
 export default function Transfers() {
 	const [selectedPage, setSelectedPage] = useState("0");
@@ -49,37 +49,96 @@ export default function Transfers() {
 			<div className="transfers_body">
 				{selectedPage === "0" && <TransferDefault />}
 				{selectedPage === "1" && <TransferInterbanc />}
-				{selectedPage === "2" && <TransferIntrabanc/>}
-				{selectedPage === "3" && <TransferInternational/>}
-				{selectedPage === "4" && <TransferWallet/>}
+				{selectedPage === "2" && <TransferIntrabanc />}
+				{selectedPage === "3" && <TransferInternational />}
+				{selectedPage === "4" && <TransferWallet />}
 			</div>
-			<div className="transfers_lateral" >
+			<div className="transfers_lateral">
 				<div className="top">
 					<h1 className="title">Transferências enviadas</h1>
-					<div className="separator"/>
+					<div className="separator" />
 					<div className="requests">
-						<LateralCard text1="45.000,00 Kz" text2="Paratus" text3="12/09/2023" text4="Internet Service"/>
-						<LateralCard text1="12.000 USD" text2="Vercel" text3="11/09/2023" text4="Premium Cloud Storage"/>
-						<LateralCard text1="45.000,00 Kz" text2="Paratus" text3="12/09/2023" text4="Internet Service"/>
-						<LateralCard text1="12.000 USD" text2="Vercel" text3="11/09/2023" text4="Premium Cloud Storage"/>
-						<LateralCard text1="45.000,00 Kz" text2="Paratus" text3="12/09/2023" text4="Internet Service"/>
-						<LateralCard text1="12.000 USD" text2="Vercel" text3="11/09/2023" text4="Premium Cloud Storage"/>
+						<LateralCard
+							text1="45.000,00 Kz"
+							text2="Paratus"
+							text3="12/09/2023"
+							text4="Internet Service"
+						/>
+						<LateralCard
+							text1="12.000 USD"
+							text2="Vercel"
+							text3="11/09/2023"
+							text4="Premium Cloud Storage"
+						/>
+						<LateralCard
+							text1="45.000,00 Kz"
+							text2="Paratus"
+							text3="12/09/2023"
+							text4="Internet Service"
+						/>
+						<LateralCard
+							text1="12.000 USD"
+							text2="Vercel"
+							text3="11/09/2023"
+							text4="Premium Cloud Storage"
+						/>
+						<LateralCard
+							text1="45.000,00 Kz"
+							text2="Paratus"
+							text3="12/09/2023"
+							text4="Internet Service"
+						/>
+						<LateralCard
+							text1="12.000 USD"
+							text2="Vercel"
+							text3="11/09/2023"
+							text4="Premium Cloud Storage"
+						/>
 					</div>
 				</div>
 				<div className="bottom">
 					<h1 className="title">Transferências recebidas</h1>
-					<div className="separator"/>
+					<div className="separator" />
 					<div className="requests">
-						<LateralCard text1="45.000,00 Kz" text2="Paratus" text3="12/09/2023" text4="Internet Service"/>
-						<LateralCard text1="12.000 USD" text2="Vercel" text3="11/09/2023" text4="Premium Cloud Storage"/>
-						<LateralCard text1="45.000,00 Kz" text2="Paratus" text3="12/09/2023" text4="Internet Service"/>
-						<LateralCard text1="12.000 USD" text2="Vercel" text3="11/09/2023" text4="Premium Cloud Storage"/>
-						<LateralCard text1="45.000,00 Kz" text2="Paratus" text3="12/09/2023" text4="Internet Service"/>
-						<LateralCard text1="12.000 USD" text2="Vercel" text3="11/09/2023" text4="Premium Cloud Storage"/>
-
+						<LateralCard
+							text1="45.000,00 Kz"
+							text2="Paratus"
+							text3="12/09/2023"
+							text4="Internet Service"
+						/>
+						<LateralCard
+							text1="12.000 USD"
+							text2="Vercel"
+							text3="11/09/2023"
+							text4="Premium Cloud Storage"
+						/>
+						<LateralCard
+							text1="45.000,00 Kz"
+							text2="Paratus"
+							text3="12/09/2023"
+							text4="Internet Service"
+						/>
+						<LateralCard
+							text1="12.000 USD"
+							text2="Vercel"
+							text3="11/09/2023"
+							text4="Premium Cloud Storage"
+						/>
+						<LateralCard
+							text1="45.000,00 Kz"
+							text2="Paratus"
+							text3="12/09/2023"
+							text4="Internet Service"
+						/>
+						<LateralCard
+							text1="12.000 USD"
+							text2="Vercel"
+							text3="11/09/2023"
+							text4="Premium Cloud Storage"
+						/>
 					</div>
 				</div>
-				</div>
+			</div>
 		</div>
 	);
 }

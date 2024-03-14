@@ -189,7 +189,7 @@
 .accountCard > .exit > button {
     width: 30px;
     height: 30px;
-    background-color: rgb(200, 1, 1);
+    background-color: #c80101;
     color: var(--color-cards);
     border-radius: 6px;
     display: flex;

@@ -44,14 +44,14 @@ export default function Email() {
 	});
 
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-function  APICall(data: FormType): Promise<any> {
+	function APICall(data: FormType): Promise<any> {
 		setLoading(true);
 		const { email } = data;
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-return  new Promise(async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.get(
-					`https://bfa-nodejs-api.onrender.com/sendEmail/${email}`,
+					`http://localhost:5000/sendEmail/${email}`,
 				);
 				if (response.status === 201) {
 					useStore.updateEmail(email);
@@ -61,8 +61,8 @@ return  new Promise(async (resolve, reject) => {
 					resolve(response.data.message);
 					router.push("/email/verification");
 				}
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-}  catch (error: any) {
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+			} catch (error: any) {
 				reject(error.response?.data.message);
 			} finally {
 				setLoading(false);
@@ -83,7 +83,7 @@ return  new Promise(async (resolve, reject) => {
 	}
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-useEffect(() => onOpen(), []);
+	useEffect(() => onOpen(), []);
 
 	return (
 		<div className="home_main">

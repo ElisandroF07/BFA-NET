@@ -20,19 +20,19 @@ export default function Verification() {
 	}
 
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-function  APICall(): Promise<any> {
+	function APICall(): Promise<any> {
 		setLoading(true);
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-return  new Promise(async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.get(
-					`https://bfa-nodejs-api.onrender.com/resetPassword/${email}`,
+					`http://localhost:5000/resetPassword/${email}`,
 				);
 				if (response.status === 201) {
 					resolve(response.data.message);
 				}
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-}  catch (error: any) {
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+			} catch (error: any) {
 				reject(error.response?.data.message);
 			} finally {
 				setLoading(false);

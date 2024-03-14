@@ -40,7 +40,7 @@ export default function IdentityValidation() {
 	const stepsStore = useStepsStore();
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-useEffect(() => {
+	useEffect(() => {
 		stepsStore.setCurrent(2);
 		stepsStore.setStep1(true);
 		stepsStore.setStep2(true);
@@ -52,9 +52,9 @@ useEffect(() => {
 			await faceapi.nets.faceRecognitionNet.loadFromUri("/models");
 			await faceapi.nets.faceExpressionNet.loadFromUri("/models");
 			// biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
-let  idCard;
+			let idCard;
 			// biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
-let  idSelfie;
+			let idSelfie;
 			if (idCardRef.current) {
 				const idCardFacedetection = await faceapi
 					.detectSingleFace(
@@ -143,25 +143,25 @@ let  idSelfie;
 	}, [selfie.haveFile]);
 
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-function  uploadSelfie(): Promise<any> {
+	function uploadSelfie(): Promise<any> {
 		setLoading(true);
 		const formData = new FormData();
 		if (selfie.file) {
 			formData.append("image", selfie.file);
 		}
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-return  new Promise(async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post(
-					`https://bfa-nodejs-api.onrender.com/upload/${email ?? useStore.email}/4`,
+					`http://localhost:5000/upload/${email ?? useStore.email}/4`,
 					formData,
 					{ headers: { "Content-Type": "multipart/form-data" } },
 				);
 				if (response.status === 200) {
 					resolve(response.data.message);
 				}
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-}  catch (error: any) {
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+			} catch (error: any) {
 				reject(error.response?.data.message);
 			} finally {
 				setLoading(false);
@@ -170,25 +170,25 @@ return  new Promise(async (resolve, reject) => {
 	}
 
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-function  uploadSelfieBI(): Promise<any> {
+	function uploadSelfieBI(): Promise<any> {
 		setLoading(true);
 		const formData = new FormData();
 		if (selfieWithBI.file) {
 			formData.append("image", selfieWithBI.file);
 		}
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-return  new Promise(async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post(
-					`https://bfa-nodejs-api.onrender.com/upload/${email ?? useStore.email}/2`,
+					`http://localhost:5000/upload/${email ?? useStore.email}/2`,
 					formData,
 					{ headers: { "Content-Type": "multipart/form-data" } },
 				);
 				if (response.status === 200) {
 					resolve(response.data.message);
 				}
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-}  catch (error: any) {
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+			} catch (error: any) {
 				reject(error.response?.data.message);
 			} finally {
 				setLoading(false);

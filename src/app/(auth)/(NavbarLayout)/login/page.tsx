@@ -51,12 +51,12 @@ export default function Login() {
 	});
 
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-async  function APICall(data: any): Promise<any> {
+	async function APICall(data: any): Promise<any> {
 		setLoading(true);
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-return  new Promise(async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
-				const response = await axios.post("https://bfa-nodejs-api.onrender.com/login", data, {
+				const response = await axios.post("http://localhost:5000/login", data, {
 					headers: { "Content-Type": "application/json" },
 				});
 				if (response.status === 201) {
@@ -73,23 +73,23 @@ return  new Promise(async (resolve, reject) => {
 	}
 
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-function  APICall2(membership_number: string): Promise<any> {
+	function APICall2(membership_number: string): Promise<any> {
 		setLoading(true);
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-return  new Promise(async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
 				useStore.updateMembershipNumber(membership_number);
 				if (typeof window !== "undefined") {
 					localStorage.setItem("membership_number", membership_number);
 				}
 				const response = await axios.get(
-					`https://bfa-nodejs-api.onrender.com/2fa/${membership_number}`,
+					`http://localhost:5000/2fa/${membership_number}`,
 				);
 				if (response.status === 201) {
 					resolve(response.data.message);
 				}
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-}  catch (error: any) {
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+			} catch (error: any) {
 				reject(error.response?.data.message);
 			} finally {
 				setLoading(false);

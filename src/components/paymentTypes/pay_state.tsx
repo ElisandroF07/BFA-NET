@@ -1,5 +1,5 @@
 import "@/styles/pay-types.css";
-import { CiCircleChevRight } from "react-icons/ci"
+import { CiCircleChevRight } from "react-icons/ci";
 export default function PayState() {
 	return (
 		<div className="pt3_container">
@@ -14,49 +14,40 @@ export default function PayState() {
 						<input
 							type="text"
 							disabled
-							style={{border: "none", background: "none"}}
+							style={{ border: "none", background: "none" }}
 							value="43674324.10235.353"
 						/>
 					</div>
 					<div className="input_field">
 						<label htmlFor="email">Referência</label>
-						<input
-							type="text"
-							placeholder="Introduza o número de referência"
-							
-						/>
+						<input type="text" placeholder="Introduza o número de referência" />
 					</div>
 					<div className="input_field">
 						<label htmlFor="email">Montante</label>
 						<div className="input_phone">
 							<p>Kz</p>
-							<input
-								type="text"
-								placeholder="Conta emissora"
-						
-							/>
+							<input type="text" placeholder="Conta emissora" />
 						</div>
 					</div>
 				</div>
 				<div className="right">
-				<div className="input_field">
+					<div className="input_field">
 						<label htmlFor="email">Data do pagamento</label>
 						<input
 							type="text"
 							disabled
-							style={{border: "none", background: "none"}}
+							style={{ border: "none", background: "none" }}
 							value="26 / 09 / 2005"
 						/>
 					</div>
 					<div className="input_field">
 						<label htmlFor="email">Descrição do pagamento</label>
-							<input
-								type="text"
-								placeholder="Descreva o pagamento"
-							/>
+						<input type="text" placeholder="Descreva o pagamento" />
 					</div>
 				</div>
-				<button type="button">Confirmar pagamento <CiCircleChevRight/></button>
+				<button type="button">
+					Confirmar pagamento <CiCircleChevRight />
+				</button>
 			</div>
 		</div>
 	);

@@ -1,5 +1,5 @@
 import "@/styles/transfer-types.css";
-import { CiCircleChevRight, CiCircleInfo } from "react-icons/ci"
+import { CiCircleChevRight, CiCircleInfo } from "react-icons/ci";
 export default function TransferIntrabanc() {
 	return (
 		<div className="tt3_container">
@@ -14,59 +14,54 @@ export default function TransferIntrabanc() {
 						<input
 							type="text"
 							disabled
-							style={{border: "none", background: "none"}}
+							style={{ border: "none", background: "none" }}
 							value="43674324.10235.353"
 						/>
 					</div>
 					<div className="input_field">
 						<label htmlFor="email">Número da conta receptora</label>
-							<input
-								type="text"
-								placeholder="Número do conta"
-							/>
+						<input type="text" placeholder="Número do conta" />
 					</div>
 					<div className="input_field">
 						<label htmlFor="email">Montante</label>
 						<div className="input_phone">
 							<p>Kz</p>
-							<input
-								type="text"
-								placeholder="Montante"
-							/>
+							<input type="text" placeholder="Montante" />
 						</div>
 					</div>
 				</div>
 				<div className="right">
-				<div className="input_field">
+					<div className="input_field">
 						<label htmlFor="email">Data da transferência</label>
 						<input
 							type="text"
 							disabled
-							style={{border: "none", background: "none"}}
+							style={{ border: "none", background: "none" }}
 							value="26 / 09 / 2005"
 						/>
 					</div>
 					<div className="input_field">
 						<label htmlFor="email">Descrição da transferência</label>
-							<input
-								type="text"
-								placeholder="Descreva o motivo da transferência"
-							/>
+						<input
+							type="text"
+							placeholder="Descreva o motivo da transferência"
+						/>
 					</div>
 					<div className="input_field">
 						<label htmlFor="email">Descrição do destinatário</label>
-							<input
-								type="text"
-								placeholder="Descreva o destinatário (nome, parentesco, ...)"
-							/>
+						<input
+							type="text"
+							placeholder="Descreva o destinatário (nome, parentesco, ...)"
+						/>
 					</div>
 				</div>
 				<div className="information">
-					<CiCircleInfo className="icone"/>
-					<p>Envie e receba dinheiro instantânemante.
-					</p>
-					<button type="button">Confirmar transferência <CiCircleChevRight/></button>
-				</div>  
+					<CiCircleInfo className="icone" />
+					<p>Envie e receba dinheiro instantânemante.</p>
+					<button type="button">
+						Confirmar transferência <CiCircleChevRight />
+					</button>
+				</div>
 			</div>
 		</div>
 	);

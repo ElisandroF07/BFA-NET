@@ -78,7 +78,7 @@ export default function PersonalData() {
 		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post(
-					"https://bfa-nodejs-api.onrender.com/personal-data",
+					"http://localhost:5000/personal-data",
 					data,
 					{ headers: { "Content-Type": "application/json" } },
 				);

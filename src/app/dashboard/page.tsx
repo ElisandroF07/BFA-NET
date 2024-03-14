@@ -1,71 +1,101 @@
-"use client"
+"use client";
 
 import ButtonIcon from "@/components/buttons/buttonIcon";
-import "@/styles/private.css";
-import { CiBellOff, CiReceipt, CiGrid41, CiInboxOut, CiMoneyCheck1, CiSettings, CiGps, CiSquareAlert, CiInboxIn, CiCloudOn, CiShare1, CiLogout } from "react-icons/ci";
-import { useEffect, useState } from "react";
-import Dashboard from "@/components/pages/dashboard/page";
 import Account from "@/components/pages/account/page";
+import Consults from "@/components/pages/consults/page";
+import Dashboard from "@/components/pages/dashboard/page";
 import Payments from "@/components/pages/payments/page";
 import Support from "@/components/pages/support/page";
-import Consults from "@/components/pages/consults/page";
-import Upmoney from "@/components/pages/upmoney/page";
 import Transfers from "@/components/pages/transfers/page";
+import Upmoney from "@/components/pages/upmoney/page";
+import { AuthContext } from "@/contexts/AuthContext";
+import { getAPIClient } from "@/services/axios";
+import "@/styles/private.css";
+import { GetServerSideProps } from "next";
+import { parseCookies } from "nookies";
+import { useContext, useEffect, useState } from "react";
+import {
+	CiBellOff,
+	CiCloudOn,
+	CiGps,
+	CiGrid41,
+	CiInboxIn,
+	CiInboxOut,
+	CiLogout,
+	CiMoneyCheck1,
+	CiReceipt,
+	CiSettings,
+	CiShare1,
+	CiSquareAlert,
+} from "react-icons/ci";
 
 export default function PrivateLayout() {
+	const [page, setPage] = useState("Dashboard");
+	const { user } = useContext(AuthContext)
 
-	const [page, setPage] = useState("Dashboard")
+	useEffect(() => {
+		console.log(user)
+		const buttons = document.querySelectorAll(
+			".btn[data-active]",
+		) as NodeListOf<HTMLButtonElement>;
+		const item_list = document.querySelectorAll(
+			".btn",
+		) as NodeListOf<HTMLButtonElement>;
+		const shadow = document.querySelector(".shadow") as HTMLDivElement;
 
-	useEffect(()=>{
-		const buttons = document.querySelectorAll(".btn[data-active]") as NodeListOf<HTMLButtonElement>
-		const item_list = document.querySelectorAll('.btn') as NodeListOf<HTMLButtonElement>;
-		const shadow = document.querySelector('.shadow') as HTMLDivElement
-
-		for(const item of item_list){
-				if (item.dataset.active === "true") {
-						shadow.style.transition = '.5s';
-						shadow.style.transform = `translate(${item.getBoundingClientRect().x + 7}px, ${item.getBoundingClientRect().y + 18}px)`;
-						shadow.style.height = `${item.getBoundingClientRect().height - 35}px`;
-				}
-		}
-
-		for (const button of buttons){
-			button.addEventListener("mouseover", ()=>{
-			shadow.style.transform = `translate(${button.getBoundingClientRect().x + 7}px, ${button.getBoundingClientRect().y + 18}px)`;
-			shadow.style.height = `${button.getBoundingClientRect().height - 35}px`;
-			})
-		}
-
-		for (const button of buttons){
-			button.addEventListener("mouseleave", ()=>{
-				for(const item of item_list){
-						if (item.dataset.active === "true") {
-								shadow.style.transition = '.5s';
-								shadow.style.transform = `translate(${item.getBoundingClientRect().x + 7}px, ${item.getBoundingClientRect().y + 18}px)`;
-								shadow.style.height = `${item.getBoundingClientRect().height - 35}px`;
-						}
-				}
-			})
-		}
-
-		function update(button: HTMLButtonElement){
-			for (const btn of buttons){
-				btn.dataset.active = "false"
+		for (const item of item_list) {
+			if (item.dataset.active === "true") {
+				shadow.style.transition = ".5s";
+				shadow.style.transform = `translate(${
+					item.getBoundingClientRect().x + 7
+				}px, ${item.getBoundingClientRect().y + 18}px)`;
+				shadow.style.height = `${item.getBoundingClientRect().height - 35}px`;
 			}
-			button.dataset.active = "true"
 		}
 
-		for(const button of buttons){
-			button.addEventListener("click", ()=>{
-				update(button)
-				setPage(button.dataset.page || '')
-			})
+		for (const button of buttons) {
+			button.addEventListener("mouseover", () => {
+				shadow.style.transform = `translate(${
+					button.getBoundingClientRect().x + 7
+				}px, ${button.getBoundingClientRect().y + 18}px)`;
+				shadow.style.height = `${button.getBoundingClientRect().height - 35}px`;
+			});
 		}
-	})
+
+		for (const button of buttons) {
+			button.addEventListener("mouseleave", () => {
+				for (const item of item_list) {
+					if (item.dataset.active === "true") {
+						shadow.style.transition = ".5s";
+						shadow.style.transform = `translate(${
+							item.getBoundingClientRect().x + 7
+						}px, ${item.getBoundingClientRect().y + 18}px)`;
+						shadow.style.height = `${
+							item.getBoundingClientRect().height - 35
+						}px`;
+					}
+				}
+			});
+		}
+
+		function update(button: HTMLButtonElement) {
+			for (const btn of buttons) {
+				btn.dataset.active = "false";
+			}
+			button.dataset.active = "true";
+		}
+
+		for (const button of buttons) {
+			button.addEventListener("click", () => {
+				update(button);
+				setPage(button.dataset.page || "");
+			});
+		}
+	});
 
 	return (
 		<main className="privateMainContainer">
-			<div className="shadow"/>
+			<div className="shadow" />
 			<nav className="privateNavbar">
 				{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 				<svg
@@ -108,56 +138,101 @@ export default function PrivateLayout() {
 				<p className="listTitle">Menu</p>
 				<ul className="navlist">
 					<li>
-						<button className="btn" data-active="true" data-page="Dashboard" type="button">
+						<button
+							className="btn"
+							data-active="true"
+							data-page="Dashboard"
+							type="button"
+						>
 							<CiGrid41 />
 							Inicio
 						</button>
 					</li>
 					<li>
-						<button className="btn" data-active="false" data-page="Consultas" type="button">
-							<CiReceipt  />
+						<button
+							className="btn"
+							data-active="false"
+							data-page="Consultas"
+							type="button"
+						>
+							<CiReceipt />
 							Consultas
 						</button>
 					</li>
 					<li>
-						<button className="btn" data-active="false"  data-page="Pagamentos" type="button">
+						<button
+							className="btn"
+							data-active="false"
+							data-page="Pagamentos"
+							type="button"
+						>
 							<CiInboxOut />
 							Pagamentos
 						</button>
 					</li>
 					<li>
-						<button className="btn" data-active="false"  data-page="Transferências" type="button">
+						<button
+							className="btn"
+							data-active="false"
+							data-page="Transferências"
+							type="button"
+						>
 							<CiShare1 />
 							Transferências
 						</button>
 					</li>
 					<li>
-						<button className="btn" data-active="false"  data-page="Levantamentos" type="button">
+						<button
+							className="btn"
+							data-active="false"
+							data-page="Levantamentos"
+							type="button"
+						>
 							<CiInboxIn />
 							Levantamentos
 						</button>
 					</li>
 					<li>
-						<button className="btn" data-active="false"  data-page="Conta" type="button">
+						<button
+							className="btn"
+							data-active="false"
+							data-page="Conta"
+							type="button"
+						>
 							<CiMoneyCheck1 />
 							Conta
 						</button>
 					</li>
 					<div className="separator" />
 					<li>
-						<button className="btn" data-active="false"  data-page="Ajustes" type="button">
+						<button
+							className="btn"
+							data-active="false"
+							data-page="Ajustes"
+							type="button"
+						>
 							<CiSettings />
 							Ajustes
 						</button>
 					</li>
 					<li>
-						<button  className="btn" data-active="false"  data-page="Agências" type="button">
+						<button
+							className="btn"
+							data-active="false"
+							data-page="Agências"
+							type="button"
+						>
 							<CiGps />
 							Agências
 						</button>
 					</li>
 					<li>
-						<button className="btn" data-active="false"  data-page="Suporte" type="button">
+						<button
+							className="btn"
+							data-active="false"
+							data-page="Suporte"
+							type="button"
+						>
 							<CiSquareAlert />
 							Suporte
 						</button>
@@ -166,9 +241,9 @@ export default function PrivateLayout() {
 				<div className="account">
 					<div className="separator" />
 					<div className="accountCard">
-						<div className="layoutProfile"/>
+						<div className="layoutProfile" />
 						<div>
-							<h1>John Doe</h1>
+							<h1>Oi</h1>
 							<p>020239365LA055</p>
 						</div>
 						<div className="exit">
@@ -192,9 +267,24 @@ export default function PrivateLayout() {
 					</ButtonIcon>
 				</div>
 			</header>
-			<section className="privateChildrenContainer">{
-				page === "Dashboard" ? <Dashboard/> : page === "Conta" ? <Account/> : page === "Pagamentos" ? <Payments/> : page === "Suporte" ? <Support/> : page === "Consultas" ? <Consults/> : page === "Levantamentos" ? <Upmoney/> : page === "Transferências" ? <Transfers/> : null
-			}</section>
+			<section className="privateChildrenContainer">
+				{page === "Dashboard" ? (
+					<Dashboard />
+				) : page === "Conta" ? (
+					<Account />
+				) : page === "Pagamentos" ? (
+					<Payments />
+				) : page === "Suporte" ? (
+					<Support />
+				) : page === "Consultas" ? (
+					<Consults />
+				) : page === "Levantamentos" ? (
+					<Upmoney />
+				) : page === "Transferências" ? (
+					<Transfers />
+				) : null}
+			</section>
 		</main>
 	);
 }
+
