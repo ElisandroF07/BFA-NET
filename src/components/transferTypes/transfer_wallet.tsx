@@ -17,7 +17,7 @@ import wise from "../../../public/assets/images/wallets/wise.png";
 import xikila from "../../../public/assets/images/wallets/xikila.png";
 import ButtonService from "../buttons/buttonService";
 
-export default function TransferWallet() {
+export default function TransferWallet({number}: {number: string}) {
 	const [wallet, setWallet] = useState("");
 
 	useEffect(() => {
@@ -128,7 +128,7 @@ export default function TransferWallet() {
 									type="text"
 									disabled
 									style={{ border: "none", background: "none" }}
-									value="43674324.10235.353"
+									value={number}
 								/>
 							</div>
 							<div className="input_field">

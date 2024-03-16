@@ -1,6 +1,6 @@
 import "@/styles/pay-types.css";
 import { CiCircleChevRight } from "react-icons/ci";
-export default function PayReference() {
+export default function PayReference({number}: {number: string}) {
 	return (
 		<div className="pt3_container">
 			<div className="top">
@@ -15,7 +15,7 @@ export default function PayReference() {
 							type="text"
 							disabled
 							style={{ border: "none", background: "none" }}
-							value="43674324.10235.353"
+							value={number}
 						/>
 					</div>
 					<div className="input_field">

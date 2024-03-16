@@ -6,12 +6,59 @@ import ManageInfoSection from "@/components/cards/manageInfoSection";
 import OptionsSection from "@/components/cards/optionsSecton";
 import SecuritySection from "@/components/cards/securitySection";
 import useUserStore from "@/contexts/stores/userStore";
+import api from "@/services/api";
 import "@/styles/account.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CiImport, CiLocationArrow1 } from "react-icons/ci";
-import { useStore } from "zustand";
 
-export default function Account() {
+interface IProps{
+	biNumber: string,
+	titular: string,
+	email: string,
+	country: string,
+	address: string,
+	birthDate: string,
+	fullName: string
+}
+
+interface IAccount {
+	iban: string,
+	nbi: string,
+	role: number,
+	number: string,
+	authorized_balance: number,
+	bic: string,
+	available_balance: number,
+	created_at: string,
+	currency: string,
+	state: string,
+}
+
+export default function Account({biNumber, titular, email, birthDate, country, address, fullName}: IProps) {
+	const [account, setAccount] = useState<IAccount | null>(null);
+
+	function convertTimestamp(timestamp: number) {
+		const data = new Date(timestamp);
+		const dia = data.getDate().toString().padStart(2, '0');
+		const mes = (data.getMonth() + 1).toString().padStart(2, '0'); // Mês começa em zero, então adicionamos 1
+		const ano = data.getFullYear();
+		const dataFormatada = `${dia}-${mes}-${ano}`;
+		return dataFormatada
+	}
+
+	async function getAccount() {
+		try {
+			const response = await api.get(`/getAccountData/${biNumber}`);
+			setAccount(response.data.account);
+		} catch (err) {
+			setAccount(null);
+		}
+	}
+
+	useEffect(() => {
+		getAccount();
+	}, []);
+
 	const store = useUserStore();
 
 	return (
@@ -25,14 +72,14 @@ export default function Account() {
 			<div className="account_body">
 				<div className="settings">
 					<div className="image" />
-					<h1>Elisandro Canjeque da Paixao Franco</h1>
+					<h1>{fullName}</h1>
 					<p>Conta Particular</p>
 					{store.validation === "options" ? (
 						<OptionsSection />
 					) : store.validation === "manageInfo" ? (
-						<ManageInfoSection />
+						<ManageInfoSection biNumber={biNumber} titular={fullName} birthDate={birthDate} email={email} country={country} address={address}/>
 					) : store.validation === "cards" ? (
-						<CardsSection />
+						<CardsSection biNumber={biNumber} titular={titular}/>
 					) : store.validation === "security" ? (
 						<SecuritySection />
 					) : store.validation === "actives" ? (
@@ -48,43 +95,43 @@ export default function Account() {
 				<div className="infoContainer">
 					<div>
 						<h1>Número da conta</h1>
-						<p>545334534.3453.34</p>
+						<p>{account?.number}</p>
 					</div>
 					<div>
 						<h1>IBAN</h1>
-						<p>AO06 0000 0040 4532 3454 7</p>
+						<p>{account?.iban}</p>
 					</div>
 					<div>
 						<h1>NBA</h1>
-						<p>AO06 0000 0040 4354 3454 7</p>
+						<p>{account?.nbi}</p>
 					</div>
 					<div>
 						<h1>BIC/SWIFT</h1>
-						<p>BFMXAOLU</p>
+						<p>{account?.bic}</p>
 					</div>
 					<div>
 						<h1>Divísa</h1>
-						<p>Kz</p>
+						<p>{account?.currency}</p>
 					</div>
 					<div>
 						<h1>Titular</h1>
-						<p>Elisandro Franco</p>
+						<p>{titular}</p>
 					</div>
 					<div>
 						<h1>Data de abertura</h1>
-						<p>26-09-2002</p>
+						<p>{convertTimestamp(parseInt(account?.created_at || ""))}</p>
 					</div>
 					<div>
 						<h1>Tipo de conta</h1>
-						<p>Conta à ordem</p>
+						<p>{account?.role === 1 && "Conta à ordem"}</p>
 					</div>
 					<div>
 						<h1>Saldo disponível</h1>
-						<p>180.550,00 Kz</p>
+						<p>{account?.available_balance} Kz</p>
 					</div>
 					<div>
 						<h1>Saldo autorizado</h1>
-						<p>180.550,00 Kz</p>
+						<p>{account?.authorized_balance} Kz</p>
 					</div>
 					<div>
 						<h1>Estado</h1>
@@ -105,7 +152,7 @@ export default function Account() {
 									marginRight: "10px",
 								}}
 							/>
-							Ativa
+							{account?.state}
 						</p>
 					</div>
 				</div>

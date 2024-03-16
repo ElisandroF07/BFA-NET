@@ -1,6 +1,7 @@
 "use client";
 
 import { AuthProvider } from "@/contexts/AuthContext";
+import NextAuthSessionProvider from "@/providers/sessionProvider";
 import "@/styles/globals.css";
 import { NextUIProvider } from "@nextui-org/react";
 import { Analytics } from "@vercel/analytics/react";
@@ -33,7 +34,9 @@ export default function RootLayout({
 					speed={200}
 					shadow="0 0 10px orange,0 0 5px orange"
 				/>
-				<NextUIProvider><AuthProvider>{children}</AuthProvider></NextUIProvider>
+				<NextUIProvider>
+					<NextAuthSessionProvider>{children}</NextAuthSessionProvider>
+					</NextUIProvider>
 				<Analytics />
 				<SpeedInsights />
 				<Toaster

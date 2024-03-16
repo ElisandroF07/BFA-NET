@@ -2,7 +2,13 @@ import LateralCard from "@/components/cards/requestCard";
 import "@/styles/upmoney.css";
 import { PiInfoThin } from "react-icons/pi";
 
-export default function Upmoney() {
+interface IProps {
+	authorized_balance: number,
+	available_balance: number,
+	email: string
+}
+
+export default function Upmoney({authorized_balance, available_balance, email}: IProps) {
 	return (
 		// Container principal
 		<div className="mainContainer">
@@ -13,13 +19,13 @@ export default function Upmoney() {
 					<p>Retire o seu dinheiro a qualquer momento.</p>
 				</div>
 				<div className="bottom">
-					<div>
+				<div>
 						<h2>Saldo contabilístico</h2>
-						<p>Kz 832.540,00</p>
+						<p>Kz {available_balance},00</p>
 					</div>
 					<div>
 						<h2>Saldo autorizado</h2>
-						<p>Kz 832.540,00</p>
+						<p>Kz {authorized_balance},00</p>
 					</div>
 				</div>
 			</div>
@@ -33,8 +39,8 @@ export default function Upmoney() {
 							<h4 className="title">Para mim</h4>
 							<div className="toMe">
 								<form action="">
-									<h4 className="static-text">Meu número de telefone</h4>
-									<p className="static-number">+244 9*** *** *28 </p>
+									<h4 className="static-text">Meu número endereço de email</h4>
+									<p className="static-number">{email}</p>
 									<h4 className="static-text mt-2">Montante</h4>
 									<div id="Kz" className="input_montante">
 										<p>Kz</p>
@@ -106,14 +112,13 @@ export default function Upmoney() {
 							<h4 className="title">Para outra pessoa</h4>
 							<div className="another">
 								<form action="">
-									<h4 className="static-text">Meu número de telefone</h4>
+									<h4 className="static-text">Endereço de email do beneficiário</h4>
 
 									<div id="Kz" className="input_montante">
-										<p>+244</p>
 										<input
 											type="text"
 											className="montante"
-											placeholder="Introduza o numero de telemovel"
+											placeholder="Introduza o endereço de email do beneficiário"
 										/>
 									</div>
 									<h4 className="static-text">Montante</h4>

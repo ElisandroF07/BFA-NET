@@ -9,7 +9,14 @@ import TransferWallet from "@/components/transferTypes/transfer_wallet";
 import "@/styles/transfers.css";
 import { useState } from "react";
 
-export default function Transfers() {
+interface IProps {
+	authorized_balance: number,
+	available_balance: number,
+	iban: string,
+	number: string
+}
+
+export default function Transfers({authorized_balance, available_balance, iban, number}: IProps) {
 	const [selectedPage, setSelectedPage] = useState("0");
 
 	return (
@@ -22,11 +29,11 @@ export default function Transfers() {
 				<div className="bottom">
 					<div>
 						<h2>Saldo contabilístico</h2>
-						<p>Kz 832.540,00</p>
+						<p>Kz {available_balance},00</p>
 					</div>
 					<div>
 						<h2>Saldo autorizado</h2>
-						<p>Kz 832.540,00</p>
+						<p>Kz {authorized_balance},00</p>
 					</div>
 					<div>
 						<h2>Selecione o tipo de transferência</h2>
@@ -48,10 +55,10 @@ export default function Transfers() {
 			</div>
 			<div className="transfers_body">
 				{selectedPage === "0" && <TransferDefault />}
-				{selectedPage === "1" && <TransferInterbanc />}
-				{selectedPage === "2" && <TransferIntrabanc />}
+				{selectedPage === "1" && <TransferInterbanc number={number}/>}
+				{selectedPage === "2" && <TransferIntrabanc number={number}/>}
 				{selectedPage === "3" && <TransferInternational />}
-				{selectedPage === "4" && <TransferWallet />}
+				{selectedPage === "4" && <TransferWallet number={number}/>}
 			</div>
 			<div className="transfers_lateral">
 				<div className="top">

@@ -6,13 +6,14 @@ import "@/styles/phone_verification.css";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import business from "../../../../../../public/assets/images/Two factor authentication-pana.svg";
 import {z} from 'zod'
 import {useForm} from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AuthContext } from "@/contexts/AuthContext";
+import { signIn } from "next-auth/react";
+import {useRouter} from "next/navigation";
 
 const FormSchema = z.object({
 	value1: z.string().min(1, "O campo é obrigatório!"),
@@ -27,14 +28,9 @@ type FormType = z.infer<typeof FormSchema>
 
 export default function TwoFactorAuthentication() {
 
-	const { register, handleSubmit} = useForm<FormType>({
-		resolver: zodResolver(FormSchema)
-	})
-	const { signIn } = useContext(AuthContext)
-
 	const [loading, setLoading] = useState(false);
 	const useStore = useUserStore();
-
+	const router = useRouter()
 	let email = "";
 	if (typeof window !== "undefined") {
 		email = localStorage.getItem("email") ?? "";
@@ -45,38 +41,26 @@ export default function TwoFactorAuthentication() {
 		membership_number = localStorage.getItem("membership_number") ?? "";
 	}
 
+	const { register, handleSubmit} = useForm<FormType>({
+		resolver: zodResolver(FormSchema)
+	})
+
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	function APICall(): Promise<any> {
 		setLoading(true);
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
 		return new Promise(async (resolve, reject) => {
 			try {
-				const response = await axios.get(
-					`http://localhost:5000/2fa/${
-						membership_number || useStore.membership_number
-					}`,
-				);
+				const response = await axios.get(`http://localhost:5000/2fa/${membership_number || useStore.membership_number}`);
 				if (response.status === 201) {
 					resolve(response.data.message);
 				}
-				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-			} catch (error: any) {
-				reject(error.response?.data.message);
+			} catch {
+				reject("Erro ao processar a sua solicitação!");
 			} finally {
 				setLoading(false);
 			}
 		});
-	}
-
-	async function submitForm(data: FormType) {
-		setLoading(true)
-		const {value1, value2, value3, value4, value5, value6} = data
-		const OTP = value1+value2+value3+value4+value5+value6
-		const response = await signIn({OTP, email})
-		if (response ===  false) {
-			setLoading(false)
-			toast.error("Código de autenticação inválido!")
-		}
 	}
 
 	async function resendEmail() {
@@ -89,6 +73,25 @@ export default function TwoFactorAuthentication() {
 				return data;
 			},
 		});
+	}
+
+	async function submitForm(data: FormType) {
+		setLoading(true)
+		const {value1, value2, value3, value4, value5, value6} = data
+		const OTP = value1+value2+value3+value4+value5+value6
+		const result = await signIn('credentials', {
+      email,
+      OTP,
+      redirect: false
+    })
+
+    if (result?.error) {
+      toast.error("Código de autenticação inválido!")
+			setLoading(false)
+      return
+    }
+
+    router.replace('/dashboard')
 	}
 
 	return (

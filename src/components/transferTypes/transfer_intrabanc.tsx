@@ -1,6 +1,6 @@
 import "@/styles/transfer-types.css";
 import { CiCircleChevRight, CiCircleInfo } from "react-icons/ci";
-export default function TransferIntrabanc() {
+export default function TransferIntrabanc({number}: {number: string}) {
 	return (
 		<div className="tt3_container">
 			<div className="top">
@@ -15,7 +15,7 @@ export default function TransferIntrabanc() {
 							type="text"
 							disabled
 							style={{ border: "none", background: "none" }}
-							value="43674324.10235.353"
+							value={number}
 						/>
 					</div>
 					<div className="input_field">

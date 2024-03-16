@@ -295,12 +295,7 @@
     background-color: #c80101;
     color: var(--color-cards);
 }
-.cardsbottom > .left > .multiText > button:nth-child(2)[data-show="true"] {
-    background-color: transparent;
-    border: 1px solid var(--color-border);
-    color: var(--color-text);
-}
-.cardsbottom > .left > .multiText > button:nth-child(2)[data-show="false"] {
+.cardsbottom > .left > .multiText > button:nth-child(2){
     background-color: var(--color-focus3);
     color: var(--color-focus);
 }

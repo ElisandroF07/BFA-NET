@@ -9,7 +9,13 @@ import {
 } from "react-icons/ci";
 import { FaAngleDown } from "react-icons/fa6";
 
-export default function Consults() {
+interface IProps {
+	authorized_balance: number,
+	available_balance: number,
+	iban: string
+}
+
+export default function Consults({authorized_balance, available_balance, iban}: IProps) {
 	return (
 		<div className="consults_container">
 			<div className="consults_header">
@@ -20,15 +26,15 @@ export default function Consults() {
 				<div className="bottom">
 					<div>
 						<h2>Saldo contabilístico</h2>
-						<p>Kz 832.540,00</p>
+						<p>Kz {available_balance},00</p>
 					</div>
 					<div>
 						<h2>Saldo autorizado</h2>
-						<p>Kz 832.540,00</p>
+						<p>Kz {authorized_balance},00</p>
 					</div>
 					<div>
 						<h2>IBAN</h2>
-						<p>AO06 0000 0040 3432 3234 7</p>
+						<p>{iban}</p>
 					</div>
 				</div>
 			</div>

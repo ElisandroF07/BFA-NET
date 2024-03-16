@@ -11,7 +11,13 @@ import PayState from "@/components/paymentTypes/pay_state";
 import "@/styles/payments.css";
 import { useState } from "react";
 
-export default function Payments() {
+interface IProps {
+	authorized_balance: number,
+	available_balance: number,
+	number: string
+}
+
+export default function Payments({authorized_balance, available_balance, number}: IProps) {
 	const [selectedPage, setSelectedPage] = useState("0");
 
 	return (
@@ -24,11 +30,11 @@ export default function Payments() {
 				<div className="bottom">
 					<div>
 						<h2>Saldo contabilístico</h2>
-						<p>Kz 832.540,00</p>
+						<p>Kz {available_balance},00</p>
 					</div>
 					<div>
 						<h2>Saldo autorizado</h2>
-						<p>Kz 832.540,00</p>
+						<p>Kz {authorized_balance},00</p>
 					</div>
 					<div>
 						<h2>Selecione o tipo de pagamento</h2>
@@ -50,8 +56,8 @@ export default function Payments() {
 			<div className="payments_body">
 				{selectedPage === "0" && <PayDefault />}
 				{selectedPage === "1" && <PayServices />}
-				{selectedPage === "2" && <PayState />}
-				{selectedPage === "3" && <PayReference />}
+				{selectedPage === "2" && <PayState number={number}/>}
+				{selectedPage === "3" && <PayReference number={number}/>}
 			</div>
 			<div className="payments_lateral">
 				<h1 className="title">Últimos pagamentos</h1>
