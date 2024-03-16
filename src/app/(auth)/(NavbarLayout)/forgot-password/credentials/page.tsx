@@ -55,9 +55,9 @@ export default function ForgotPassword() {
 	});
 
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-function  APICall(data: any): Promise<any> {
+	function APICall(data: any): Promise<any> {
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-return  new Promise(async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post(
 					"http://localhost:5000/setAccessCode",
@@ -69,8 +69,8 @@ return  new Promise(async (resolve, reject) => {
 				} else {
 					reject(response.data.message);
 				}
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-}  catch (error: any) {
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+			} catch (error: any) {
 				reject(error.response?.data.message);
 			} finally {
 			}

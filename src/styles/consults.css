@@ -1,0 +1,203 @@
+.consults_container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: calc(100% - 370px) 350px;
+  grid-template-rows: 160px calc(100% - 180px);
+  row-gap: 20px;
+  column-gap: 20px;
+}
+.consults_header {
+  background-color: transparent;
+  /*box-shadow: var(--shadow-cards);*/
+  border-radius: 14px;
+  grid-row: 1;
+  grid-column: 1;
+}
+.consults_header > .top {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.consults_header > .top > h1 {
+  font-family: Inter_SemiBold;
+  font-size: 2rem;
+  color: var(--color-text);
+}
+.consults_header > .top > p {
+  font-family: Inter_Regular;
+  font-size: 1.1rem;
+  color: var(--color-text);
+}
+.consults_header > .bottom {
+  margin-top: 10px;
+  width: 100%;
+  height: 55%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 20px;
+}
+.consults_header > .bottom > div {
+  width: max-content;
+  height: 90%;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  padding: 10px 20px;
+  gap: 5px;
+  background-color: var(--color-cards);
+}
+.consults_header > .bottom > div > h2 {
+  font-family: Inter_Regular;
+  font-size: 1rem;
+}
+.consults_header > .bottom > div > p {
+  font-family: Inter_Regular;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.consults_header > .bottom > div > select {
+  font-family: Inter_Regular;
+  font-size: 1rem;
+  background-color: transparent;
+  outline: none;
+  margin: 0;
+  padding: 0; 
+}
+.consults_header > .bottom > div > select::-ms-expand {
+  display: none; /* esconde a seta do select no IE 10 e 11 */
+}
+.consults_body {
+  background-color: var(--color-cards);
+  border-radius: 14px;
+  grid-column: 1;
+  grid-row: 2;
+  padding: 20px;
+  display: grid;
+  grid-template-rows: 34px calc(100% - 34px);
+}
+.consults_body > h1 {
+  grid-row: 1;
+}
+.consults_lateral {
+  background-color: var(--color-cards);
+  border-radius: 14px;
+  grid-column: 2;
+  grid-row: span 2;
+  padding: 20px;
+  font-size: 1rem;
+  font-family: Inter_Regular;
+}
+
+.generator {
+  width: 100%;
+  height: 100px;
+  border: 1px dashed var(--color-border);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 0px;
+  transition: .3s;
+  cursor: pointer;
+}
+.generator:hover {
+  border: var(--border-input);
+}
+.generator > p {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.generator > p > svg {
+  width: 24px;
+  height: 24px;
+}
+.requests {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: scroll;
+}
+.requests::-webkit-scrollbar {
+  display: none;
+}
+.newRequest {
+  width: 100%;
+  height: 80px;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .3s;
+  cursor: pointer;
+}
+.newRequest > p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid transparent;
+}
+.newRequest:hover {
+  border: var(--border-input);
+}
+.newRequest > p > svg {
+  width: 24px;
+  height: 24px;
+}
+.historic {
+  width: 100%;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  overflow-y: scroll;
+  padding-top: 76px;
+}
+.historic::-webkit-scrollbar {
+  display: none;
+}
+.historic > div {
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.historic > div > .left {
+  width: max-content;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.historic > div > .left > h1 {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #676e7f;
+
+}
+
+.historic > div > .right > p {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color:  #676e7f;
+}
+.historic > div > .right > p > svg {
+  width: 24px;
+  height: 24px;
+}

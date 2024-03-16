@@ -22,10 +22,10 @@ export default function PersonalData() {
 	}
 
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-async  function APICall(): Promise<any> {
+	async function APICall(): Promise<any> {
 		setLoading(true);
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-return  new Promise(async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.get(
 					`http://localhost:5000/generateCredentials/${
@@ -45,7 +45,7 @@ return  new Promise(async (resolve, reject) => {
 	}
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-useEffect(() => {
+	useEffect(() => {
 		stepsStore.setCurrent(3);
 		stepsStore.setStep1(true);
 		stepsStore.setStep2(true);

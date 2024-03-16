@@ -30,7 +30,7 @@ export default function NavbarLayout({
 				<NavbarContent className="sm:hidden pr-1" justify="center">
 					<NavbarBrand>
 						{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
-<svg
+						<svg
 							id="svg"
 							version="1.1"
 							xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +69,7 @@ export default function NavbarLayout({
 				<NavbarContent className="hidden sm:flex gap-6" justify="end">
 					<NavbarBrand>
 						{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
-<svg
+						<svg
 							id="svg"
 							version="1.1"
 							xmlns="http://www.w3.org/2000/svg"

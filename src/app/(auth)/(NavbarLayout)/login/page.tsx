@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { signIn } from "next-auth/react";
 import business from "../../../../../public/assets/images/Secure login-pana.png";
 
 const loginSchema = z.object({
@@ -51,10 +52,10 @@ export default function Login() {
 	});
 
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-async  function APICall(data: any): Promise<any> {
+	async function APICall(data: any): Promise<any> {
 		setLoading(true);
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-return  new Promise(async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post("http://localhost:5000/login", data, {
 					headers: { "Content-Type": "application/json" },
@@ -73,10 +74,10 @@ return  new Promise(async (resolve, reject) => {
 	}
 
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-function  APICall2(membership_number: string): Promise<any> {
+	function APICall2(membership_number: string): Promise<any> {
 		setLoading(true);
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-return  new Promise(async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
 				useStore.updateMembershipNumber(membership_number);
 				if (typeof window !== "undefined") {
@@ -88,8 +89,8 @@ return  new Promise(async (resolve, reject) => {
 				if (response.status === 201) {
 					resolve(response.data.message);
 				}
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-}  catch (error: any) {
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+			} catch (error: any) {
 				reject(error.response?.data.message);
 			} finally {
 				setLoading(false);

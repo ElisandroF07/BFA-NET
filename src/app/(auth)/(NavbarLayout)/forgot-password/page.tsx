@@ -41,11 +41,11 @@ export default function ForgotPassword() {
 	});
 
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-function  APICall(data: FormType): Promise<any> {
+	function APICall(data: FormType): Promise<any> {
 		setLoading(true);
 		const { email } = data;
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-return  new Promise(async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.get(
 					`http://localhost:5000/resetPassword/${email}`,
@@ -59,8 +59,8 @@ return  new Promise(async (resolve, reject) => {
 				} else {
 					reject(response.data.message);
 				}
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-}  catch (error: any) {
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+			} catch (error: any) {
 				reject(error.response?.data.message);
 			} finally {
 				setLoading(false);

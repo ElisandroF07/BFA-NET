@@ -40,7 +40,7 @@
 }
 
 .not_found_title {
-    font-size: 60px;
+    font-size: 3.5rem;
     color: var(--color-focus);
     font-weight: 600;
     max-width: 400px;
@@ -70,7 +70,7 @@
 
 @media screen and (max-width: 870px) {
     .not_found_title {
-        font-size: 40px;
+        font-size: 2.5rem;
     }
     .not_found_text_container > p { 
         max-width: 200px;
@@ -112,7 +112,7 @@
         height: 97dvh;
     }
     .not_found_title {
-        font-size: 28px;
+        font-size: 1.7rem;
     }
     .not_found_footer {
         width: 100%;
@@ -129,7 +129,7 @@
 
 @media screen and (max-width: 400px) {
     .not_found_title {
-        font-size: 20px;
+        font-size: 1.3rem;
     }
     .not_found_svg_container > svg  {
         width: 90%;

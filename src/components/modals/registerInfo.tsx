@@ -11,9 +11,9 @@ import {
 
 interface IProps {
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-isOpen: any;
+	isOpen: any;
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-onOpenChange: any;
+	onOpenChange: any;
 }
 
 export default function RegisterInfoModal({ isOpen, onOpenChange }: IProps) {

@@ -54,7 +54,7 @@ export default function Documentation() {
 	let email = "";
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-useEffect(() => {
+	useEffect(() => {
 		stepsStore.setCurrent(1);
 		stepsStore.setStep1(true);
 	}, []);
@@ -72,7 +72,7 @@ useEffect(() => {
 	}, [backFile.haveFile]);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-useEffect(() => {
+	useEffect(() => {
 		const filePath = URL.createObjectURL(frontFile.file || new File([], ""));
 
 		if (!frontFile.haveFile) {
@@ -87,28 +87,28 @@ useEffect(() => {
 	}, [frontFile.haveFile]);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-useEffect(() => {
+	useEffect(() => {
 		if (success) {
 			toast.promise(uploadFront(), {
 				loading: "Enviando a imagem do BI...",
 				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-success: (data: any) => {
+				success: (data: any) => {
 					return data;
 				},
 				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-error: (data: any) => {
+				error: (data: any) => {
 					return data;
 				},
 			});
 			toast.promise(uploadBack(), {
 				loading: "Enviando a selfie...",
 				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-success: (data: any) => {
+				success: (data: any) => {
 					router.push("/register/identity");
 					return data;
 				},
 				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-error: (data: any) => {
+				error: (data: any) => {
 					return data;
 				},
 			});
@@ -121,7 +121,9 @@ error: (data: any) => {
 
 	function compareBI(bi1: string, bi2: string) {
 		console.log(bi1, bi2);
-		if (bi1.toLocaleUpperCase() === bi2.toLocaleUpperCase()) { return true; }
+		if (bi1.toLocaleUpperCase() === bi2.toLocaleUpperCase()) {
+			return true;
+		}
 		return false;
 	}
 
@@ -140,7 +142,7 @@ error: (data: any) => {
 		let biNumber = "";
 		let scanned = false;
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-return  new Promise(async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			const response = await Tesseract.recognize(
 				URL.createObjectURL(frontFile.file || new File([], "")),
 			);
@@ -148,7 +150,7 @@ return  new Promise(async (resolve, reject) => {
 
 			if (words) {
 				// biome-ignore lint/complexity/noForEach: <explanation>
-words.forEach(async (word) => {
+				words.forEach(async (word) => {
 					if (regexBI.test(word.text)) {
 						biNumber = word.text;
 						scanned = true;
@@ -186,9 +188,9 @@ words.forEach(async (word) => {
 		await faceapi.nets.faceRecognitionNet.loadFromUri("/models");
 		await faceapi.nets.faceExpressionNet.loadFromUri("/models");
 		// biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
-		let  idCard;
+		let idCard;
 		// biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
-		let  idSelfie;
+		let idSelfie;
 
 		if (idCardRef.current) {
 			const idCardFacedetection = await faceapi
@@ -240,12 +242,12 @@ words.forEach(async (word) => {
 		toast.promise(testRegex(regexBI), {
 			loading: "Analisando BI...",
 			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-success: (data: any) => {
+			success: (data: any) => {
 				setSuccess(true);
 				return data;
 			},
 			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-error: (data: any) => {
+			error: (data: any) => {
 				return data;
 			},
 		});
@@ -268,14 +270,14 @@ error: (data: any) => {
 	}
 
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-function  uploadFront(): Promise<any> {
+	function uploadFront(): Promise<any> {
 		setLoading(true);
 		const formData = new FormData();
 		if (frontFile.file) {
 			formData.append("image", frontFile.file);
 		}
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-return  new Promise(async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post(
 					`http://localhost:5000/upload/${email ?? useStore.email}/1`,
@@ -285,8 +287,8 @@ return  new Promise(async (resolve, reject) => {
 				if (response.status === 200) {
 					resolve(response.data.message);
 				}
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-}  catch (error: any) {
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+			} catch (error: any) {
 				reject(error.response?.data.message);
 			} finally {
 				setLoading(false);
@@ -295,14 +297,14 @@ return  new Promise(async (resolve, reject) => {
 	}
 
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-function  uploadBack(): Promise<any> {
+	function uploadBack(): Promise<any> {
 		setLoading(true);
 		const formData = new FormData();
 		if (backFile.file) {
 			formData.append("image", backFile.file);
 		}
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-return  new Promise(async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post(
 					`http://localhost:5000/upload/${email ?? useStore.email}/5`,
@@ -312,8 +314,8 @@ return  new Promise(async (resolve, reject) => {
 				if (response.status === 200) {
 					resolve(response.data.message);
 				}
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-}  catch (error: any) {
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+			} catch (error: any) {
 				reject(error.response?.data.message);
 			} finally {
 				setLoading(false);

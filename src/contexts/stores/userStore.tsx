@@ -3,7 +3,7 @@ import { create } from "zustand";
 type State = {
 	email: string;
 	bi_number: string;
-	validation: boolean;
+	validation: string;
 	membership_number: string;
 };
 
@@ -19,7 +19,7 @@ type Action = {
 const useUserStore = create<State & Action>((set) => ({
 	email: "",
 	bi_number: "",
-	validation: false,
+	validation: "options",
 	membership_number: "",
 	updateEmail: (email) => set(() => ({ email: email })),
 	updateBi: (bi_number) => set(() => ({ bi_number: bi_number })),
