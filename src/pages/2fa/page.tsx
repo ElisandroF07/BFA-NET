@@ -92,11 +92,14 @@ export default function TwoFactorAuthentication() {
 		else {
 			try {
 				const response = await api.get(`/verifyLogin/${email}`);
-				if(response.data) {
+				if(response.data  === true) {
 					router.replace("/set-access")
 				}
-				else {
+				else if(response.data === false) {
 					router.replace("/dashboard")
+				}
+				else {
+					toast.warning("Um serviço está indisponível!")
 				}
 			}
 			catch{
