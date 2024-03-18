@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -14,6 +13,7 @@ import useUserStore from "@/contexts/stores/userStore";
 import "@/styles/globals.css";
 import "@/styles/login.css";
 import business from "@/assets/images/Secure login-pana.png";
+import api from "@/services/api";
 
 const loginSchema = z.object({
 	membership_number: z
@@ -51,7 +51,7 @@ export default function Login() {
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
 		return  new Promise(async (resolve, reject) => {
 			try {
-				const response = await axios.post("http://localhost:5000/login", data, {headers: { "Content-Type": "application/json" }});
+				const response = await api.post("/login", data);
 				if (response.status === 201) {
 					useStore.updateEmail(response.data.email)
 					if (typeof window !== "undefined") {
@@ -78,9 +78,7 @@ export default function Login() {
 				if (typeof window !== "undefined") {
 					localStorage.setItem("membership_number", membership_number);
 				}
-				const response = await axios.get(
-					`http://localhost:5000/2fa/${membership_number}`,
-				);
+				const response = await api.get(`/2fa/${membership_number}`);
 				if (response.status === 201) {
 					resolve(response.data.message);
 				}

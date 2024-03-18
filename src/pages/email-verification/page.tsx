@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import { useState } from "react";
 import { toast } from "sonner";
 import Image from "next/image";
@@ -10,6 +9,7 @@ import "@/styles/globals.css";
 import "@/styles/phone_verification.css";
 import business from "@/assets/images/message.svg";
 import { useRouter } from "next/navigation";
+import api from "@/services/api";
 
 export default function EmailVerification() {
 	const [loading, setLoading] = useState(false);
@@ -26,7 +26,7 @@ export default function EmailVerification() {
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
 		return new Promise(async (resolve, reject) => {
 			try {
-				const response = await axios.get(`http://localhost:5000/resendEmail/${email}`,);
+				const response = await api.get(`/resendEmail/${email}`,);
 				if (response.status === 201) {
 					resolve(response.data.message);
 				}

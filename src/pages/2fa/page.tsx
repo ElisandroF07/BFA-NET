@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
@@ -54,7 +53,7 @@ export default function TwoFactorAuthentication() {
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
 		return new Promise(async (resolve, reject) => {
 			try {
-				const response = await axios.get(`http://localhost:5000/2fa/${membership_number}`);
+				const response = await api.get(`/2fa/${membership_number}`);
 				if (response.status === 201) {
 					resolve(response.data.message);
 				}

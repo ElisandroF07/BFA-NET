@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,6 +14,7 @@ import "@/styles/phone.css";
 import business from "@/assets/images/Upvote-pana.svg";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import api from "@/services/api";
 
 const FormSchema = z.object({
 	accessCode: z.string()
@@ -52,7 +52,7 @@ export default function SetCredentials() {
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
 		return new Promise(async (resolve, reject) => {
 			try {
-				const response = await axios.post("http://localhost:5000/setAccessCode", data, { headers: { "Content-Type": "application/json" } });
+				const response = await api.post("/setAccessCode", data, { headers: { "Content-Type": "application/json" } });
 				if (response.status === 201) {
 					router.push("/login")
 					resolve(response.data.message);

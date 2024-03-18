@@ -35,7 +35,7 @@ export default function RegisterCredentials() {
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
 		return new Promise(async (resolve, reject) => {
 			try {
-				const response = await api.get(`http://localhost:5000/generateCredentials/${email_address}`);
+				const response = await api.get(`/generateCredentials/${email_address}`);
 				if (response.status === 201) {
 					router.replace("/login")
 					resolve(response.data.message);

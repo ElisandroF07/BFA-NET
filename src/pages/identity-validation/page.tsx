@@ -131,7 +131,7 @@ export default function IdentityValidation() {
 
 	async function getBI() {
 		const response = await axios.get(
-			`http://localhost:5000/getBI/${email || useStore.email}`,
+			`https://bfa-nodejs-api.onrender.com/getBI/${email || useStore.email}`,
 		);
 		if (response.data.biNumber) {
 			return response.data.biNumber;
@@ -282,7 +282,7 @@ export default function IdentityValidation() {
 		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post(
-					`http://localhost:5000/upload/${email ?? useStore.email}/1`,
+					`https://bfa-nodejs-api.onrender.com/upload/${email ?? useStore.email}/1`,
 					formData,
 					{ headers: { "Content-Type": "multipart/form-data" } },
 				);
@@ -309,7 +309,7 @@ export default function IdentityValidation() {
 		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post(
-					`http://localhost:5000/upload/${email ?? useStore.email}/5`,
+					`https://bfa-nodejs-api.onrender.com/upload/${email ?? useStore.email}/5`,
 					formData,
 					{ headers: { "Content-Type": "multipart/form-data" } },
 				);

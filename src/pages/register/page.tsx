@@ -1,5 +1,5 @@
 "use client";
-import axios from "axios";
+
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -15,6 +15,7 @@ import RegisterInfoModal from "@/components/modals/registerInfo";
 import business from "@/assets/images/wellcome.svg";
 import "@/styles/globals.css";
 import "@/styles/phone.css";
+import api from "@/services/api";
 
 const FormSchema = z.object({
     email: z.string().min(1, "O email é obrigatório!").email("Email inválido! Corrija o email").transform((email) => {
@@ -51,7 +52,7 @@ export default function Register() {
         const { email } = data;
         // biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
         return  new Promise(async (resolve, reject) => {
-            await axios.get(`http://localhost:5000/sendEmail/${email}`)
+            await api.get(`/sendEmail/${email}`)
             .then((response) => {
                 if (response.status === 201) {
                     useStore.updateEmail(email);

@@ -1,8 +1,6 @@
 import api from "@/services/api"
-import axios from "axios"
 import { NextAuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-
 
 const nextAuthOptions: NextAuthOptions = {
 	providers: [
@@ -18,11 +16,7 @@ const nextAuthOptions: NextAuthOptions = {
 					OTP: credentials?.OTP
 				})
 				try {
-					const response = await axios.post('http://localhost:5000/verifyOTP', body, {
-					headers: {
-						'Content-type': 'application/json'
-					}
-				})
+					const response = await api.post('/verifyOTP', body)
 
 				if (response.data && response.status === 201) {
 					api.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
