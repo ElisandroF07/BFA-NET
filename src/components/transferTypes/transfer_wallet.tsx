@@ -3,18 +3,18 @@
 import "@/styles/pay-types.css";
 import { useEffect, useState } from "react";
 import { CiCircleChevRight, CiSearch } from "react-icons/ci";
-import afrimoney from "../../../public/assets/images/wallets/afrimoney.png";
-import aki from "../../../public/assets/images/wallets/aki.png";
-import binance from "../../../public/assets/images/wallets/binance.png";
-import bnix from "../../../public/assets/images/wallets/bnix.png";
-import ekwanza from "../../../public/assets/images/wallets/ekwanza.png";
-import kwanza from "../../../public/assets/images/wallets/kwanza.png";
-import kwanzaonline from "../../../public/assets/images/wallets/kwanzaonline.png";
-import paypal from "../../../public/assets/images/wallets/paypal.png";
-import paypay from "../../../public/assets/images/wallets/paypay.png";
-import unitelmoney from "../../../public/assets/images/wallets/unitelmoney.png";
-import wise from "../../../public/assets/images/wallets/wise.png";
-import xikila from "../../../public/assets/images/wallets/xikila.png";
+import afrimoney from "@/assets/images/wallets/afrimoney.png";
+import aki from "@/assets/images/wallets/aki.png";
+import binance from "@/assets/images/wallets/binance.png";
+import bnix from "@/assets/images/wallets/bnix.png";
+import ekwanza from "@/assets/images/wallets/ekwanza.png";
+import kwanza from "@/assets/images/wallets/kwanza.png";
+import kwanzaonline from "@/assets/images/wallets/kwanzaonline.png";
+import paypal from "@/assets/images/wallets/paypal.png";
+import paypay from "@/assets/images/wallets/paypay.png";
+import unitelmoney from "@/assets/images/wallets/unitelmoney.png";
+import wise from "@/assets/images/wallets/wise.png";
+import xikila from "@/assets/images/wallets/xikila.png";
 import ButtonService from "../buttons/buttonService";
 
 export default function TransferWallet({number}: {number: string}) {

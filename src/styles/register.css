@@ -31,8 +31,8 @@
     align-items: center;
     padding: 40px 0px;
 }
-.left {
-    width: 33%;
+.regLeft {
+    width: 36%;
     height: 100%;
     display: flex;
     padding: 18px 0px 0px 30px;
@@ -41,11 +41,11 @@
     justify-content: flex-start;
     overflow: hidden;
 }
-.left > img {
+.regLeft > img {
     width: 500px;
     height: 500px;
 }
-.left > h1{
+.regLeft > h1{
     font-family: Inter_Regular;
     font-size: 1.2rem;
     width: 80%;
@@ -53,14 +53,14 @@
     color: var(--color-text);
     text-align: center;
 }
-.left > p {
+.regLeft > p {
     font-size: 1.02rem;
     font-family: Inter_Regular;
     color: var(--color-placeholder);
     text-align: justify;
     line-height: 25px;
 }
-.right {
+.regRight {
     background-color: var(--color-cards);
     width: 33%;
     height: max-content;
@@ -118,10 +118,10 @@
     .last{
         display: none;
     }
-    .right {
+    .regRight {
         width: 50%;
     }
-    .left{
+    .regLeft{
         width: 50%;
     }
 }
@@ -138,7 +138,7 @@
         height: 100%;
         padding-right: 0px;
     }
-    .right {
+    .regRight {
         width: 100%;
         height: 100%;
         align-items: center;
@@ -148,7 +148,7 @@
         border: none;
         border-radius: 0px;
     }
-    .left {
+    .regLeft {
         display: none;
     }
     .stepper.horizontalStepper {
@@ -171,7 +171,7 @@
     .home_main > svg {
         display: none;
     }
-    .right {
+    .regRight {
         justify-content: flex-start !important;
         padding-top: 20px;
         min-width: 0px;

@@ -56,7 +56,6 @@
     min-width: 200px;
     min-height: 200px;
     border-radius: 200px;
-    background-image: url(../../public/assets/images/profi.jpg);
     background-size: cover;
 }
 .settings > h1 {
@@ -311,7 +310,7 @@
 .cardsbottom > .right > .cardImage {
     width: 400px;
     height: 254px;
-    background-image: url(../../public/assets/images/bfacard.svg);
+    background-image: url(../assets/images/bfacard.svg);
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;

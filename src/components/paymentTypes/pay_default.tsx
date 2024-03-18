@@ -1,5 +1,5 @@
 import Image from "next/image";
-import svg from "../../../public/assets/images/Select-amico.svg";
+import svg from "@/assets/images/Select-amico.svg";
 
 export default function PayDefault() {
 	return (
