@@ -3,20 +3,20 @@
 import "@/styles/pay-types.css";
 import { useEffect } from "react";
 import { CiSearch } from "react-icons/ci";
-import africell from "../../../public/assets/images/africell.png";
-import aws from "../../../public/assets/images/aws.png";
-import dezzer from "../../../public/assets/images/dezzer.png";
-import dstv from "../../../public/assets/images/dstv.png";
-import ende from "../../../public/assets/images/ende.png";
-import googlecloud from "../../../public/assets/images/googlecloud.png";
-import heroku from "../../../public/assets/images/heroku.png";
-import netone from "../../../public/assets/images/nteone.png";
-import paratus from "../../../public/assets/images/paratus.png";
-import spotify from "../../../public/assets/images/spotify.png";
-import tvcabo from "../../../public/assets/images/tvcabo.png";
-import unitel from "../../../public/assets/images/unitel.png";
-import vercel from "../../../public/assets/images/vercel.png";
-import zap from "../../../public/assets/images/zap.png";
+import africell from "@/assets/images/africell.png";
+import aws from "@/assets/images/aws.png";
+import dezzer from "@/assets/images/dezzer.png";
+import dstv from "@/assets/images/dstv.png";
+import ende from "@/assets/images/ende.png";
+import googlecloud from "@/assets/images/googlecloud.png";
+import heroku from "@/assets/images/heroku.png";
+import netone from "@/assets/images/nteone.png";
+import paratus from "@/assets/images/paratus.png";
+import spotify from "@/assets/images/spotify.png";
+import tvcabo from "@/assets/images/tvcabo.png";
+import unitel from "@/assets/images/unitel.png";
+import vercel from "@/assets/images/vercel.png";
+import zap from "@/assets/images/zap.png";
 import ButtonService from "../buttons/buttonService";
 
 export default function PayServices() {

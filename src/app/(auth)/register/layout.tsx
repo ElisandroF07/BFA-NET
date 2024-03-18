@@ -1,11 +1,6 @@
 "use client";
 
-import ConfirmExitModal from "@/components/modals/confirmExit";
-import useStepsStore from "@/contexts/stores/stepsStore";
-import "@/styles/globals.css";
-import "@/styles/navbar.css";
-import "@/styles/register.css";
-import Stepper from "@keyvaluesystems/react-stepper";
+import { useDisclosure } from "@nextui-org/react";
 import {
 	Button,
 	Link,
@@ -17,14 +12,19 @@ import {
 	NavbarMenuItem,
 	NavbarMenuToggle,
 } from "@nextui-org/react";
-import { useDisclosure } from "@nextui-org/react";
+import Stepper from "@keyvaluesystems/react-stepper";
+import ConfirmExitModal from "@/components/modals/confirmExit";
+import useStepsStore from "@/contexts/stores/stepsStore";
+import "@/styles/globals.css";
+import "@/styles/navbar.css";
+import "@/styles/register.css";
 import "react-step-progress/dist/index.css";
 
 interface RegisterProps {
 	children: React.ReactNode;
 }
 
-export default function AccountVerification({ children }: RegisterProps) {
+export default function RegisterLayout({ children }: RegisterProps) {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	const stepsStore = useStepsStore();
 
@@ -171,7 +171,7 @@ export default function AccountVerification({ children }: RegisterProps) {
 			</Navbar>
 			<div className="home_main">
 				<div className="home_body">
-					<div className="left">
+					<div className="regLeft">
 						<Stepper
 							orientation="vertical"
 							steps={[
@@ -180,11 +180,11 @@ export default function AccountVerification({ children }: RegisterProps) {
 									completed: stepsStore.step1,
 								},
 								{
-									stepLabel: "Documentação",
+									stepLabel: "Validação de identidade",
 									completed: stepsStore.step2,
 								},
 								{
-									stepLabel: "Validação de identidade",
+									stepLabel: "Assinatura",
 									completed: stepsStore.step3,
 								},
 								{
@@ -196,7 +196,7 @@ export default function AccountVerification({ children }: RegisterProps) {
 							styles={styles}
 						/>
 					</div>
-					<div className="right">
+					<div className="regRight">
 						<Stepper
 							className="stepper2"
 							orientation="horizontal"

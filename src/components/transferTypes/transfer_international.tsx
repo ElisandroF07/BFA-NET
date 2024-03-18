@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CiWarning } from "react-icons/ci";
-import svg from "../../../public/assets/images/503.svg";
+import svg from "@/assets/images/503.svg";
 
 export default function TransferInternational() {
 	return (

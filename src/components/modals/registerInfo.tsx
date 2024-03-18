@@ -1,4 +1,5 @@
-"use client";
+"use client"
+
 import "@/styles/modal.css";
 import {
 	Button,
@@ -11,9 +12,9 @@ import {
 
 interface IProps {
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	isOpen: any;
+isOpen: any;
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	onOpenChange: any;
+onOpenChange: any;
 }
 
 export default function RegisterInfoModal({ isOpen, onOpenChange }: IProps) {
@@ -29,15 +30,15 @@ export default function RegisterInfoModal({ isOpen, onOpenChange }: IProps) {
 						y: 0,
 						opacity: 1,
 						transition: {
-							duration: 0.3,
+							duration: 0.2, // Reduzir a duração da transição
 							ease: "easeOut",
 						},
 					},
 					exit: {
-						y: -20,
-						opacity: 0,
+						y: -10, // Reduzir a distância de deslocamento
+						opacity: 0.5, // Reduzir a opacidade durante a saída
 						transition: {
-							duration: 0.2,
+							duration: 0.2, // Reduzir a duração da transição
 							ease: "easeIn",
 						},
 					},

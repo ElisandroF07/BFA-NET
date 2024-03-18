@@ -59,16 +59,16 @@
     margin: 0px;
 }
 .channels:nth-child(1) > .image {
-    background-image: url(./../../public/assets/images/card1.png);
+    background-image: url(../assets/images/card1.png);
 }
 .channels:nth-child(2) > .image {
-    background-image: url(./../../public/assets/images/card2.png);
+    background-image: url(../assets/images/card2.png);
 }
 .channels:nth-child(2) > p {
     margin: 10px 0px;
 }
 .channels:nth-child(3) > .image {
-    background-image: url(./../../public/assets/images/card3.png);
+    background-image: url(../assets/images/card3.png);
 }
 .channels > .title {
     font-size: 1.2rem;

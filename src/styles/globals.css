@@ -4,19 +4,19 @@
 
 @font-face {
     font-family: Inter_Light;
-    src: url(../../public/assets/fonts/Inter-Light.ttf);
+    src: url(../assets/fonts/Inter-Light.ttf);
 }
 @font-face {
     font-family: Inter_Regular;
-    src: url(../../public/assets/fonts/Inter-Regular.ttf);
+    src: url(../assets/fonts/Inter-Regular.ttf);
 }
 @font-face {
     font-family: Inter_Medium;
-    src: url(../../public/assets/fonts/Inter-Medium.ttf);
+    src: url(../assets/fonts/Inter-Medium.ttf);
 }
 @font-face {
     font-family: Inter_SemiBold;
-    src: url(../../public/assets/fonts/Inter-SemiBold.ttf);
+    src: url(../assets/fonts/Inter-SemiBold.ttf);
 }
 
 *, html {
@@ -26,6 +26,12 @@
     scroll-behavior: smooth;
     outline: none;
     font-family: Inter_Regular;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 :root {

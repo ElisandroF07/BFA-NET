@@ -1,12 +1,11 @@
 import Image from "next/image";
 import { RefObject } from "react";
 import { FaX } from "react-icons/fa6";
-import "react-sweet-progress/lib/style.css";
-import jpeg from "../../../public/assets/images/JPEG.svg";
-import jpg from "../../../public/assets/images/JPG.svg";
-import png from "../../../public/assets/images/PNG.svg";
-import svg from "../../../public/assets/images/SVG.svg";
-import webp from "../../../public/assets/images/WEBP.svg";
+import jpeg from "@/assets/images/JPEG.svg";
+import jpg from "@/assets/images/JPG.svg";
+import png from "@/assets/images/PNG.svg";
+import svg from "@/assets/images/SVG.svg";
+import webp from "@/assets/images/WEBP.svg";
 
 interface IProps {
 	imageType: string;

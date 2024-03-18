@@ -163,7 +163,6 @@
     height: 50px;
     border-radius: 50px;
     margin-right: 5px;
-    background-image: url(../../public/assets/images/profi.jpg);
     background-size: cover;
 }
 .accountCard > div {

@@ -1,17 +1,14 @@
 "use client";
 
-import { AuthProvider } from "@/contexts/AuthContext";
-import NextAuthSessionProvider from "@/providers/sessionProvider";
-import "@/styles/globals.css";
 import { NextUIProvider } from "@nextui-org/react";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import NextAuthSessionProvider from "@/providers/sessionProvider";
 import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "sonner";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import "@/styles/globals.css";
 
-export default function RootLayout({
-	children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({children,}: Readonly<{ children: React.ReactNode }>) {
 	return (
 		<html lang="pt-PT">
 			<head>
