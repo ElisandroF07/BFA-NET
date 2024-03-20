@@ -67,6 +67,9 @@ div[data-overlay-container="true"] {
     color: var(--color-placeholder);
 }
 
+.apexcharts-canvas.apexchartszcij6rr1.apexcharts-theme-light {
+    height: 100% !important;
+}
 
 .page_title {
     font-family: Inter_Regular;

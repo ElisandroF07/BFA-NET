@@ -29,6 +29,7 @@ import Upmoney from "@/privatePages/upmoney/page";
 import api from "@/services/api";
 import useAccountStore from "@/contexts/stores/accountStore";
 import { toast } from "sonner";
+import useSWR from "swr";
 
 interface DashboardProps {
   username: string,
@@ -59,9 +60,40 @@ export default function Dashbaord({fullName, username, biNumber, email, birthDat
   const router = useRouter()
   const [picture, setPicture] = useState("")
   const useAccount = useAccountStore()
+  const fetcher = (url: string) => api.get(url).then(res => res.data);
+	const { data: accountData, error: accountError } = useSWR(`/getAccountData/${biNumber}`, fetcher);
+  const { data: pictureProfile, error: pictureError } = useSWR(`/getProfilePicture/${biNumber}`, fetcher);
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+		if (accountData) {
+      useAccount.updateIban(accountData.account.iban)
+      useAccount.updateNbi(accountData.account.nbi)
+      useAccount.updateRole(accountData.account.role)
+      useAccount.updateNumber(accountData.account.number)
+      useAccount.updateAuthorizedBalance(accountData.account.authorized_balance)
+      useAccount.updateBic(accountData.account.bic)
+      useAccount.updateAuthorizedBalance(accountData.account.available_balance)
+      useAccount.updateCreatedAt(accountData.account.created_at)
+      useAccount.updateCurrency(accountData.account.currency)
+      useAccount.updateState(accountData.account.state)
+		}
+		if (accountError) {
+			toast.error("Não foi possível carregar os dados da sua conta!", { description: "Verifique a sua conexão com a internet." });
+		}
+	}, [accountData, accountError]);
+
+  useEffect(() => {
+    if (pictureProfile) {
+      setPicture(pictureProfile.imageUrl)
+    }
+    if (pictureError) {
+      toast.error("Não foi possível carregar a sua foto de perfil!", {description: "Verifique a sua conexão conexão com internet."})
+    }
+  }, [pictureProfile, pictureError])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-useEffect(() => {
+  useEffect(() => {
     const buttons = document.querySelectorAll(
       ".btn[data-active]",
     ) as NodeListOf<HTMLButtonElement>;
@@ -118,49 +150,20 @@ useEffect(() => {
         setPage(button.dataset.page || "");
       });
     }
-
-    async function getProfilePicture() {
-      try {
-        const response = await api.get(`/getProfilePicture/${biNumber}`)
-        setPicture(response.data.imageUrl)
-      }
-      catch{
-        toast.error("Verifique a sua conexão com a internet!")
-      }
-    }
-
-    async function getAccountData(){
-      try {
-        const response = await api.get(`/getAccountData/${biNumber}`);
-        const {iban, nbi, role, number, authorized_balance, bic, available_balance, created_at, currency, state,} = response.data.account
-        useAccount.updateIban(iban)
-        useAccount.updateNbi(nbi)
-        useAccount.updateRole(role)
-        useAccount.updateNumber(number)
-        useAccount.updateAuthorizedBalance(authorized_balance)
-        useAccount.updateBic(bic)
-        useAccount.updateAuthorizedBalance(available_balance)
-        useAccount.updateCreatedAt(created_at)
-        useAccount.updateCurrency(currency)
-        useAccount.updateState(state)
-      } catch (err) {
-        toast.error("Falha ao carregar dados!", {description: "Verifique a sua conexão com a internet."})
-      }
-    }
-
-    getProfilePicture()
-    getAccountData()
     router.refresh()
-
   }, []);
 
   async function logout() {
     await signOut({
       redirect: false
     })
+
+     
+      
+
     router.replace('/login')
   }
-  
+
   return (
     <main className="privateMainContainer">
       <div className="shadow" />
@@ -318,7 +321,7 @@ useEffect(() => {
       </header>
       <section className="privateChildrenContainer">
           {page === "Dashboard" ? (
-            <Dashboard />
+            <Dashboard biNumber={biNumber} titular={username}/>
           ) : page === "Conta" ? (
             <Account biNumber={biNumber} fullName={fullName} titular={username} birthDate={birthDate} email={email} country={country} address={address} picture={picture}/>
           ) : page === "Pagamentos" ? (
