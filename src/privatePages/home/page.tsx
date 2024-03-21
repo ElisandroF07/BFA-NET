@@ -74,6 +74,14 @@ export default function Dashboard({biNumber, titular}: IProps) {
 		return `${day}-${month}-${year}`;
 	}
 
+	function convertDate(timestamp: number) {
+    const data = new Date(timestamp);
+    data.setFullYear(data.getFullYear() + 2);
+    const mes = (`0${data.getMonth() + 1}`).slice(-2);
+    const ano = data.getFullYear();
+    return `${mes} / ${ano}`;
+  }
+
 	return (
 		<div className="dashboard_container">
 			<div className="dashboard_top">
@@ -84,16 +92,16 @@ export default function Dashboard({biNumber, titular}: IProps) {
 				<div className="exchanges_container">
 					<h1 className="title">Taxas de câmbio</h1>
 					<div className="exchanges">
-						<CardExchange currency='Dollar' subtitle='USD - AOA' price='904'>
+						<CardExchange currency='Dollar' subtitle='USD - AOA' price='904' backgroundColor='linear-gradient(-134deg, #f05d1a 0, #ff9727 100%)'>
 							<FaDollarSign/>
 						</CardExchange>
-						<CardExchange currency='Dollar' subtitle='USD - AOA' price='904'>
+						<CardExchange currency='Dollar' subtitle='USD - AOA' price='904'  backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #66859d 100%)'>
 							<FaDollarSign/>
 						</CardExchange>
-						<CardExchange currency='Dollar' subtitle='USD - AOA' price='904'>
+						<CardExchange currency='Dollar' subtitle='USD - AOA' price='904' backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #66859d 100%)'>
 							<FaDollarSign/>
 						</CardExchange>
-						<CardExchange currency='Dollar' subtitle='USD - AOA' price='904'>
+						<CardExchange currency='Dollar' subtitle='USD - AOA' price='904' backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #66859d 100%)'>
 							<FaDollarSign/>
 						</CardExchange>
 					</div>
@@ -154,9 +162,9 @@ export default function Dashboard({biNumber, titular}: IProps) {
 				<h1 className="title">Meus cartões</h1>
         <div className="separator" />
 				<div className="cardImage">
-					<p>Elisandro Franco</p>
-					<p>26 / 25</p>
-					<p>1267</p>
+					<p>{titular}</p>
+					<p>{convertDate(parseInt(card?.createdAt || ""))}</p>
+					<p>{card?.cardNumber.slice(-4)}</p>
         </div>
 				<div className="infoContainer" style={{marginTop: "20px"}}>
           {(

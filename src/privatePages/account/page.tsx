@@ -51,6 +51,7 @@ export default function Account({
   fullName,
   picture,
 }: IProps) {
+  
   const [account, setAccount] = useState<IAccount | null>(null);
   const store = useUserStore();
 
