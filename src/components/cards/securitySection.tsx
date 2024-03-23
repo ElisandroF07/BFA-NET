@@ -12,6 +12,10 @@ import { toast } from "sonner";
 import { z } from "zod";
 import InfoError from "../others/infoError";
 
+interface IProps {
+    biNumber: string
+}
+
 const formSchema = z.object({
     code: z.string().min(1, "Introduza o código de acesso atual!"),
     accessCode: z.string().min(1, "Introduza o novo código de acesso!").max(6, "O código de acesso deve conter apenas 6 dígitos").regex(/^[0-9]{6}$/, "São aceites apenas números!"),
@@ -21,20 +25,45 @@ const formSchema = z.object({
     path: ["confirmCode"],
 });
 
-type formType = z.infer<typeof formSchema>
+const formSchemaEmail = z.object({
+    accessCode: z.string().min(1, "Introduza o código de acesso!"),
+    emailAddress: z.string().email("Introduza um endereço de email válido!"),
+    confirmEmail: z.string().email("Introduza um endereço de email válido!"),
+    }).refine(email => email.emailAddress === email.confirmEmail, {
+    message: "Os endreços não coincidem!",
+    path: ["confirmEmail"],
+});
 
-export default function SecuritySection() {
+const formSchema2FA = z.object({
+    otp: z.string().min(1, "Introduza o código de acesso!").max(6, "O código de acesso é constituido por apenas 6 dígitos!"),
+})
+
+type formType = z.infer<typeof formSchema>
+type formTypeEmail = z.infer<typeof formSchemaEmail>
+type formType2FA = z.infer<typeof formSchema2FA>
+
+export default function SecuritySection({biNumber}: IProps) {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { isOpen: isOpen2FA, onOpen: onOpen2FA, onClose: onClose2FA } = useDisclosure();
+    const { isOpen: isEmailModalOpen, onOpen: onEmailModalOpen, onClose: onEmailModalClose } = useDisclosure();
+    const [newEmail, setNewEmail] = useState("")
     const useStore = useUserStore()
     const [loading, setLoading] = useState(false)
-    const {register, handleSubmit, formState: {errors}} = useForm<formType>({
-        resolver: zodResolver(formSchema)
-    })
-
     let email = ""
     if (typeof window !== "undefined") {
         email = localStorage.getItem("email") || useStore.email;
     }
+    const {register, handleSubmit, formState: {errors}} = useForm<formType>({
+        resolver: zodResolver(formSchema)
+    })
+
+    const {register: registerEmail, handleSubmit: handleSubmitEmail, formState: {errors: errorsEmail}} = useForm<formTypeEmail>({
+        resolver: zodResolver(formSchemaEmail)
+    })
+
+    const {register: register2FA, handleSubmit: handleSubmit2FA, formState: {errors: errors2FA}} = useForm<formType2FA>({
+        resolver: zodResolver(formSchema2FA)
+    })
 
     function APICall(data: string): Promise<string> {
 		setLoading(true)
@@ -75,6 +104,48 @@ export default function SecuritySection() {
 		});
 	}
 
+    async  function submitForm2FA(data: formType2FA) {
+        const response = await api.get(`/check2FA/${data.otp}/${biNumber}`)
+        if (response.data.valid) {
+            const resp = await api.get(`/setEmail/${newEmail}/${biNumber}`)
+            if (resp.status === 201) {
+                toast.success("Endereço de email alterado com sucesso!")
+                onEmailModalClose()
+                onClose2FA()
+            }
+            else {
+                toast.error("Occorreu um erro ao processar a sua solicitação! Tente novamente mais tarde.")
+                onEmailModalClose()
+                onClose2FA()
+            }
+        }
+        else {
+            toast.error("Código de verificação inválido!")
+        }
+    }
+
+    async function submitFormEmail(data: formTypeEmail) {
+        const body = JSON.stringify({
+            accessCode: data.accessCode,
+            biNumber
+        })
+       const response = await api.post("/checkAccessCode", body)
+       if (response.data.valid) {
+            const resp = await api.get(`/private2fa/${data.emailAddress}/${biNumber}`)
+            if (resp.status === 201) {
+                toast.success("Código de verificação enviado para o novo endereço de email")
+                setNewEmail(data.emailAddress)
+                onOpen2FA()
+            }
+            else {
+                toast.error(resp.data.message)
+            }
+       }
+       else {
+        toast.error("Código de acesso incorreto!")
+       }
+    }
+
     return (
       <div className="manageInfoContainer">
         <div
@@ -89,7 +160,7 @@ export default function SecuritySection() {
             <button type="button" onMouseDown={onOpen}>
                 Alterar código de acesso <IoIosArrowRoundForward />
             </button>
-            <button type="button">
+            <button type="button" onMouseDown={onEmailModalOpen}>
                 Alterar endereço de email <IoIosArrowRoundForward />
             </button>
         </div>
@@ -99,11 +170,9 @@ export default function SecuritySection() {
                     <form onSubmit={handleSubmit(submitForm)}>
                         <ModalHeader className="flex flex-col gap-1">Alterar código de acesso</ModalHeader>
                         <ModalBody>
-
                             <Input
                                 autoFocus
                                 label="Código de acesso atual"
-                                placeholder="Insira seu código de acesso atual"
                                 type="password"
                                 variant="flat"
                                 onKeyDown={(event)=>{ if (event.key === 'e') event.preventDefault()}}
@@ -112,7 +181,6 @@ export default function SecuritySection() {
                             {errors.code && <InfoError message={errors.code.message}/>}
                             <Input
                                 label="Novo código de acesso"
-                                placeholder="Insira o novo código de acesso"
                                 type="password"
                                 variant="flat"
                                 onKeyDown={(event)=>{ if (event.key === 'e') event.preventDefault()}}
@@ -123,7 +191,6 @@ export default function SecuritySection() {
                                 label="Confirme o novo código de acesso"
                                 type="password"
                                 variant="flat"
-                                placeholder="Insira novamente o código criado"
                                 {...register("confirmCode")}
                             />
                             {errors.confirmCode && <InfoError message={errors.confirmCode.message}/>}
@@ -140,47 +207,70 @@ export default function SecuritySection() {
                 </ModalContent>
             </Modal>
         )}
-        {isOpen && (
-            <Modal isOpen={isOpen} onClose={onClose} placement="top-center">
+        {isEmailModalOpen && (
+            <Modal isOpen={isEmailModalOpen} onClose={onEmailModalClose} placement="top-center">
                 <ModalContent>
-                    <form onSubmit={handleSubmit(submitForm)}>
-                        <ModalHeader className="flex flex-col gap-1">Alterar código de acesso</ModalHeader>
+                    <form onSubmit={handleSubmitEmail(submitFormEmail)}>
+                        <ModalHeader className="flex flex-col gap-1">Alterar endereço de email</ModalHeader>
                         <ModalBody>
-
                             <Input
                                 autoFocus
-                                label="Código de acesso atual"
-                                placeholder="Insira seu código de acesso atual"
-                                type="password"
+                                label="Insira o novo endereço de email"
+                                type="text"
+                                variant="flat"
+                                {...registerEmail("emailAddress")}
+                            />
+                            {errorsEmail.emailAddress && <InfoError message={errorsEmail.emailAddress.message}/>}
+                            <Input
+                                label="Confirme o novo email"
+                                type="text"
+                                variant="flat"
+                                {...registerEmail("confirmEmail")}
+                            />
+                            {errorsEmail.confirmEmail && <InfoError message={errorsEmail.confirmEmail.message}/>}
+                            <Input
+                                label="Código de acesso"
+                                type="number"
                                 variant="flat"
                                 onKeyDown={(event)=>{ if (event.key === 'e') event.preventDefault()}}
-                                {...register("code")}
+                                {...registerEmail("accessCode")}
                             />
-                            {errors.code && <InfoError message={errors.code.message}/>}
-                            <Input
-                                label="Novo código de acesso"
-                                placeholder="Insira o novo código de acesso"
-                                type="password"
-                                variant="flat"
-                                onKeyDown={(event)=>{ if (event.key === 'e') event.preventDefault()}}
-                                {...register("accessCode")}
-                            />
-                            {errors.accessCode && <InfoError message={errors.accessCode.message}/>}
-                            <Input
-                                label="Confirme o novo código de acesso"
-                                type="password"
-                                variant="flat"
-                                placeholder="Insira novamente o código criado"
-                                {...register("confirmCode")}
-                            />
-                            {errors.confirmCode && <InfoError message={errors.confirmCode.message}/>}
+                            {errorsEmail.accessCode && <InfoError message={errorsEmail.accessCode.message}/>}
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="danger" variant="flat" onPress={onClose} disabled={loading}>
+                            <Button color="danger" variant="flat" onPress={onEmailModalClose} disabled={loading}>
                                 Cancelar
                             </Button>
                             <Button color="primary" type="submit" disabled={loading}>
                                 Confirmar alteração
+                            </Button>
+                        </ModalFooter>
+                    </form>
+                </ModalContent>
+            </Modal>
+        )}
+        {isOpen2FA && (
+            <Modal isOpen={isOpen2FA} onClose={onClose2FA} placement="top-center">
+                <ModalContent>
+                    <form onSubmit={handleSubmit2FA(submitForm2FA)}>
+                        <ModalHeader className="flex flex-col gap-1">Verificação de email</ModalHeader>
+                        <ModalBody>
+                            <Input
+                                autoFocus
+                                label="Insira o código enviado para o seu email"
+                                type="number"
+                                onKeyDown={(event)=>{ if (event.key === 'e') event.preventDefault()}}
+                                variant="flat"
+                                {...register2FA("otp")}
+                            />
+                            {errors2FA.otp && <InfoError message={errors2FA.otp.message}/>}
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button color="danger" variant="flat" onPress={onClose2FA} disabled={loading}>
+                                Cancelar
+                            </Button>
+                            <Button color="primary" type="submit" disabled={loading}>
+                                Verificar
                             </Button>
                         </ModalFooter>
                     </form>

@@ -2,6 +2,7 @@ import api from "@/services/api"
 import axios from "axios"
 import { NextAuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
+import type { UserSession } from 'next-auth';
 
 
 const nextAuthOptions: NextAuthOptions = {
@@ -41,12 +42,17 @@ const nextAuthOptions: NextAuthOptions = {
 	},
 	callbacks: {
 		async jwt({ token, user }) {
-			user && (token.user = user)
-            return token;
+			if (user) {
+				token.user = user
+			}
+      return token;
 		},
 		async session({ session, token }){
-			session = token.user as any
-            return session
+			session = token.user as UserSession
+			const biNumber = token.user.user.biNumber as string
+			const response = await  api.get(`/getUserData/${biNumber}`)
+			session = {user: response.data.client, token: token.token}
+      return session
 		}
 	}
 }

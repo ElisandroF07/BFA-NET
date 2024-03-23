@@ -20,9 +20,9 @@ const loginSchema = z.object({
 		.string({
 			required_error: "O campo não pode estar vazio!",
 		})
-		.min(1, "O número de adesão é obrigatório!")
+		.min(1, "Introduza o seu número de adesão ou o seu email!")
 		.transform((information) => {
-			return information.trim().toUpperCase();
+			return information.trim().toLowerCase();
 		}),
 	access_code: z
 		.string({
@@ -57,6 +57,10 @@ export default function Login() {
 					if (typeof window !== "undefined") {
 						localStorage.setItem("email", response.data.email);
 					}
+					useStore.updateMembershipNumber(response.data.membership_number)
+					if (typeof window !== "undefined") {
+						localStorage.setItem("membership_number", response.data.membership_number);
+					}
 					resolve("Autenticado com sucesso!");
 				} else {
 					reject(response.data.message);
@@ -74,12 +78,20 @@ export default function Login() {
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
 		return new Promise(async (resolve, reject) => {
 			try {
-				useStore.updateMembershipNumber(membership_number);
+				if (membership_number.includes("@")) {
+					useStore.updateEmail(membership_number);
+					if (typeof window !== "undefined") {
+					localStorage.setItem("email", membership_number);
+				}
+				else {
+					useStore.updateMembershipNumber(membership_number);
 				if (typeof window !== "undefined") {
 					localStorage.setItem("membership_number", membership_number);
 				}
+				}
+				}
 				const response = await axios.get(
-					`http://localhost:5000/2fa/${membership_number}`,
+					`http://localhost:5000/2fa/${membership_number.toLowerCase()}`,
 				);
 				if (response.status === 201) {
 					resolve(response.data.message);
@@ -135,9 +147,9 @@ export default function Login() {
 						</div>
 						<div className="body_form">
 							<div className="input_field">
-								<label htmlFor="membership_number">Número de adesão</label>
+								<label htmlFor="membership_number">Email ou número de adesão</label>
 								<input
-									placeholder="Nome ou número de adesão"
+									placeholder="Email ou número de adesão"
 									{...register("membership_number")}
 								/>
 								{errors.membership_number && (

@@ -80,7 +80,7 @@ export default function Account({
       />
     ),
     cards: <CardsSection biNumber={biNumber} titular={titular} />,
-    security: <SecuritySection />,
+    security: <SecuritySection  biNumber={biNumber} />,
   };
 
   return (

@@ -5,7 +5,7 @@ import api from "@/services/api";
 import { useEffect, useState } from "react";
 import "@/styles/dashboard.css"
 import CardService from "@/components/cards/cardService";
-import { CiGps, CiInboxIn, CiInboxOut, CiMoneyCheck1, CiReceipt, CiWallet } from "react-icons/ci";
+import { CiBellOn, CiGps, CiInboxIn, CiInboxOut, CiMoneyCheck1, CiReceipt, CiWallet } from "react-icons/ci";
 import { toast } from "sonner";
 import MovimentationsChart from '@/components/charts/movimentationsChart';
 import MovimentationCard from '@/components/cards/movimentationCard';
@@ -13,10 +13,13 @@ import { GoCheckCircleFill } from "react-icons/go";
 import { IoIosCloseCircle } from "react-icons/io";
 import { FaDollarSign } from 'react-icons/fa6';
 import CardExchange from '@/components/cards/cardExchange';
+import CardFriend from '@/components/cards/cardFriend';
+import axios from 'axios';
 
 interface IProps {
 	biNumber: string,
-	titular: string
+	titular: string,
+	picture: string
 }
 
 interface IAccount {
@@ -41,7 +44,7 @@ interface ICard {
 	state: string
 }
 
-export default function Dashboard({biNumber, titular}: IProps) {
+export default function Dashboard({biNumber, titular,picture}: IProps) {
 
 	const [account, setAccount] = useState<IAccount | null>(null);
 	const [card, setCard] = useState<ICard | null>(null);
@@ -85,76 +88,64 @@ export default function Dashboard({biNumber, titular}: IProps) {
 	return (
 		<div className="dashboard_container">
 			<div className="dashboard_top">
-				<h1>Olá {titular}, é um prazer ter você aqui</h1>
-				<p>Este é o resumo da sua conta.</p>
+				<div>
+					<h1>Dashboard</h1>
+					<p>Gerencie o seu dinheiro facilemente no sua plataforma de Internet Banking</p>
+				</div>
+				<div className='last'>
+					<button type='button'>
+						<CiBellOn className="icon" />
+					</button>
+					<div className="layoutProfile" style={{backgroundImage: `url(${picture})`}}/>
+				</div>
 			</div>
 			<div className="dashboard_middle">
+				<div className="balanceContainer">
+					<div className="balance">
+					  <h1>Saldo disponível</h1>
+						<p>
+						{account?.available_balance},00 Kz
+            </p>
+						<p>Total de saldo disponível na conta</p>
+					</div>
+					<div className="balance">
+					<h1>Saldo autorizado</h1>
+						<p>
+              {account?.authorized_balance},00 Kz
+            </p>
+						<p>Total de saldo autorizado na conta</p>
+					</div>
+					<div className="balance">
+					<h1>Saldo por levantar</h1>
+						<p>
+              {account?.available_balance},00 Kz
+            </p>
+						<p>Total de saldo por levantar</p>
+					</div>
+				</div>
 				<div className="exchanges_container">
 					<h1 className="title">Taxas de câmbio</h1>
 					<div className="exchanges">
-						<CardExchange currency='Dollar' subtitle='USD - AOA' price='904' backgroundColor='linear-gradient(-134deg, #f05d1a 0, #ff9727 100%)'>
-							<FaDollarSign/>
-						</CardExchange>
-						<CardExchange currency='Dollar' subtitle='USD - AOA' price='904'  backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #66859d 100%)'>
-							<FaDollarSign/>
-						</CardExchange>
-						<CardExchange currency='Dollar' subtitle='USD - AOA' price='904' backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #66859d 100%)'>
-							<FaDollarSign/>
-						</CardExchange>
-						<CardExchange currency='Dollar' subtitle='USD - AOA' price='904' backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #66859d 100%)'>
-							<FaDollarSign/>
-						</CardExchange>
+						<CardExchange currency='Dollar' subtitle='USD - AOA' price='904' backgroundColor='linear-gradient(-134deg, #ff5000 0, #6d3901 100%)'/>
+						<CardExchange currency='Dollar' subtitle='USD - AOA' price='904' backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #003d6d 100%)'/>
+						<CardExchange currency='Dollar' subtitle='USD - AOA' price='904' backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #003d6d 100%)'/>
+						<CardExchange currency='Dollar' subtitle='USD - AOA' price='904' backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #003d6d 100%)'/>
 					</div>
 				</div>
-				<div className="movimentations">
-					<div className="movimentations_left">
-						<h1 className="title">Últimas movimentações</h1>
-						<div className='movimentations_container'>
-							<MovimentationCard tittle='Pagamento' text='por referência ref.0234128' date='24-02-2024'>
-								<GoCheckCircleFill fill='rgb(19, 180, 59)'/>
-							</MovimentationCard>
-							<MovimentationCard tittle='Pagamento' text='por referência ref.0234128' date='24-02-2024'>
-								<GoCheckCircleFill fill='rgb(19, 180, 59)'/>
-							</MovimentationCard>
-							<MovimentationCard tittle='Levantamento' text='sem cartão ref.92847' date='12-01-2024'>
-								<IoIosCloseCircle fill='rgb(217 52 15)'/>
-							</MovimentationCard>
-							<MovimentationCard tittle='Pagamento' text='por referência ref.0234128' date='24-02-2024'>
-								<GoCheckCircleFill fill='rgb(19, 180, 59)'/>
-							</MovimentationCard>
-							<MovimentationCard tittle='Pagamento' text='por referência ref.0234128' date='24-02-2024'>
-								<GoCheckCircleFill fill='rgb(19, 180, 59)'/>
-							</MovimentationCard>
-							<MovimentationCard tittle='Levantamento' text='sem cartão ref.92847' date='12-01-2024'>
-								<IoIosCloseCircle fill='rgb(217 52 15)'/>
-							</MovimentationCard>
-							<MovimentationCard tittle='Pagamento' text='por referência ref.0234128' date='24-02-2024'>
-								<GoCheckCircleFill fill='rgb(19, 180, 59)'/>
-							</MovimentationCard>
-							<MovimentationCard tittle='Levantamento' text='sem cartão ref.92847' date='12-01-2024'>
-								<IoIosCloseCircle fill='rgb(217 52 15)'/>
-							</MovimentationCard>
-							<MovimentationCard tittle='Pagamento' text='por referência ref.0234128' date='24-02-2024'>
-								<GoCheckCircleFill fill='rgb(19, 180, 59)'/>
-							</MovimentationCard>
+				<div className="bottom">
+					<div className="bottomLeft">
+						<h1>Ultimas transações</h1>
+						<div className="content">
+							
 						</div>
 					</div>
-					<div className="movimentations_right">
-						<h1 className="title">Mêses mais movimentados</h1>
-						<div>
-							<MovimentationsChart/>
+					<div className="bottomRight">
+						<h1>Enviar para amigos</h1>
+						<div className="content">
+							<CardFriend name={"Elisandro Franco"} imageUrl={picture}/>
+							<CardFriend name={"Elisandro Franco"}  imageUrl={picture}/>
+							<CardFriend name={"Elisandro Franco"}  imageUrl={picture}/>
 						</div>
-					</div>
-				</div>
-				<div className="principal_services">
-					<h1 className="title">Acesso rápido aos principais serviços</h1>
-					<div className="services_container">
-						<CardService label="Consulta de IBAN"><CiMoneyCheck1/></CardService>
-						<CardService label="Encontrar agências"><CiGps /></CardService>
-						<CardService label="Levantamentos"><CiInboxIn/></CardService>
-						<CardService label="Consulta de saldo"><CiReceipt/></CardService>
-						<CardService label="Pagamentos"><CiInboxOut/></CardService>
-						<CardService label="Carregamentos"><CiWallet/></CardService>
 					</div>
 				</div>
 			</div>
@@ -173,7 +164,7 @@ export default function Dashboard({biNumber, titular}: IProps) {
                 { label: "Saldo contabilístico", value: `${account?.available_balance},00 Kz`},
                 { label: "Saldo autorizado", value: `${account?.authorized_balance},00 Kz`},
                 
-              ].map((item, index) => (
+              ].map((item, _index) => (
                 <div key={item.label}>
                   <h1>{item.label}</h1>
                   <p>{item.value}</p>
@@ -192,7 +183,7 @@ export default function Dashboard({biNumber, titular}: IProps) {
                 { label: "Tipo de cartão", value: `${card?.role === 1 && "Multicaixa - Débito"}`},
 								{ label: "Moeda", value: `${account?.currency}`},
                 
-              ].map((item, index) => (
+              ].map((item, _index) => (
                 <div key={item.label}>
                   <h1>{item.label}</h1>
                   <p>{item.value}</p>
@@ -211,7 +202,7 @@ export default function Dashboard({biNumber, titular}: IProps) {
                 { label: "Estado", value: `${account?.state}`},
 								{ label: "Data de abertura", value: timestampToDateString(parseInt(account?.created_at || ""))},
                 
-              ].map((item, index) => (
+              ].map((item, _index) => (
                 <div key={item.label}>
                   <h1>{item.label}</h1>
                   <p>{item.value}</p>

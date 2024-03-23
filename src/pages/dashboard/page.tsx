@@ -17,6 +17,7 @@ import {
   CiShare1,
   CiSquareAlert,
 } from "react-icons/ci";
+import { FiLogOut } from "react-icons/fi";
 import { signOut } from "next-auth/react";
 import ButtonIcon from "@/components/buttons/buttonIcon";
 import Account from "@/privatePages/account/page";
@@ -30,6 +31,7 @@ import api from "@/services/api";
 import useAccountStore from "@/contexts/stores/accountStore";
 import { toast } from "sonner";
 import useSWR from "swr";
+import axios from "axios";
 
 interface DashboardProps {
   username: string,
@@ -59,6 +61,7 @@ export default function Dashbaord({fullName, username, biNumber, email, birthDat
   const [page, setPage] = useState("Dashboard")
   const router = useRouter()
   const [picture, setPicture] = useState("")
+  const [friends, setFriends] = useState({})
   const useAccount = useAccountStore()
   const fetcher = (url: string) => api.get(url).then(res => res.data);
 	const { data: accountData, error: accountError } = useSWR(`/getAccountData/${biNumber}`, fetcher);
@@ -150,16 +153,13 @@ export default function Dashbaord({fullName, username, biNumber, email, birthDat
         setPage(button.dataset.page || "");
       });
     }
-    router.refresh()
+
   }, []);
 
   async function logout() {
     await signOut({
       redirect: false
     })
-
-     
-      
 
     router.replace('/login')
   }
@@ -294,16 +294,10 @@ export default function Dashbaord({fullName, username, biNumber, email, birthDat
         <div className="account">
           <div className="separator" />
           <div className="accountCard">
-            <div className="layoutProfile" style={{backgroundImage: `url(${picture})`}}/>
-            <div>
-              <h1>{username}</h1>
-              <p>{biNumber}</p>
-            </div>
-            <div className="exit">
-              <button type="button" onClick={logout}>
-              <CiLogout />
-              </button>
-            </div>
+            <button type="button" onClick={logout}>
+              <p>Terminar sessão </p>
+              <FiLogOut />
+            </button>
           </div>
         </div>
       </nav>
@@ -321,7 +315,7 @@ export default function Dashbaord({fullName, username, biNumber, email, birthDat
       </header>
       <section className="privateChildrenContainer">
           {page === "Dashboard" ? (
-            <Dashboard biNumber={biNumber} titular={username}/>
+            <Dashboard biNumber={biNumber} titular={username} picture={picture}/>
           ) : page === "Conta" ? (
             <Account biNumber={biNumber} fullName={fullName} titular={username} birthDate={birthDate} email={email} country={country} address={address} picture={picture}/>
           ) : page === "Pagamentos" ? (

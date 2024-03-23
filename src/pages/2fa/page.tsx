@@ -54,7 +54,7 @@ export default function TwoFactorAuthentication() {
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
 		return new Promise(async (resolve, reject) => {
 			try {
-				const response = await axios.get(`http://localhost:5000/2fa/${membership_number}`);
+				const response = await axios.get(`http://localhost:5000/2fa/${membership_number.toLowerCase()}`);
 				if (response.status === 201) {
 					resolve(response.data.message);
 				}
@@ -81,7 +81,7 @@ export default function TwoFactorAuthentication() {
 	async function submitForm(OTP: string) {
 		setLoading(true)
 		const result = await signIn('credentials', {
-      email,
+      email: email.toLowerCase(),
       OTP,
       redirect: false
     })

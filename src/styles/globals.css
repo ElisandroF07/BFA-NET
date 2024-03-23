@@ -37,7 +37,7 @@ input[type=number]::-webkit-outer-spin-button {
 :root {
     --color-text: #232c44;
     --color-link: #478099;
-    --color-body: #f8f9fd;
+    --color-body: #f5f7fb;
     --color-cards: #ffffff;
     --shadow-cards: 0 0 #0000,0 0 #0000,3px -5px 40px #cdcdd557;
     --color-focus: #fc6423;
