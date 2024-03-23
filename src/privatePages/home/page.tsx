@@ -7,7 +7,6 @@ import "@/styles/dashboard.css"
 import CardService from "@/components/cards/cardService";
 import { CiBellOn, CiGps, CiInboxIn, CiInboxOut, CiMoneyCheck1, CiReceipt, CiWallet } from "react-icons/ci";
 import { toast } from "sonner";
-import MovimentationsChart from '@/components/charts/movimentationsChart';
 import MovimentationCard from '@/components/cards/movimentationCard';
 import { GoCheckCircleFill } from "react-icons/go";
 import { IoIosCloseCircle } from "react-icons/io";
