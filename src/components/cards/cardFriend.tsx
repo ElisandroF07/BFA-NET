@@ -1,4 +1,4 @@
-import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
+import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, DropdownSection} from "@nextui-org/react";
 
 interface IProps {
   name: string,
@@ -31,19 +31,21 @@ export default function CardFriend(props: IProps) {
       <DropdownTrigger>
         <button type="button" className="cardFriend">
           <div className="layoutProfile" style={{backgroundImage: `url(${props.imageUrl})`}}/>
-          {props.name}
+          <div className="text">
+            <p>{props.name}</p>
+            <p>{props.email}</p>
+          </div>
         </button>
       </DropdownTrigger>
-      <DropdownMenu aria-label="Dynamic Actions" variant={"flat"} items={items}>
-        {(item) => (
-          <DropdownItem
-            key={item.key}
-            color={item.key === "delete" ? "danger" : "default"}
-            className={item.key === "4" ? "text-danger" : ""}
-          >
-            {item.label}
-          </DropdownItem>
-        )}
+      <DropdownMenu aria-label="Example with disabled actions">
+        <DropdownSection title="Opções">
+          <DropdownItem key="new">Enviar dinehrio</DropdownItem>
+          <DropdownItem key="copy">Solicitar dinehiro</DropdownItem>
+        </DropdownSection>
+        <DropdownSection title="Zona vermelha">  
+          <DropdownItem key="edit">Editar</DropdownItem>
+          <DropdownItem key="delete" className="text-danger" color="danger">Remover amigo</DropdownItem>
+        </DropdownSection>
       </DropdownMenu>
     </Dropdown>
   )

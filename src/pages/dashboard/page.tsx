@@ -32,6 +32,7 @@ import useAccountStore from "@/contexts/stores/accountStore";
 import { toast } from "sonner";
 import useSWR from "swr";
 import axios from "axios";
+import { TailSpin } from "react-loader-spinner";
 
 interface DashboardProps {
   username: string,
@@ -61,11 +62,13 @@ export default function Dashbaord({fullName, username, biNumber, email, birthDat
   const [page, setPage] = useState("Dashboard")
   const router = useRouter()
   const [picture, setPicture] = useState("")
-  const [friends, setFriends] = useState({})
+  const [loading, setLoading] = useState(false)
   const useAccount = useAccountStore()
   const fetcher = (url: string) => api.get(url).then(res => res.data);
 	const { data: accountData, error: accountError } = useSWR(`/getAccountData/${biNumber}`, fetcher);
   const { data: pictureProfile, error: pictureError } = useSWR(`/getProfilePicture/${biNumber}`, fetcher);
+  const currencies = ["USD", "EUR", "ZAR", "CNY"]
+  const [currency, setCurrency] = useState([])
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -85,6 +88,31 @@ export default function Dashbaord({fullName, username, biNumber, email, birthDat
 			toast.error("Não foi possível carregar os dados da sua conta!", { description: "Verifique a sua conexão com a internet." });
 		}
 	}, [accountData, accountError]);
+
+  useEffect(() => {
+    async function getCurrencies() {
+      const newCurrencies = await Promise.all(
+        currencies.map(async (item) => {
+          const response = await axios.get(
+            `https://www.bna.ao/service/rest/taxas/get/taxa/referencia?moeda=${item}&tipocambio=G`
+          );
+          return response.data.genericResponse[0];
+        })
+      );
+      setCurrency((prevCurrency) => {
+        const existingCurrencies = prevCurrency.map((curr) => curr.designacaoMoeda);
+        return [...prevCurrency, ...newCurrencies.filter((curr) => !existingCurrencies.includes(curr.designacaoMoeda)).slice(0, 4)];
+      });
+    }
+    getCurrencies();
+  }, []);
+
+  useEffect(() => {
+    console.log(currency);
+  }, [currency]);
+  
+  
+
 
   useEffect(() => {
     if (pictureProfile) {
@@ -157,10 +185,10 @@ export default function Dashbaord({fullName, username, biNumber, email, birthDat
   }, []);
 
   async function logout() {
+    setLoading(true)
     await signOut({
       redirect: false
     })
-
     router.replace('/login')
   }
 
@@ -295,8 +323,20 @@ export default function Dashbaord({fullName, username, biNumber, email, birthDat
           <div className="separator" />
           <div className="accountCard">
             <button type="button" onClick={logout}>
-              <p>Terminar sessão </p>
-              <FiLogOut />
+            {loading ? (
+              <TailSpin
+                height="25"
+                width="25"
+                color="#ff0000"
+                ariaLabel="tail-spin-loading"
+                radius="1"
+                visible={true}
+              />
+            ) : (
+             <><p>Sair </p> <CiLogout /></> 
+            )}
+              
+              
             </button>
           </div>
         </div>
@@ -315,7 +355,7 @@ export default function Dashbaord({fullName, username, biNumber, email, birthDat
       </header>
       <section className="privateChildrenContainer">
           {page === "Dashboard" ? (
-            <Dashboard biNumber={biNumber} titular={username} picture={picture}/>
+            <Dashboard biNumber={biNumber} titular={username} picture={picture} exchanges={currency}/>
           ) : page === "Conta" ? (
             <Account biNumber={biNumber} fullName={fullName} titular={username} birthDate={birthDate} email={email} country={country} address={address} picture={picture}/>
           ) : page === "Pagamentos" ? (

@@ -2,14 +2,13 @@
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: calc(100% - 370px) 350px;
-  grid-template-rows: 80px calc(100% - 100px);
-  row-gap: 20px;
-  column-gap: 20px;
-  font-size: 1rem;
+  grid-template-columns: calc(100% - 305px) 290px;
+  grid-template-rows: 80px calc(100% - 80px);
+  column-gap: 15px;
+  font-size: var(--font-small);
 }
 .dashboard_right, .dashboard_middle, .dashboard_top {
-  border-radius: 15px;
+  border-radius: 10px;
 }
 .dashboard_top {
   grid-column: 1;
@@ -17,21 +16,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px 0px 20px;
+  padding: 0px 20px 0px 0px;
   background-color: transparent;
 }
 .dashboard_top h1 {
   font-weight: 600;
-  font-size: 1.7rem;
+  font-size: var(--font-page-titles);
 }
 .dashboard_top p {
   font-weight: 200;
   color: #858585;
 }
 .dashboard_top .layoutProfile{
-  width: 60px;
-  height: 60px;
-  border-radius: 70px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
   background-size: cover;
 }
 .dashboard_top .last {
@@ -43,10 +42,10 @@
   justify-content: space-between;
 }
 .dashboard_top .last button {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border: none;
-  border-radius: 60px;
+  border-radius: 40px;
   background-color: var(--color-cards);
   cursor: pointer;
   display: flex;
@@ -61,7 +60,7 @@
 .dashboard_middle {
   grid-column: 1;
   grid-row: 2;
-  padding: 10px 10px 10px 10px;
+  padding: 10px 0px 0px 0px;
   display: flex;
   flex-direction: column;
 }
@@ -73,7 +72,11 @@
   grid-row: span 2;
   padding: 20px;
   background-color: var(--color-cards);
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  box-shadow: #959da533 0px 8px 24px;
+  overflow-y: scroll;
+}
+.dashboard_right::-webkit-scrollbar {
+  display: none;
 }
 .dashboard_right > .infoContainer {
   width: 100%;
@@ -86,8 +89,8 @@
   padding-bottom: 10px;
 }
 .dashboard_right > .cardImage {
-  width: 310px;
-  height: 197px;
+  width: 250px;
+  height: 158px;
   background-image: url(../assets/images/bfacard.svg);
   background-repeat: no-repeat;
   background-size: cover;
@@ -95,37 +98,37 @@
 }
 .dashboard_right > .cardImage > p:nth-child(1) {
   position: absolute;
-    bottom: 28px;
-    left: 40px;
+    bottom: 17px;
+    left: 33px;
     color: #ffffffa8;
-    font-size: 1rem;
+    font-size: var(--font-small);
     font-family: 'Inter_Light';
 }
 .dashboard_right > .cardImage > p:nth-child(2) {
   position: absolute;
-  bottom: 19px;
-  right: 41px;
+  bottom: 12px;
+  right: 19px;
   color: #ffffffa8;
   font-size: 0.5rem;
   font-family: 'Inter_Light';
 }
 .dashboard_right > .cardImage > p:nth-child(3) {
   position: absolute;
-  bottom: 64px;
-  right: 63px;
+  bottom: 48px;
+  right: 48px;
   color: #ffffffd6;
-  font-size: 1rem;
+  font-size: var(--font-small);
   font-family: 'Inter_Regular';
 }
 .dashboard_middle > .exchanges_container {
   width: 100%;
-  height: max-content;
+  height: 155px;
   display: flex;
   flex-direction: column;
   grid-row: 2;
   background-color: #fff;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  border-radius: 14px;
+  border-radius: 10px;
   padding: 20px;
 }
 .dashboard_middle > .exchanges_container > .exchanges {
@@ -136,8 +139,8 @@
 }
 .exchange {
   width: 24%;
-  border-radius: 14px;
-  height: 100px;
+  border-radius: 10px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -150,7 +153,6 @@
 }
 .exchange > .exchangeText {
   position: relative;
-  padding-left: 10px;
   width: 100%;
   height: 100%;
   color: #fff;
@@ -159,33 +161,32 @@
 .exchange > .exchangeText > h1 {
   position: absolute;
   font-weight: 500;
-  font-size: 1.2rem;
-  top: 25px;
+  font-size: var(--font-small-titles);
+  top: 20px;
   left: 10px;
-  letter-spacing: 1px;
 }
 .exchange > .exchangeText > p:nth-child(2) {
   position: absolute;
-    top: 56px;
+    top: 45px;
     left: 10px;
-    font-size: 0.9rem;
+    font-size: var(--font-small-info);
     font-family: Inter_Light;
 }
 .exchange > .exchangeText > p:nth-child(3) {
   position: absolute;
-  top: 36px;
+  top: 42px;
   right: 20px;
   font-weight: 500;
-  font-size: 1.2rem;
+  font-size: var(--font-small-titles);
 }
 .dashboard_middle > .movimentations {
-  margin-top: 30px;
+  margin-top: 20px;
   width: 100%;
   grid-row: 3;
 }
 
 .balanceContainer {
-  height: 140px;
+  height: 120px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -193,8 +194,8 @@
   gap: 10px;
   padding: 0px 10px 0px 10px;
   background-color: var(--color-cards);
-  border-radius: 14px;
-  margin-bottom: 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .balance:not(:nth-child(3))::after {
@@ -214,21 +215,21 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 10px;
-  padding-left: 20px;
+  gap: 5px;
+  padding: 20px;
 }
 .balance > h1 {
-  font-size: 1rem;
+  font-size: var(--font-small);
   font-family: Inter;
   font-weight: 400;
   color: #000000a8;
 }
 .balance > p:nth-child(2) {
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: var(--font-page-focus);;
 }
 .balance > p:nth-child(3) {
-  font-size: 1rem;
+  font-size: var(--font-small);
   font-family: Inter;
   font-weight: 400;
   color: #000000a8;
@@ -236,40 +237,124 @@
 
 .bottom {
   width: 100%;
-  flex: 1;
+  height: calc(100% - 280px);
   display: flex;
   align-items: center;
-  gap: 20px;
-  margin-top: 20px;
+  gap: 15px;
+  margin-top: 15px;
   font-family: Inter;
+  font-size: var(--font-small);
 }
-.bottom .bottomLeft, .bottomRight {
-  width: calc(50% - 10px);
+.bottom .bottomLeft {
+  width: calc(60% - 7.50px);
   height: 100%;
   background-color: var(--color-cards);
-  border-radius: 14px;
-  padding: 20px;
+  border-radius: 10px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.cardDashboardTransaction {
+  width: 100%;
+  height: max-content;
+  padding: 10px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #eee;
+  border-radius: 10px;
+}
+.cardDashboardTransaction > p:nth-chlid(2) {
+  font-weight: 600;
+}
+.cardDashboardTransaction > div {
+  width: 35px;
+  height: 35px;
+  background-color: #959da533;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40px;
+}
+.cardDashboardTransaction > div > .imageContainer {
+  width: 24px;
+  height: 24px;
+  background-image: url(../assets/images/wallets/paypal.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.bottomLeft > .content::-webkit-scrollbar {
+  display: none;
+}
+.bottomRight {
+  width: calc(40% - 7.50px);
+  height: 100%;
+  background-color: var(--color-cards);
+  border-radius: 10px;
+  padding: 10px 20px;
   display: flex;
   flex-direction: column;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .bottom > .bottomLeft > h1, .bottom > .bottomRight > h1 {
-  font-size: 1.1rem;
+  font-size: var(--font-small-titles);
   font-weight: 600;
 }
 .bottom > .bottomLeft > .content, .bottom > .bottomRight > .content {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
   height: calc(100% - 20px);
   overflow-y: scroll;
+  margin-top: 10px;
 }
-.bottom > .bottomLeft > .content, .bottom > .bottomRight > .content::-webkit-scrollbar {
+.bottom > .bottomLeft > .content::-webkit-scrollbar, .bottom > .bottomRight > .content::-webkit-scrollbar {
   display: none;
 }
-
+.btTop {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.btTop > svg {
+  width: 30px;
+  height: 30px;
+  fill: #606060;
+  cursor: pointer;
+}
+.btTop > h1 {
+  font-size: var(--font-small-titles);
+  font-weight: 600;
+}
 .cardFriend {
   width: 100%;
-  height: 50px;
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px 10px;
+  border-radius: 10px;
+  gap: 7px;
+  border: 1px solid #e8edef;
+}
+.cardFriend > .text >  p:nth-child(1) {
+  font-size: var(--font-small);
+  font-weight: 600;
+}
+.cardFriend > .text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+}
+.cardFriend > .text > p:nth-child(2) {
+  font-size: var(--font-small-info);
+  font-family: Inter_Light;
+}
+.cardFriend > .layoutProfile {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
 }

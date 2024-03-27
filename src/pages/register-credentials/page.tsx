@@ -10,6 +10,7 @@ import useUserStore from "@/contexts/stores/userStore";
 import "@/styles/credentials.css";
 import picture from "@/assets/images/Certification-bro.svg";
 import api from "@/services/api";
+import { TailSpin } from 'react-loader-spinner'
 
 export default function RegisterCredentials() {
 	const router = useRouter();
@@ -45,8 +46,6 @@ export default function RegisterCredentials() {
 			} 
 			catch {
 				reject("Não foi possivel processar a sua solicitação! Verifique a sua conexão com a internet.");
-			}
-			finally {
 				setLoading(false);
 			}
 		});
@@ -86,20 +85,17 @@ export default function RegisterCredentials() {
 					disabled={loading}
 					className="button_auth"
 				>
-					{!loading ? (
-						<>
-							Obter credenciais{" "}
-							<FaArrowRight
-								style={{
-									width: "20px",
-									height: "20px",
-									color: "var(--color-cards)",
-									marginLeft: "10px",
-								}}
-							/>
-						</>
+					{loading ? (
+						<TailSpin
+							height="25"
+							width="25"
+							color="#fff"
+							ariaLabel="tail-spin-loading"
+							radius="1"
+							visible={true}
+						/>
 					) : (
-						<>Validando</>
+						'Obter credenciais'
 					)}
 				</button>
 			</div>

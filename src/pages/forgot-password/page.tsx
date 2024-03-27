@@ -14,6 +14,7 @@ import business from "@/assets/images/Forgot password-pana.svg";
 import "@/styles/globals.css";
 import "@/styles/phone.css";
 import api from "@/services/api";
+import { TailSpin } from 'react-loader-spinner'
 
 const FormSchema = z.object({
 	email: z
@@ -51,14 +52,13 @@ export default function ForgotPassword() {
 					resolve(response.data.message);
 				} else {
 					reject(response.data.message);
+					setLoading(false);
 				}
 			} 
 			catch {
 				reject("Não foi possivel processar a sua solicitação! Verifique a sua conexão com a interent.");
-			} 
-			finally {
 				setLoading(false);
-			}
+			} 
 		});
 	}
 
@@ -66,7 +66,7 @@ export default function ForgotPassword() {
 		toast.promise(APICall(data), {
 			loading: "Enviando...",
 			success: (data) => {
-				router.push("/forgot-password/email-verification");
+				router.push("/email-verification");
 				return data;
 			},
 			error: (data) => {
@@ -103,7 +103,18 @@ export default function ForgotPassword() {
 								{errors.email && <InfoError message={errors.email.message} />}
 							</div>
 							<button type="submit" disabled={loading} className="button_auth">
-								Verificar email
+							{loading ? (
+								<TailSpin
+									height="25"
+									width="25"
+									color="#fff"
+									ariaLabel="tail-spin-loading"
+									radius="1"
+									visible={true}
+								/>
+							) : (
+								'Verificar email'
+							)}
 							</button>
 							<div className="terms">
 								<p>

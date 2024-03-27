@@ -12,6 +12,7 @@ import UploadCard from "@/components/cards/uploadCard";
 import UploadCard2 from "@/components/cards/uploadCard2";
 import Uploader from "@/components/cards/uploader";
 import "@/styles/upload.css";
+import { TailSpin } from 'react-loader-spinner'
 
 const MAX_FILE_SIZE: number = parseInt(process.env.MAX_FILE_SIZE ?? "5242880");
 const regexBI = /^[0-9]{9}[A-Z]{2}[0-9]{3}$/;
@@ -289,12 +290,13 @@ export default function IdentityValidation() {
 				if (response.status === 200) {
 					resolve(response.data.message);
 				}
+				reject(response.data.message)
+				setLoading(false);
 				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 			} catch (error: any) {
 				reject(error.response?.data.message);
-			} finally {
 				setLoading(false);
-			}
+			} 
 		});
 	}
 
@@ -316,10 +318,11 @@ export default function IdentityValidation() {
 				if (response.status === 200) {
 					resolve(response.data.message);
 				}
+				reject(response.data.message);
+				setLoading(false);
 				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 			} catch (error: any) {
 				reject(error.response?.data.message);
-			} finally {
 				setLoading(false);
 			}
 		});
@@ -411,7 +414,18 @@ export default function IdentityValidation() {
 					onClick={formSubmit}
 					className="button_auth"
 				>
-					{loading ? <>Validando...</> : <>Avançar</>}
+					{loading ? (
+						<TailSpin
+							height="25"
+							width="25"
+							color="#fff"
+							ariaLabel="tail-spin-loading"
+							radius="1"
+							visible={true}
+						/>
+					) : (
+						'Validar'
+					)}
 				</button>
 			</div>
 		</form>

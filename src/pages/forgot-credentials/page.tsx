@@ -15,6 +15,7 @@ import "@/styles/phone.css";
 import business from "@/assets/images/Upvote-pana.svg";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { TailSpin } from "react-loader-spinner";
 
 const FormSchema = z.object({
 	accessCode: z.string()
@@ -58,11 +59,10 @@ export default function SetCredentials() {
 					resolve(response.data.message);
 				}
 				reject(response.data.message);
+				setLoading(false)
 			} 
 			catch {
 				reject("Não foi possivel processar a sua solicitação! Verifique a sua conexão com a internet.");
-			} 
-			finally {
 				setLoading(false)
 			}
 		});
@@ -130,7 +130,18 @@ export default function SetCredentials() {
 								)}
 							</div>
 							<button type="submit" className="button_auth" disabled={loading}>
-								{loading ? "Enviando..." : "Confirmar"}
+							{loading ? (
+								<TailSpin
+									height="25"
+									width="25"
+									color="#fff"
+									ariaLabel="tail-spin-loading"
+									radius="1"
+									visible={true}
+								/>
+							) : (
+								'Salvar'
+							)}
 							</button>
 							<div className="terms">
 								<p>

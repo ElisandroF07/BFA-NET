@@ -11,7 +11,7 @@
 }
 .support_header {
     background-color: transparent;
-    border-radius: 14px;
+    border-radius: 10px;
 }
 .support_header > .top {
     width: 100%;
@@ -22,12 +22,12 @@
 }
 .support_header > .top > h1 {
     font-family: Inter_SemiBold;
-    font-size: 2rem;
+    font-size: var(--font-page-titles);
     color: var(--color-text);
 }
 .support_header > .top > p {
     font-family: Inter_Regular;
-    font-size: 1.1rem;
+    font-size: var(--font-small-titles);
     color: var(--color-text);
 }
 .support_body {
@@ -38,7 +38,7 @@
     align-items: center;
     justify-content: space-between;
     font-family: Inter;
-    font-size: 1rem;
+    font-size: var(--font-small);
 }
 .support_body > .channels {
     width: 32%;
@@ -47,6 +47,8 @@
     background-color: var(--color-cards);
     padding: 20px;
     overflow-y: scroll;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    font-size: var(--font-small)
 }
 .support_body > .channels::-webkit-scrollbar {
     display: none;
@@ -87,7 +89,7 @@
     margin: 20px 0px;
 }
 .channels h1 {
-    font-size: 1rem;
+    font-size: var(--font-small);
     font-family:  Inter_Regular;
     font-weight: 600;
 }
@@ -113,7 +115,7 @@
     height: 50px;
     border-radius: 10px;
     background-color: #f0f0f0;
-    font-size: 1rem;
+    font-size: var(--font-small);
     padding: 0px 20px;
     border: none;
     outline: none;

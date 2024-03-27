@@ -5,6 +5,7 @@
     padding: 20px 20px 20px 20px;
     display: flex;
     flex-direction: column;
+    font-size: var(--font-small);
 }
 .pt1_container > .top, .pt3_container > .top {
     width: 100%;
@@ -17,7 +18,7 @@
 }
 .pt1_container .top > h1, .pt3_container > .top > h1 {
     font-family: Inter_Regular;
-    font-size: 1rem;
+    font-size: var(--font-small);
     color: var(--color-text);
     text-align: center;
     width: 30%;
@@ -35,7 +36,7 @@
 .pt1_container  > .bottom > .left {
     width: 30%;
     height: 100%;
-    font-size: 1rem;
+    font-size: var(--font-small);
     font-family: Inter_Regular;
     display: flex;
     flex-direction: column;

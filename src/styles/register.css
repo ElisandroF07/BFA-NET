@@ -69,7 +69,7 @@
     justify-content: center;
     flex-direction: column;
     position: relative;
-    border-radius: 14px;
+    border-radius: 10px;
     padding: 20px;
     border: 1px solid var(--color-border3);
     min-width: 500px;
@@ -98,7 +98,7 @@
 .goToLogin {
     width: 130px;
     height: 40px;
-    font-size: 1rem;
+    font-size: var(--font-small);
     font-weight: 600;
     font-family: Inter_Regular;
     border-radius: 10px;
@@ -224,7 +224,7 @@
     text-align: center;
 }
 .terms > p {
-    font-size: 1rem;
+    font-size: var(--font-small);
     font-family: Inter_Regular;
     line-height: 22px;
     color: var(--color-placeholder);

@@ -10,6 +10,7 @@ import "@/styles/globals.css";
 import "@/styles/phone_verification.css";
 import business from "@/assets/images/message.svg";
 import { useRouter } from "next/navigation";
+import { TailSpin } from 'react-loader-spinner'
 
 export default function EmailVerification() {
 	const [loading, setLoading] = useState(false);
@@ -31,13 +32,13 @@ export default function EmailVerification() {
 					resolve(response.data.message);
 				}
 				reject(response.data.message)
+				setLoading(false)
 			} 
 			catch {
 				reject("Não foi possivel processar a sua solicitação! Vertifique a sua coenxão com a internet.");
+				setLoading(false)
 			} 
-			finally {
-				setLoading(false);
-			}
+			
 		});
 	}
 
@@ -86,7 +87,18 @@ export default function EmailVerification() {
 								disabled={loading}
 								className="button_auth"
 							>
-								Reenviar
+								{loading ? (
+									<TailSpin
+										height="25"
+										width="25"
+										color="#fff"
+										ariaLabel="tail-spin-loading"
+										radius="1"
+										visible={true}
+									/>
+								) : (
+									'Reenviar email'
+								)}
 							</button>
 							<div className="terms">
 								<p>Verifique o seu correio eletrônico.</p>
