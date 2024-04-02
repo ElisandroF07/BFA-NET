@@ -25,15 +25,15 @@ function ButtonService({
     <li
       data-active="false"
       onMouseDown={handleClick}
-      className="btnService flex gap-4 items-center justify-start rounded-[7px] bg-[var(--color-cards)] w-full h-[70px] px-[10px]"
-      style={{ minHeight: "70px", transition: ".3s" }}
+      className="btnService flex gap-4 items-center justify-start rounded-[7px] bg-[var(--color-cards)] w-full h-[50px] px-[10px]"
+      style={{ minHeight: "50px", transition: ".3s" }}
     >
       <Image
         src={image}
         alt="image_service"
-        width={52}
-        height={52}
-        className="rounded-[5px]"
+        width={34}
+        height={34}
+        className="rounded-[3px]"
       />
       <p style={{ transition: ".3s" }}>{serviceName}</p>
     </li>

@@ -1,9 +1,8 @@
 import LateralCard from "@/components/cards/requestCard";
 import RequestCard from "@/components/cards/requestCard";
+import TransactionList from "@/components/lists/transactionList";
 import "@/styles/consults.css";
 import {
-	CiCircleChevDown,
-	CiCircleChevUp,
 	CiCirclePlus,
 	CiImport,
 } from "react-icons/ci";
@@ -12,10 +11,11 @@ import { FaAngleDown } from "react-icons/fa6";
 interface IProps {
 	authorized_balance: number,
 	available_balance: number,
-	iban: string
+	iban: string,
+	number: string
 }
 
-export default function Consults({authorized_balance, available_balance, iban}: IProps) {
+export default function Consults({authorized_balance, available_balance, iban, number}: IProps) {
 	return (
 		<div className="consults_container">
 			<div className="consults_header">
@@ -26,164 +26,22 @@ export default function Consults({authorized_balance, available_balance, iban}: 
 				<div className="bottom">
 					<div>
 						<h2>Saldo contabilístico</h2>
-						<p>Kz {available_balance},00</p>
+						<p>{available_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}</p>
 					</div>
 					<div>
 						<h2>Saldo autorizado</h2>
-						<p>Kz {authorized_balance},00</p>
+						<p>{authorized_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}</p>
 					</div>
 					<div>
 						<h2>IBAN</h2>
-						<p>{iban}</p>
+						<p>{iban.match(/.{1,4}/g)?.join(' ')}</p>
 					</div>
 				</div>
 			</div>
 			<div className="consults_body">
 				<h1 className="title">Histórico de movimentações</h1>
 				<div className="historic">
-					<div>
-						<div className="left">
-							<h1>Levantamento sem cartão</h1>
-							<p>25.000,00 KZ</p>
-						</div>
-						<div className="right">
-							<p>
-								Ref. 003245345 <CiCircleChevDown style={{ fill: "#ff1111" }} />
-							</p>
-						</div>
-					</div>
-					<div>
-						<div className="left">
-							<h1>Levantamento sem cartão</h1>
-							<p>25.000,00 KZ</p>
-						</div>
-						<div className="right">
-							<p>
-								Ref. 003245345 <CiCircleChevUp style={{ fill: "#11aa11" }} />
-							</p>
-						</div>
-					</div>
-					<div>
-						<div className="left">
-							<h1>Levantamento sem cartão</h1>
-							<p>25.000,00 KZ</p>
-						</div>
-						<div className="right">
-							<p>
-								Ref. 003245345 <CiCircleChevUp style={{ fill: "#11aa11" }} />
-							</p>
-						</div>
-					</div>
-					<div>
-						<div className="left">
-							<h1>Levantamento sem cartão</h1>
-							<p>25.000,00 KZ</p>
-						</div>
-						<div className="right">
-							<p>
-								Ref. 003245345 <CiCircleChevDown style={{ fill: "#ff1111" }} />
-							</p>
-						</div>
-					</div>
-					<div>
-						<div className="left">
-							<h1>Levantamento sem cartão</h1>
-							<p>25.000,00 KZ</p>
-						</div>
-						<div className="right">
-							<p>
-								Ref. 003245345 <CiCircleChevUp style={{ fill: "#11aa11" }} />
-							</p>
-						</div>
-					</div>
-					<div>
-						<div className="left">
-							<h1>Levantamento sem cartão</h1>
-							<p>25.000,00 KZ</p>
-						</div>
-						<div className="right">
-							<p>
-								Ref. 003245345 <CiCircleChevDown style={{ fill: "#ff1111" }} />
-							</p>
-						</div>
-					</div>
-					<div>
-						<div className="left">
-							<h1>Levantamento sem cartão</h1>
-							<p>25.000,00 KZ</p>
-						</div>
-						<div className="right">
-							<p>
-								Ref. 003245345 <CiCircleChevDown style={{ fill: "#ff1111" }} />
-							</p>
-						</div>
-					</div>
-					<div>
-						<div className="left">
-							<h1>Levantamento sem cartão</h1>
-							<p>25.000,00 KZ</p>
-						</div>
-						<div className="right">
-							<p>
-								Ref. 003245345 <CiCircleChevDown style={{ fill: "#ff1111" }} />
-							</p>
-						</div>
-					</div>
-					<div>
-						<div className="left">
-							<h1>Levantamento sem cartão</h1>
-							<p>25.000,00 KZ</p>
-						</div>
-						<div className="right">
-							<p>
-								Ref. 003245345 <CiCircleChevDown style={{ fill: "#ff1111" }} />
-							</p>
-						</div>
-					</div>
-					<div>
-						<div className="left">
-							<h1>Levantamento sem cartão</h1>
-							<p>25.000,00 KZ</p>
-						</div>
-						<div className="right">
-							<p>
-								Ref. 003245345 <CiCircleChevDown style={{ fill: "#ff1111" }} />
-							</p>
-						</div>
-					</div>
-					<div>
-						<div className="left">
-							<h1>Levantamento sem cartão</h1>
-							<p>25.000,00 KZ</p>
-						</div>
-						<div className="right">
-							<p>
-								Ref. 003245345 <CiCircleChevDown style={{ fill: "#ff1111" }} />
-							</p>
-						</div>
-					</div>
-					<div>
-						<div className="left">
-							<h1>Levantamento sem cartão</h1>
-							<p>25.000,00 KZ</p>
-						</div>
-						<div className="right">
-							<p>
-								Ref. 003245345 <CiCircleChevDown style={{ fill: "#ff1111" }} />
-							</p>
-						</div>
-					</div>
-					<div>
-						<div className="left">
-							<h1>Levantamento sem cartão</h1>
-							<p>25.000,00 KZ</p>
-						</div>
-						<div className="right">
-							<p>
-								Ref. 003245345 <CiCircleChevDown style={{ fill: "#ff1111" }} />
-							</p>
-						</div>
-					</div>
+					<TransactionList accountNumber={number} />
 				</div>
 			</div>
 			<div className="consults_lateral">

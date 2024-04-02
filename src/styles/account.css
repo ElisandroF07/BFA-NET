@@ -2,14 +2,14 @@
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: calc(100% - 370px) 350px;
-    grid-template-rows: 70px calc(100% - 90px);
-    row-gap: 20px;
-    column-gap: 20px;
+    grid-template-columns: calc(100% - 305px) 290px;
+    grid-template-rows: 70px calc(100% - 85px);
+    row-gap: 15px;
+    column-gap: 15px;
 }
 .account_header {
     background-color: transparent;
-    border-radius: 14px;
+    border-radius: 10px;
     grid-row: 1;
     grid-column: 1;
 }
@@ -22,12 +22,12 @@
 }
 .account_header > .top > h1 {
     font-family: Inter_SemiBold;
-    font-size: 2rem;
+    font-size: var(--font-page-titles);
     color: var(--color-text);
 }
 .account_header > .top > p {
     font-family: Inter_Regular;
-    font-size: 1.1rem;
+    font-size: var(--font-small-titles);
     color: var(--color-text);
 }
 .account_body {
@@ -38,28 +38,27 @@
     align-items: center;
     justify-content: center;
     font-family: Inter;
-    font-size: 1rem;
+    font-size: var(--font-small);
 }
 .settings {
-
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 4px;
 }
 .settings > .image {
-    width: 200px;
-    height: 200px;
-    min-width: 200px;
-    min-height: 200px;
-    border-radius: 200px;
+    width: 150px;
+    height: 150px;
+    min-width: 150px;
+    min-height: 150px;
+    border-radius: 150px;
     background-size: cover;
 }
 .settings > h1 {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 500;
 }
 .optionsContainer {
@@ -81,11 +80,11 @@
     transition: .3s;
     border: 1px solid transparent;
     cursor: pointer;
-    width: 230px;
-    height: 150px;
+    width: 180px;
+    height: 110px;
 }
 .optionsContainer > div:hover {
-    box-shadow: var(--shadow-cards);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     border: var(--border-input);
 }
 .optionsContainer > div > svg {
@@ -111,14 +110,16 @@
 }
 .account_lateral {
     background-color: var(--color-cards);
-    border-radius: 14px;
+    border-radius: 10px;
     grid-column: 2;
     grid-row: span 2;
     padding: 20px;
+    font-size: var(--font-small);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .title {
     font-family: Inter_SemiBold;
-    font-size: 1.1rem;
+    font-size: var(--font-small-titles);
     margin-bottom: 10px;
 }
 .infoContainer {
@@ -138,7 +139,7 @@
     justify-content: space-between;
 }
 .infoContainer > div > h1 {
-    font-size: 1rem;
+    font-size: var(--font-small);
     font-weight: 300;
 }
 .infoContainer > div > p {
@@ -176,14 +177,14 @@
     align-items: center;
     justify-content: flex-start;
     gap: 10px;
-    font-size: 1rem;
+    font-size: var(--font-small);
     font-weight: 400;
-    margin-bottom: 30px;
 }
 .manageInfoContainer .top > button {
     width: 40px;
     height: 40px;
     background-color: var(--color-cards);
+    border: var(--border-input);
     border-radius: 7px;
     display: flex;
     align-items: center;
@@ -191,15 +192,17 @@
 }
 .manageInfoContainer .bottom {
     background-color: var(--color-cards);
-    border-radius: 15px;
-    padding: 30px;
+    border-radius: 10px;
+    padding: 20px;
     width: 100%;
     height: max-content;
     display: flex;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-row: 1fr 1fr;
-    gap: 30px;
+    column-gap: 30px;
+    row-gap: 10px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .manageInfoContainer .bottom > .input_field {
     margin: 0px;
@@ -232,9 +235,10 @@
     padding: 10px 20px;
     background-color: var(--color-focus3);
     color: var(--color-focus);
-    font-size: 1rem;
+    font-size: var(--font-small);
     font-weight: 500;
     border-radius: 8px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 /*»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»*/
@@ -248,16 +252,17 @@
 }
 .cardsbottom {
     background-color: var(--color-cards);
-    border-radius: 15px;
-    padding: 30px;
+    border-radius: 10px;
+    padding: 20px;
     width: 100%;
+    margin-top: 20px;
     height: max-content;
     display: flex;
-
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .cardsbottom > .left {
     height: max-content;
-    width: 40%;
+    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -300,7 +305,7 @@
 }
 .cardsbottom > .right {
     height: 100%;
-    width: 60%;
+    width: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -320,7 +325,7 @@
     bottom: 28px;
     left: 45px;
     color: #ffffffa8;
-    font-size: 1.1rem;
+    font-size: var(--font-small-titles);
     font-family: 'Inter_Light';
 }
 .cardsbottom > .right > .cardImage > p:nth-child(2) {
@@ -336,7 +341,7 @@
     bottom: 86px;
     right: 92px;
     color: #ffffffd6;
-    font-size: 1.1rem;
+    font-size: var(--font-small-titles);
     font-family: 'Inter_Regular';
 }
 .cards.manageInfoContainer > .buttonContainer {

@@ -1,0 +1,358 @@
+.dashboard_container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: calc(100% - 305px) 290px;
+  grid-template-rows: 80px calc(100% - 80px);
+  column-gap: 15px;
+  font-size: var(--font-small);
+}
+.dashboard_right, .dashboard_middle, .dashboard_top {
+  border-radius: 10px;
+}
+.dashboard_top {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 20px 0px 0px;
+  background-color: transparent;
+}
+.dashboard_top h1 {
+  font-weight: 600;
+  font-size: var(--font-page-titles);
+}
+.dashboard_top p {
+  font-weight: 200;
+  color: #858585;
+}
+.dashboard_top .layoutProfile{
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  background-size: cover;
+}
+.dashboard_top .last {
+  width: max-content;
+  height: 100%;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: space-between;
+}
+.dashboard_middle {
+  grid-column: 1;
+  grid-row: 2;
+  padding: 10px 0px 0px 0px;
+  display: flex;
+  flex-direction: column;
+}
+.dashboard_middle::-webkit-scrollbar {
+  display: none;
+}
+.dashboard_right {
+  grid-column: 2;
+  grid-row: span 2;
+  padding: 20px;
+  background-color: var(--color-cards);
+  box-shadow: #959da533 0px 8px 24px;
+  overflow-y: scroll;
+}
+.dashboard_right::-webkit-scrollbar {
+  display: none;
+}
+.dashboard_right > .infoContainer {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding-bottom: 10px;
+}
+.dashboard_right > .cardImage {
+  width: 250px;
+  height: 158px;
+  background-image: url(../assets/images/bfacard.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+.dashboard_right > .cardImage > p:nth-child(1) {
+  position: absolute;
+    bottom: 17px;
+    left: 33px;
+    color: #ffffffa8;
+    font-size: var(--font-small);
+    font-family: 'Inter_Light';
+}
+.dashboard_right > .cardImage > p:nth-child(2) {
+  position: absolute;
+  bottom: 12px;
+  right: 19px;
+  color: #ffffffa8;
+  font-size: 0.5rem;
+  font-family: 'Inter_Light';
+}
+.dashboard_right > .cardImage > p:nth-child(3) {
+  position: absolute;
+  bottom: 48px;
+  right: 48px;
+  color: #ffffffd6;
+  font-size: var(--font-small);
+  font-family: 'Inter_Regular';
+}
+.dashboard_middle > .exchanges_container {
+  width: 100%;
+  height: 155px;
+  display: flex;
+  flex-direction: column;
+  grid-row: 2;
+  background-color: #fff;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 10px;
+  padding: 20px;
+}
+.dashboard_middle > .exchanges_container > .exchanges {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: calc(100% - 10px);
+}
+.exchange {
+  width: 24%;
+  border-radius: 10px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 10px;
+}
+.exchange > svg {
+  width: 40px;
+  height: 40px;
+  fill: #fff;
+}
+.exchange > .exchangeText {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  font-family: Inter;
+}
+.exchange > .exchangeText > h1 {
+  position: absolute;
+  font-weight: 500;
+  font-size: var(--font-small-titles);
+  top: 20px;
+  left: 10px;
+}
+.exchange > .exchangeText > p:nth-child(2) {
+  position: absolute;
+    top: 45px;
+    left: 10px;
+    font-size: var(--font-small-info);
+    font-family: Inter_Light;
+}
+.exchange > .exchangeText > p:nth-child(3) {
+  position: absolute;
+  top: 42px;
+  right: 20px;
+  font-weight: 500;
+  font-size: var(--font-small-titles);
+}
+.dashboard_middle > .movimentations {
+  margin-top: 20px;
+  width: 100%;
+  grid-row: 3;
+}
+
+.balanceContainer {
+  height: 120px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0px 10px 0px 10px;
+  background-color: var(--color-cards);
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.balance:not(:nth-child(3))::after {
+  content: "";
+  width: 1px;
+  height: 80%;
+  background-color: #e9eaeb;
+  position: absolute;
+  right: 0px;
+  top: calc(100% - 89%);
+}
+.balance {
+  width: 33%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5px;
+  padding: 20px;
+}
+.balance > h1 {
+  font-size: var(--font-small);
+  font-family: Inter;
+  font-weight: 400;
+  color: #000000a8;
+}
+.balance > p:nth-child(2) {
+  font-weight: 600;
+  font-size: var(--font-page-focus);;
+}
+.balance > p:nth-child(3) {
+  font-size: var(--font-small);
+  font-family: Inter;
+  font-weight: 400;
+  color: #000000a8;
+}
+
+.bottom {
+  width: 100%;
+  height: calc(100% - 280px);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 15px;
+  font-family: Inter;
+  font-size: var(--font-small);
+}
+.bottom .bottomLeft {
+  width: calc(60% - 7.50px);
+  height: 100%;
+  background-color: var(--color-cards);
+  border-radius: 10px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.cardDashboardTransaction {
+  width: 100%;
+  height: max-content;
+  padding: 10px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  transition: .3s;
+}
+.cardDashboardTransaction:hover {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border: var(--border-input);
+}
+.cardDashboardTransaction > p:nth-chlid(2) {
+  font-weight: 600;
+}
+.cardDashboardTransaction > div {
+  width: 35px;
+  height: 35px;
+  background-color: #959da533;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40px;
+}
+.cardDashboardTransaction > div > .imageContainer {
+  width: 24px;
+  height: 24px;
+  background-image: url(../assets/images/wallets/paypal.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.bottomLeft > .content::-webkit-scrollbar {
+  display: none;
+}
+.bottomRight {
+  width: calc(40% - 7.50px);
+  height: 100%;
+  background-color: var(--color-cards);
+  border-radius: 10px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.bottom > .bottomLeft > h1, .bottom > .bottomRight > h1 {
+  font-size: var(--font-small-titles);
+  font-weight: 600;
+}
+.bottom > .bottomLeft > .content, .bottom > .bottomRight > .content {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 10px;
+  height: calc(100% - 20px);
+  overflow-y: scroll;
+  margin-top: 10px;
+}
+.bottom > .bottomLeft > .content::-webkit-scrollbar, .bottom > .bottomRight > .content::-webkit-scrollbar {
+  display: none;
+}
+.btTop {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.btTop > svg {
+  width: 30px;
+  height: 30px;
+  fill: #606060;
+  cursor: pointer;
+}
+.btTop > h1 {
+  font-size: var(--font-small-titles);
+  font-weight: 600;
+}
+.cardFriend {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px 10px;
+  border-radius: 10px;
+  gap: 7px;
+  border: 1px solid #e8edef;
+}
+.cardFriend > .text >  p:nth-child(1) {
+  font-size: var(--font-small);
+  font-weight: 600;
+}
+.cardFriend > .text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+}
+.cardFriend > .text > p:nth-child(2) {
+  font-size: var(--font-small-info);
+  font-family: Inter_Light;
+}
+.cardFriend > .layoutProfile {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+}
+
+.withoutTransactions {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

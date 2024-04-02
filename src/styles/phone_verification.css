@@ -43,7 +43,7 @@
 }
 .left > h1{
     font-family: Inter_Regular;
-    font-size: 1.5rem;
+    font-size: var(--font-page-focus);;
     width: 80%;
     line-height: 60px;
     color: var(--color-text);
@@ -167,7 +167,7 @@
     height: max-content;
 }
 .terms > p {
-    font-size: 1rem;
+    font-size: var(--font-small);
     font-family: Inter_Regular;
     line-height: 22px;
     color: var(--color-placeholder);
@@ -194,7 +194,7 @@
 .phone_fragment {
     width: 16%;
     height: 60px;
-    font-size: 1.5rem;
+    font-size: var(--font-page-focus);;
     background-color: var(--color-cards);
     border-radius: 7px;
     border: var(--border-input);

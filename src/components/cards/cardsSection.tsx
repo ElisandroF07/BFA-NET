@@ -7,6 +7,7 @@ import { FaAngleLeft } from "react-icons/fa6";
 import { MdOutlineLock, MdOutlineLockOpen } from "react-icons/md";
 import api from "@/services/api";
 import { toast } from "sonner";
+import useSWR from "swr";
 
 interface ICard {
   cardNumber: string;
@@ -31,31 +32,31 @@ export default function CardsSection({ biNumber, titular }: { biNumber: string; 
     return `${mes} / ${ano}`;
   }
 
-  async function getCard() {
-    try {
-      const response = await api.get(`/getCardData/${biNumber}`);
-      setCard(response.data.card);
-    } catch (err) {
-      setCard(null);
-    }
-  }
+  const fetcher = (url: string) => api.get(url).then(res => res.data);
+	const { data: cardData, error: cardError, mutate: mutateCard } = useSWR(`/getCardData/${biNumber}`, fetcher);
 
-  async function saveData() {
-    setLoading(true);
+	useEffect(() => {
+		if (cardData) {
+			setCard(cardData.card);
+		}
+		if (cardError) {
+			toast.error("Não foi possível carregar os dados do seu cartão!", { description: "Verifique a sua conexão com a internet." });
+		}
+	}, [cardData, cardError]);
+
+  async function updateCard() {
     try {
+      setLoading(true)
       const response = await api.post("/setNickname", { cardNumber: card?.cardNumber, nickname: nk });
-      toast.success(response.data.message);
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-}  catch (err: any) {
-      toast.error(err.response.data.message || "Erro interno! Tente novamente mais tarde.");
-    } finally {
-      setLoading(false);
+      mutateCard(response.data, false); 
+      toast.success('Informações atualizadas com sucesso!');
+      setLoading(false)
+    } catch (error) {
+      toast.error('Não foi possível atualizar o cartão. Por favor, tente novamente mais tarde.');
+      setLoading(false)
     }
   }
 
-  useEffect(() => {
-    getCard();
-  }, []);
 
   return (
     <div className="cards manageInfoContainer">
@@ -87,7 +88,7 @@ export default function CardsSection({ biNumber, titular }: { biNumber: string; 
             ) : (
               <button type="button" onClick={() => setLocked(true)} data-locked="false">Bloquear <MdOutlineLock /></button>
             )}
-            <button type="button" onClick={saveData} disabled={loading || !nk}>Salvar</button>
+            <button type="button" onClick={updateCard} disabled={loading || !nk}>Salvar</button>
           </div>
         </div>
         <div className="right">

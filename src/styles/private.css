@@ -16,7 +16,7 @@
     align-items: center;
     justify-content: space-between;
     font-family: Inter_Regular;
-    font-size: 1rem;
+    font-size: var(--font-small);
     padding: 10px 0px 10px 0px;
 }
 .privateHeader > div {
@@ -53,18 +53,18 @@
     outline: none;
     background-color: transparent;
     padding-left: 5px;
-    font-size: 1rem;
+    font-size: var(--font-small);
     font-family: Inter_Regular;
     color: var(--color-text);
 }
 ::placeholder {
     color: var(--color-placeholder);
-    font-size: 1rem;
+    font-size: var(--font-small);
     font-family: Inter_Regular;
 }
 .searchBar > button {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     background-color: #fff;
     border-radius: 7px;
     display: flex;
@@ -82,10 +82,10 @@
 .privateChildrenContainer {
     grid-column: 2;
     grid-row: 2;
-    background-color: #f3f3f3;
+    background-color: #f5f7fb;
     border-radius: 15px;
     overflow: hidden;
-    padding: 20px 40px 20px 30px ;
+    padding: 15px ;
 }
 .navlist {
     width: 100%;
@@ -96,13 +96,13 @@
 }
 .listTitle {
     margin-top: 20px;
-    font-size: 1rem;
+    font-size: var(--font-small);
     font-family: Inter_Regular;
     color: var(--color-text);
 }
 .navlist > li {
     width: 100%;
-    height: 55px;
+    height: 50px;
     border-radius: 7px;
 }
 .navlist > li > button {
@@ -110,7 +110,7 @@
     height: 100%;
     background-color: transparent;
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: var(--font-small);
     font-family: Inter_Regular;
     color: var(--color-text);
     display: flex;
@@ -134,7 +134,7 @@
     width: 100%;
     height: 0.5px;
     background-color: #efefef;
-    margin: 10px 0px;
+    margin: 12.5px 0px;
 }
 
 .account {
@@ -165,39 +165,26 @@
     margin-right: 5px;
     background-size: cover;
 }
-.accountCard > div {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
-}
-.accountCard > div > h1 {
-    width: max-content;
-    font-size: 1.02rem;
-    font-family: Inter_Regular;
-}
-.accountCard > div > p {
-    width: max-content;
-    font-size: 0.9rem;
-    font-family: Inter_Light;
-}
-.accountCard > .exit {
-    position: absolute;
-    right: 0px;
-}
-.accountCard > .exit > button {
-    width: 30px;
-    height: 30px;
-    background-color: #c80101;
-    color: var(--color-cards);
+.accountCard > button {
+    width: 100%;
+    height: 40px;
+    background-color: #c801011c;
+    color: #ff0000;;
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: var(--font-small);
+    font-family: Inter;
+    font-weight: 500;
 }
-.accountCard > .exit > button > svg {
-    width: 20px;
-    height: 20px;
+.accountCard > button > svg {
+    width: 24px;
+    height: 24px;
 }
 .shadow {
     border-radius: 10px;
@@ -208,4 +195,25 @@
     position: fixed;
     z-index: 16;
     width: 4px;
+}
+
+.notifications {
+    position: relative;
+}
+.notificationCount {
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-family: Inter;
+    font-weight: 500;
+    color: #fff;
+    background-color: #c80101;
+    border: 2px solid #fff;
+    position: absolute;
+    top: 0px;
+    right: 0px;
 }

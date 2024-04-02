@@ -22,13 +22,6 @@ export default function PayReference({number}: {number: string}) {
 						<label htmlFor="email">Referência</label>
 						<input type="text" placeholder="Introduza o número de referência" />
 					</div>
-					<div className="input_field">
-						<label htmlFor="email">Montante</label>
-						<div className="input_phone">
-							<p>Kz</p>
-							<input type="text" placeholder="Conta emissora" />
-						</div>
-					</div>
 				</div>
 				<div className="right">
 					<div className="input_field">
@@ -39,10 +32,6 @@ export default function PayReference({number}: {number: string}) {
 							style={{ border: "none", background: "none" }}
 							value="26 / 09 / 2005"
 						/>
-					</div>
-					<div className="input_field">
-						<label htmlFor="email">Entidade</label>
-						<input type="text" placeholder="Descreva a entidade" />
 					</div>
 				</div>
 				<button type="button">

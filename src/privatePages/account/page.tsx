@@ -10,6 +10,7 @@ import SecuritySection from "@/components/cards/securitySection";
 import "@/styles/account.css";
 import { toast } from "sonner";
 import { CiLocationArrow1, CiImport } from "react-icons/ci";
+import useSWR from "swr";
 
 
 interface IProps {
@@ -50,22 +51,21 @@ export default function Account({
   fullName,
   picture,
 }: IProps) {
+  
   const [account, setAccount] = useState<IAccount | null>(null);
   const store = useUserStore();
 
-  useEffect(() => {
-    async function getAccount() {
-      try {
-        const response = await api.get(`/getAccountData/${biNumber}`);
-        setAccount(response.data.account);
-      } catch (err) {
-        toast.error("Não foi possível carregar os dados da sua conta!", {description:"Sem conexão com a internet."})
-        setAccount(null);
-      }
-    }
+  const fetcher = (url: string) => api.get(url).then(res => res.data);
+	const { data: accountData, error: accountError } = useSWR(`/getAccountData/${biNumber}`, fetcher);
 
-    getAccount();
-  }, [biNumber]);
+	useEffect(() => {
+		if (accountData) {
+			setAccount(accountData.account);
+		}
+		if (accountError) {
+			toast.error("Não foi possível carregar os dados da sua conta!", { description: "Verifique a sua conexão com a internet." });
+		}
+	}, [accountData, accountError]);
 
   const sections: Sections = {
     options: <OptionsSection />,
@@ -80,7 +80,7 @@ export default function Account({
       />
     ),
     cards: <CardsSection biNumber={biNumber} titular={titular} />,
-    security: <SecuritySection />,
+    security: <SecuritySection  biNumber={biNumber} />,
   };
 
   return (

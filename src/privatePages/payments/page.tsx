@@ -30,11 +30,11 @@ export default function Payments({authorized_balance, available_balance, number}
 				<div className="bottom">
 					<div>
 						<h2>Saldo contabilístico</h2>
-						<p>Kz {available_balance},00</p>
+						<p>{available_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}</p>
 					</div>
 					<div>
 						<h2>Saldo autorizado</h2>
-						<p>Kz {authorized_balance},00</p>
+						<p>{authorized_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}</p>
 					</div>
 					<div>
 						<h2>Selecione o tipo de pagamento</h2>

@@ -37,9 +37,9 @@ input[type=number]::-webkit-outer-spin-button {
 :root {
     --color-text: #232c44;
     --color-link: #478099;
-    --color-body: #f8f9fd;
+    --color-body: #f5f7fb;
     --color-cards: #ffffff;
-    --shadow-cards: 0 0 #0000,0 0 #0000,3px -5px 40px #cdcdd557;
+    --shadow-cards: rgba(149, 157, 165, 0.2) 0px 8px ;
     --color-focus: #fc6423;
     --color-focus3:#e5553c1e;
     --color-focus2: #e65200;
@@ -48,13 +48,18 @@ input[type=number]::-webkit-outer-spin-button {
     --color-border: #d2d2d2;
     --color-border2: #293746;
     --color-border3: #cdd7f4;
-    --text-regular: 1rem;
-    --text-big: 1.5rem;
+    --font-small: clamp(0.8rem, 0.875rem , 0.9rem);
+    --font-small-titles: clamp(0.95rem, 1rem , 1.2rem);
+    --font-small-info: clamp(0.7rem, 0.725rem , 1rem);
+    --font-page-titles: clamp(1.5rem, 1.6rem , 2rem);
+    --font-page-subtitles: 1.25rem;
+    --font-page-focus: clamp(1.2rem, 1.3rem , 1.7rem);
 }
 
 body {
     width: 100%;
     height: 100vh;
+    font-size: 14px;
 }
 
 div[data-overlay-container="true"] {
@@ -63,10 +68,13 @@ div[data-overlay-container="true"] {
 
 ::placeholder {
     font-family: Inter_Regular;
-    font-size: 1rem;
+    font-size: var(--font-small);
     color: var(--color-placeholder);
 }
 
+.apexcharts-canvas.apexchartszcij6rr1.apexcharts-theme-light {
+    height: 100% !important;
+}
 
 .page_title {
     font-family: Inter_Regular;
@@ -91,11 +99,11 @@ div[data-overlay-container="true"] {
 
 .input_phone {
     width: 100%;
-    height: 50px;
-    padding: 0px 20px;
+    height: 45px;
+    padding: 0px 10px;
     outline: none;
     border: var(--border-input);
-    border-radius: 10px;
+    border-radius: 7px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -106,7 +114,7 @@ div[data-overlay-container="true"] {
 .input_phone > p::after {
     content: '';
     width: 1px;
-    height: 14px;
+    height: 20px;
     background-color: var(--color-border);
     position: absolute;
     margin-left: 12px;
@@ -115,7 +123,7 @@ div[data-overlay-container="true"] {
 
 .input_phone > p {
     font-family: Inter_Regular;
-    font-size: 1rem;
+    font-size: var(--font-small);
     transition: .3s;
 }
 
@@ -125,7 +133,7 @@ div[data-overlay-container="true"] {
     border: none;
     outline: none;
     font-family: Inter_Regular;
-    font-size: 1rem;
+    font-size: var(--font-small);
     transition: .3s;
     padding-left: 12px;
 }
@@ -218,27 +226,27 @@ div[data-overlay-container="true"] {
     justify-content: center;
     flex-direction: column;
     gap: 6px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 .input_field > label {
     color: var(--color-text);
     font-family: Inter_SemiBold;
-    font-size: 1rem;
+    font-size: var(--font-small);
 }
 .input_field > input {
     width: 100%;
-    height: 50px;
+    height: 45px;
     padding: 0px 20px;
     outline: none;
     border: var(--border-input);
-    border-radius: 10px;
+    border-radius: 7px;
     font-family: Inter_Regular;
-    font-size: 1.1rem;
+    font-size: var(--font-small-titles);
     transition: .3s;
 }
 
 .input_error {
-    font-size: 1rem;
+    font-size: var(--font-small);
     font-family: Inter_Regular;
     color: red;
     display: flex;
@@ -261,7 +269,7 @@ input:-webkit-autofill {
     width: 100%;
     height: 45px;
     font-family: Inter_SemiBold;
-    font-size: 1rem;
+    font-size: var(--font-small);
     color: var(--color-cards);
     background-color: var(--color-focus);
     border-radius: 10px;
@@ -387,7 +395,7 @@ input:-webkit-autofill {
 }
 .uploader .top .text > div > p:nth-child(1) {
     font-family: Inter_Medium;
-    font-size: 1rem;
+    font-size: var(--font-small);
     max-height: 20px;
     max-width: 150px;
     overflow: hidden;
@@ -396,7 +404,7 @@ input:-webkit-autofill {
 }
 .uploader .top .text > div > p:nth-child(2) {
     font-family: Inter_Light;
-    font-size: 1rem;
+    font-size: var(--font-small);
 }
 .uploader .top .end {
     display: flex;
@@ -422,7 +430,7 @@ input:-webkit-autofill {
     height: 10px;
 }
 .uploader .top .end > p {
-    font-size: 1rem;
+    font-size: var(--font-small);
     font-family: Inter_Light;
 }
 

@@ -9,6 +9,7 @@ import UploadCard from "@/components/cards/uploadCard";
 import Uploader from "@/components/cards/uploader";
 import "@/styles/upload.css";
 import axios from "axios";
+import { TailSpin } from 'react-loader-spinner'
 
 const MAX_FILE_SIZE: number = parseInt(process.env.MAX_FILE_SIZE ?? "5242880");
 const ACCEPTED_IMAGE_TYPES = [
@@ -90,12 +91,13 @@ export default function Assign() {
 				if (response.status === 200) {
 					router.push("/register/credentials")
 					resolve(response.data.message);
+
 				}
 				reject(response.data.message)
+				setLoading(false);
 			} 
 			catch {
 				reject("Ocorreu um erro ao processar a sua solicitação! Verifique a sua conexão com a internet.");
-			} finally {
 				setLoading(false);
 			}
 		});
@@ -164,7 +166,18 @@ export default function Assign() {
 					onClick={submitForm}
 					className="button_auth"
 				>
-					Avançar
+					{loading ? (
+						<TailSpin
+							height="25"
+							width="25"
+							color="#fff"
+							ariaLabel="tail-spin-loading"
+							radius="1"
+							visible={true}
+						/>
+					) : (
+						'Validar'
+					)}
 				</button>
 			</div>
 		</form>

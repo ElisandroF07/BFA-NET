@@ -17,13 +17,13 @@ export default function Upmoney({authorized_balance, available_balance, email}: 
 					<p>Retire o seu dinheiro a qualquer momento.</p>
 				</div>
 				<div className="bottom">
-				<div>
+					<div>
 						<h2>Saldo contabilístico</h2>
-						<p>Kz {available_balance},00</p>
+						<p>{available_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}</p>
 					</div>
 					<div>
 						<h2>Saldo autorizado</h2>
-						<p>Kz {authorized_balance},00</p>
+						<p>{authorized_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}</p>
 					</div>
 				</div>
 			</div>

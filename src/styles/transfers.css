@@ -2,15 +2,16 @@
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: calc(100% - 370px) 350px;
-    grid-template-rows: 160px calc(100% - 180px);
-    row-gap: 20px;
-    column-gap: 20px;
+    grid-template-columns: calc(100% - 305px) 290px;
+    grid-template-rows: 160px calc(100% - 175px);
+    row-gap: 15px;
+    column-gap: 15px;
+    font-size: var(--font-small)
 }
 .transfers_header {
     background-color: transparent;
     /*box-shadow: var(--shadow-cards);*/
-    border-radius: 14px;
+    border-radius: 10px;
     grid-row: 1;
     grid-column: 1;
 }
@@ -23,12 +24,12 @@
 }
 .transfers_header > .top > h1 {
     font-family: Inter_SemiBold;
-    font-size: 2rem;
+    font-size: var(--font-page-titles);
     color: var(--color-text);
 }
 .transfers_header > .top > p {
     font-family: Inter_Regular;
-    font-size: 1.1rem;
+    font-size: var(--font-small-titles);
     color: var(--color-text);
 }
 .transfers_header > .bottom {
@@ -43,7 +44,7 @@
 .transfers_header > .bottom > div {
     width: max-content;
     height: 90%;
-    border-radius: 12px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -51,19 +52,20 @@
     padding: 10px 20px;
     gap: 5px;
     background-color: var(--color-cards);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .transfers_header > .bottom > div > h2 {
     font-family: Inter_Regular;
-    font-size: 1rem;
+    font-size: var(--font-small);
 }
 .transfers_header > .bottom > div > p {
     font-family: Inter_Regular;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: var(--font-small);
 }
 .transfers_header > .bottom > div > select {
     font-family: Inter_Regular;
-    font-size: 1rem;
+    font-size: var(--font-small);
     background-color: transparent;
     outline: none;
     margin: 0;
@@ -75,19 +77,21 @@
 .transfers_body {
     background-color: var(--color-cards);
     /*box-shadow: var(--shadow-cards);*/
-    border-radius: 14px;
+    border-radius: 10px;
     grid-column: 1;
     grid-row: 2;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .transfers_lateral {
     background-color: var(--color-cards);
-    border-radius: 15px;
+    border-radius: 10px;
     padding: 20px;
     grid-column: 2;
     grid-row: span 2;
     display: flex;
     flex-direction: column;
     gap: 4%;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .transfers_lateral > .top, .transfers_lateral > .bottom {
     height: 48%;

@@ -17,7 +17,7 @@
 }
 .tt1_container .top > h1, .tt3_container > .top > h1 {
     font-family: Inter_Regular;
-    font-size: 1rem;
+    font-size: var(--font-small);
     color: var(--color-text);
     text-align: center;
     width: 30%;
@@ -34,7 +34,7 @@
 .tt1_container  > .bottom > .left {
     width: 30%;
     height: 100%;
-    font-size: 1rem;
+    font-size: var(--font-small);
     font-family: Inter_Regular;
     display: flex;
     flex-direction: column;
@@ -68,7 +68,7 @@
     width: 100%;
     flex: 1;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     gap: 90px;
     position: relative;
@@ -86,10 +86,10 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 10px 0;
-    width: 300px;
+    height: 43px;
     border-radius: 10px;
     transition: .3s;
+    width: 230px;
 }
 .information button:hover {
     background-color: var(--color-focus2);
@@ -106,14 +106,14 @@
     display: grid;
     column-gap: 20px;
     align-items: center;
-    justify-content: center;
-    grid-template-columns: 24px calc(100% - 430px) 330px;
+    justify-content: start;
+    grid-template-columns: 24px calc(100% - 322px) 240px;
 }
 .information > svg {
     width: 24px;
     height: 24px;
 }
 .information > p {
-    font-size: 0.95rem;
+    font-size: var(--font-small-info);;
     font-family: Inter_Light;
 }
