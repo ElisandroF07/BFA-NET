@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
@@ -14,6 +15,7 @@ import api from "@/services/api";
 import "@/styles/globals.css";
 import "@/styles/phone_verification.css";
 import business from "@/assets/images/Two factor authentication-pana.svg";
+import { TailSpin } from 'react-loader-spinner'
 
 const FormSchema = z.object({
 	value1: z.string().min(1, "O campo é obrigatório!"),
@@ -53,14 +55,13 @@ export default function TwoFactorAuthentication() {
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
 		return new Promise(async (resolve, reject) => {
 			try {
-				const response = await api.get(`/2fa/${membership_number}`);
+				const response = await axios.get(`http://localhost:5000/2fa/${membership_number.toLowerCase()}`);
 				if (response.status === 201) {
 					resolve(response.data.message);
 				}
 			} catch {
 				reject("Erro ao processar a sua solicitação!");
-			} finally {
-				setLoading(false);
+				setLoading(false)
 			}
 		});
 	}
@@ -80,7 +81,7 @@ export default function TwoFactorAuthentication() {
 	async function submitForm(OTP: string) {
 		setLoading(true)
 		const result = await signIn('credentials', {
-      email,
+      email: email.toLowerCase(),
       OTP,
       redirect: false
     })
@@ -160,6 +161,7 @@ export default function TwoFactorAuthentication() {
 								<input
 									key={index}
 									type="text"
+									maxLength={1}
 									id={`value${index}`}
 									className="phone_fragment"
 									ref={(el) => {
@@ -176,7 +178,18 @@ export default function TwoFactorAuthentication() {
 								disabled={loading}
 								className="button_auth"
 							>
-								{loading ? <>Validando...</> : <>Continuar</>}
+								{loading ? (
+									<TailSpin
+										height="25"
+										width="25"
+										color="#fff"
+										ariaLabel="tail-spin-loading"
+										radius="1"
+										visible={true}
+									/>
+								) : (
+									'Autenticar'
+								)}
 							</button>
 							<div className="terms">
 								{/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
