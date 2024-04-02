@@ -52,7 +52,7 @@ export default function Register() {
         const { email } = data;
         // biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
         return  new Promise(async (resolve, reject) => {
-            await axios.get(`http://localhost:5000/sendEmail/${email}`)
+            await axios.get(`https://bfa-nodejs-api.onrender.com/sendEmail/${email}`)
             .then((response) => {
                 if (response.status === 201) {
                     useStore.updateEmail(email);

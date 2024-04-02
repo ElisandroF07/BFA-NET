@@ -70,7 +70,7 @@ export default function PersonalData() {
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
 		return new Promise(async (resolve, reject) => {
 			try {
-				const response = await axios.post("http://localhost:5000/personal-data",data,{ headers: { "Content-Type": "application/json" } });
+				const response = await axios.post("https://bfa-nodejs-api.onrender.com/personal-data",data,{ headers: { "Content-Type": "application/json" } });
 				if (response.status === 201) {
 					router.push("/register/identity-validation");
 					resolve(response.data.message);

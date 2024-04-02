@@ -53,7 +53,7 @@ export default function SetCredentials() {
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
 		return new Promise(async (resolve, reject) => {
 			try {
-				const response = await axios.post("http://localhost:5000/setAccessCode", data, { headers: { "Content-Type": "application/json" } });
+				const response = await axios.post("https://bfa-nodejs-api.onrender.com/setAccessCode", data, { headers: { "Content-Type": "application/json" } });
 				if (response.status === 201) {
 					router.push("/login")
 					resolve(response.data.message);

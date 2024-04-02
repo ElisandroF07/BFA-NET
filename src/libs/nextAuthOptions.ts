@@ -18,7 +18,7 @@ const nextAuthOptions: NextAuthOptions = {
 					OTP: credentials?.OTP
 				})
 				try {
-					const response = await axios.post('http://localhost:5000/verifyOTP', body, {
+					const response = await axios.post('https://bfa-nodejs-api.onrender.com/verifyOTP', body, {
 					headers: {
 						'Content-type': 'application/json',
 						Authorization: "Bearer fregr554ytg5e"

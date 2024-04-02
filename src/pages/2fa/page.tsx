@@ -55,7 +55,7 @@ export default function TwoFactorAuthentication() {
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
 		return new Promise(async (resolve, reject) => {
 			try {
-				const response = await axios.get(`http://localhost:5000/2fa/${membership_number.toLowerCase()}`);
+				const response = await axios.get(`https://bfa-nodejs-api.onrender.com/2fa/${membership_number.toLowerCase()}`);
 				if (response.status === 201) {
 					resolve(response.data.message);
 				}

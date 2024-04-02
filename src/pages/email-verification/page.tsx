@@ -27,7 +27,7 @@ export default function EmailVerification() {
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
 		return new Promise(async (resolve, reject) => {
 			try {
-				const response = await axios.get(`http://localhost:5000/resendEmail/${email}`,);
+				const response = await axios.get(`https://bfa-nodejs-api.onrender.com/resendEmail/${email}`,);
 				if (response.status === 201) {
 					resolve(response.data.message);
 				}
