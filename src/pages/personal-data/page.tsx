@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -8,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import InfoError from "@/components/others/infoError";
 import useUserStore from "@/contexts/stores/userStore";
-import api from "@/services/api";
+import { TailSpin } from 'react-loader-spinner'
 
 const FormSchema = z.object({
 	name: z.string({required_error: "O campo não pode estar vazio!"})
@@ -69,18 +70,18 @@ export default function PersonalData() {
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
 		return new Promise(async (resolve, reject) => {
 			try {
-				const response = await api.post("/personal-data",data);
+				const response = await axios.post("http://localhost:5000/personal-data",data,{ headers: { "Content-Type": "application/json" } });
 				if (response.status === 201) {
 					router.push("/register/identity-validation");
 					resolve(response.data.message);
 				} else {
 					reject(response.data.message);
+					setLoading(false);
 				}
 			} catch {
 				reject("Não foi possivel processar a sua solicitação! Verifique a sua conexão com a internet.");
-			} finally {
 				setLoading(false);
-			}
+			} 
 		});
 	}
 
@@ -144,7 +145,18 @@ export default function PersonalData() {
 					{errors.biNumber && <InfoError message={errors.biNumber.message} />}
 				</div>
 				<button type="submit" disabled={loading} className="button_auth">
-					Avançar
+					{loading ? (
+						<TailSpin
+							height="25"
+							width="25"
+							color="#fff"
+							ariaLabel="tail-spin-loading"
+							radius="1"
+							visible={true}
+						/>
+					) : (
+						'Enviar dados'
+					)}
 				</button>
 			</div>
 		</form>
