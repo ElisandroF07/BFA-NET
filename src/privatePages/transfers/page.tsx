@@ -14,10 +14,11 @@ interface IProps {
 	authorized_balance: number,
 	available_balance: number,
 	iban: string,
-	number: string
+	number: string,
+	biNumber: string
 }
 
-export default function Transfers({authorized_balance, available_balance, iban, number}: IProps) {
+export default function Transfers({authorized_balance, available_balance, iban, number, biNumber}: IProps) {
 	const [selectedPage, setSelectedPage] = useState("0");
 
 	return (
@@ -30,11 +31,11 @@ export default function Transfers({authorized_balance, available_balance, iban, 
 				<div className="bottom">
 					<div>
 						<h2>Saldo contabilístico</h2>
-						<p>Kz {available_balance},00</p>
+						<p>{available_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}</p>
 					</div>
 					<div>
 						<h2>Saldo autorizado</h2>
-						<p>Kz {authorized_balance},00</p>
+						<p>{authorized_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}</p>
 					</div>
 					<div>
 						<h2>Selecione o tipo de transferência</h2>
@@ -56,8 +57,8 @@ export default function Transfers({authorized_balance, available_balance, iban, 
 			</div>
 			<div className="transfers_body">
 				{selectedPage === "0" && <TransferDefault />}
-				{selectedPage === "1" && <TransferInterbanc number={number}/>}
-				{selectedPage === "2" && <TransferIntrabanc number={number}/>}
+				{selectedPage === "1" && <TransferInterbanc number={number} biNumber={biNumber}/>}
+				{selectedPage === "2" && <TransferIntrabanc number={number} biNumber={biNumber}/>}
 				{selectedPage === "3" && <TransferInternational />}
 				{selectedPage === "4" && <TransferWallet number={number}/>}
 			</div>

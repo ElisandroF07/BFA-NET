@@ -52,14 +52,14 @@ input[type=number]::-webkit-outer-spin-button {
     --font-small-titles: clamp(0.95rem, 1rem , 1.2rem);
     --font-small-info: clamp(0.7rem, 0.725rem , 1rem);
     --font-page-titles: clamp(1.5rem, 1.6rem , 2rem);
-    --font-page-subtitles: 1.3rem;
+    --font-page-subtitles: 1.25rem;
     --font-page-focus: clamp(1.2rem, 1.3rem , 1.7rem);
 }
 
 body {
     width: 100%;
     height: 100vh;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 div[data-overlay-container="true"] {

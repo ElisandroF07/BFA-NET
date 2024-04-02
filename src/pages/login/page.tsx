@@ -48,10 +48,10 @@ export default function Login() {
 	});
 	
 	async function APICall(data: FormType): Promise<string> {
-		setLoading(true);
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-		return  new Promise(async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
+				setLoading(true);
 				const response = await axios.post("http://localhost:5000/login", data, {headers: { "Content-Type": "application/json" }});
 				if (response.status === 201) {
 					useStore.updateEmail(response.data.email)
@@ -65,6 +65,7 @@ export default function Login() {
 					resolve("Autenticado com sucesso!");
 				} else {
 					reject(response.data.message);
+					setLoading(false);
 				}
 			} catch {
 				reject("Erro interno! Tente novamente mais tarde.");
@@ -90,15 +91,14 @@ export default function Login() {
 				}
 				}
 				}
-				const response = await axios.get(
-					`http://localhost:5000/2fa/${membership_number.toLowerCase()}`,
-				);
+				const response = await axios.get(`http://localhost:5000/2fa/${membership_number.toLowerCase()}`,);
 				if (response.status === 201) {
 					resolve(response.data.message);
 				}
-				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-			} catch (error: any) {
-				reject(error.response?.data.message);
+				setLoading(false);
+				reject(response.data.message);
+      } catch  {
+				reject("Não foi possivel processar a sua solicitação!");
 				setLoading(false);
 			} 
 		});
@@ -116,6 +116,7 @@ export default function Login() {
 						return data;
 					},
 					error: (data) => {
+						setLoading(false)
 						return data;
 					},
 				});

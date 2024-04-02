@@ -2,8 +2,7 @@ import api from "@/services/api"
 import axios from "axios"
 import { NextAuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-import type { UserSession } from 'next-auth';
-
+import type { Session } from 'next-auth';
 
 const nextAuthOptions: NextAuthOptions = {
 	providers: [
@@ -21,7 +20,8 @@ const nextAuthOptions: NextAuthOptions = {
 				try {
 					const response = await axios.post('http://localhost:5000/verifyOTP', body, {
 					headers: {
-						'Content-type': 'application/json'
+						'Content-type': 'application/json',
+						Authorization: "Bearer fregr554ytg5e"
 					}
 				})
 
@@ -43,15 +43,18 @@ const nextAuthOptions: NextAuthOptions = {
 	callbacks: {
 		async jwt({ token, user }) {
 			if (user) {
-				token.user = user
+				token.user = user	
 			}
       return token;
 		},
 		async session({ session, token }){
-			session = token.user as UserSession
-			const biNumber = token.user.user.biNumber as string
-			const response = await  api.get(`/getUserData/${biNumber}`)
-			session = {user: response.data.client, token: token.token}
+			session = token.user as Session
+			if (typeof token.user === 'object' && token.user !== null && 'biNumber' in token.user && typeof token.user.biNumber === 'string') {
+				const biNumber = token.user.biNumber;
+				const response = await  api.get(`/getUserData/${biNumber}`)
+
+				session = {user: response.data.client, expires: "1h"}
+			}
       return session
 		}
 	}

@@ -4,18 +4,28 @@ import useSWR from 'swr';
 import api from "@/services/api";
 import { useEffect, useState } from "react";
 import "@/styles/dashboard.css"
-import { CiBellOn, CiGps, CiInboxIn, CiInboxOut, CiMoneyCheck1, CiReceipt, CiSquarePlus, CiWallet } from "react-icons/ci";
+import { CiSquarePlus } from "react-icons/ci";
 import { toast } from "sonner";
 import CardExchange from '@/components/cards/cardExchange';
-import CardFriend from '@/components/cards/cardFriend';
-import CardDashboardTransaction from '@/components/cards/cardDashboardTransaction';
-import axios from 'axios';
+import {z} from "zod"
+import {useForm} from "react-hook-form"
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, User, useDisclosure } from "@nextui-org/react";
+import InfoError from '@/components/others/infoError';
+import { TailSpin } from 'react-loader-spinner';
+import FriendList from '@/components/lists/friendList';
+import TransactionList from '@/components/lists/transactionList';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import CardFriends from '@/components/lists/cardFriends';
 
 interface IProps {
 	biNumber: string,
 	titular: string,
 	picture: string,
-	exchanges: []
+	exchanges: ApiResponse,
+	emailFrom: string,
+	logout: ()=>void
 }
 
 interface IAccount {
@@ -40,17 +50,34 @@ interface ICard {
 	state: string
 }
 
+interface ICurrency {
+  taxa: number;
+  descricaoTipoCambio: string;
+  tipoCambio: string;
+  data: string;
+  designacaoMoeda: string;
+  codigoMoeda: string;
+}
 
-export default function Dashboard({biNumber, titular,picture, exchanges}: IProps) {
+interface IGenericResponse {
+  genericResponse: ICurrency[];
+  success: boolean;
+}
+
+interface ApiResponse {
+  genericResponse: IGenericResponse[];
+  success: boolean;
+}
+
+export default function Dashboard({biNumber, titular, picture, exchanges, emailFrom, logout}: IProps) {
 
 	const [account, setAccount] = useState<IAccount | null>(null);
 	const [card, setCard] = useState<ICard | null>(null);
-	const [exchangeRates, setExchangeRates] = useState(exchanges)
+
 	const fetcher = (url: string) => api.get(url).then(res => res.data);
 
 	const { data: accountData, error: accountError } = useSWR(`/getAccountData/${biNumber}`, fetcher);
 	const { data: cardData, error: cardError } = useSWR(`/getCardData/${biNumber}`, fetcher);
-	
 
 	useEffect(() => {
 		if (accountData) {
@@ -66,8 +93,6 @@ export default function Dashboard({biNumber, titular,picture, exchanges}: IProps
 			setCard(null);
 		}		
 	}, [accountData, cardData, accountError, cardError]);
-
-
 
 	function timestampToDateString(timestamp: number): string {
 		const date = new Date(timestamp);
@@ -94,10 +119,29 @@ export default function Dashboard({biNumber, titular,picture, exchanges}: IProps
 					<p>Gerencie o seu dinheiro facilemente no sua plataforma de Internet Banking</p>
 				</div>
 				<div className='last'>
-					<button type='button'>
-						<CiBellOn className="icon" />
-					</button>
-					<div className="layoutProfile" style={{backgroundImage: `url(${picture})`}}/>
+					<Dropdown>
+						<DropdownTrigger>
+							<User
+								as="button"
+								avatarProps={{
+									isBordered: true,
+									src: picture,
+								}}
+								className="transition-transform"
+								description={emailFrom}
+								name={titular}
+							/>
+						</DropdownTrigger>
+						<DropdownMenu aria-label="User Actions" variant="flat">
+							<DropdownItem key="profile" className="h-14 gap-2">
+								<p className="font-bold">Email</p>
+								<p className="font-bold">{emailFrom}</p>
+							</DropdownItem>
+							<DropdownItem key="logout" onClick={logout} color="danger">
+								Sair
+							</DropdownItem>
+						</DropdownMenu>
+					</Dropdown>
 				</div>
 			</div>
 			<div className="dashboard_middle">
@@ -105,75 +149,68 @@ export default function Dashboard({biNumber, titular,picture, exchanges}: IProps
 					<div className="balance">
 					  <h1>Saldo contabilístico</h1>
 						<p>
-						{account?.available_balance},00 Kz
+						{account?.available_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 }) || <Skeleton borderRadius={10} height={40} width={220} />}
             </p>
 					</div>
 					<div className="balance">
 					<h1>Saldo autorizado</h1>
 						<p>
-              {account?.authorized_balance},00 Kz
+						{account?.authorized_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 }) || <Skeleton borderRadius={10} height={40} width={220} />}
             </p>
 					</div>
 					<div className="balance">
 					<h1>Saldo por levantar</h1>
 						<p>
-              {account?.available_balance},00 Kz
+              {account?.available_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 }) || <Skeleton borderRadius={10} height={40} width={220}/>}
             </p>
 					</div>
 				</div>
 				<div className="exchanges_container">
 					<h1 className="title">Taxas de câmbio</h1>
 					<div className="exchanges">
-					{exchanges.map((_item, index)=>{
-							if (_item.codigoMoeda === "USD") {
+					{ exchanges.genericResponse.length !== 0 ? exchanges.genericResponse.map((_item)=>{
+							if (_item.genericResponse[0].codigoMoeda === "USD") {
 								return (
-									<CardExchange key={"USD"} currency={"Dólar Americano"} subtitle={`${_item.codigoMoeda} - AOA`} price={_item.taxa.toString()} backgroundColor='linear-gradient(-134deg, #ff5000 0, #6d3901 100%)'/>
+									<CardExchange key={"USD"} currency={"Dólar Americano"} subtitle={`${_item.genericResponse[0].codigoMoeda} - AOA`} price={_item.genericResponse[0].taxa.toString()} backgroundColor='linear-gradient(-134deg, #ff5000 0, #6d3901 100%)'/> || <Skeleton borderRadius={10} height={35} width={300}/>
 								)
 							}
-							if (_item.codigoMoeda === "EUR") {
+							if (_item.genericResponse[0].codigoMoeda === "EUR") {
 								return (
-									<CardExchange key={"EUR"} currency={"Euro"} subtitle={`${_item.codigoMoeda} - AOA`} price={_item.taxa.toString()} backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #003d6d 100%)'/>
+									<CardExchange key={"EUR"} currency={"Euro"} subtitle={`${_item.genericResponse[0].codigoMoeda} - AOA`} price={_item.genericResponse[0].taxa.toString()} backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #003d6d 100%)'/>
 								)
 							}
-							if (_item.codigoMoeda === "CNY") {
+							if (_item.genericResponse[0].codigoMoeda === "CNY") {
 								return (
-									<CardExchange key={"CNY"} currency={"Yuhan"} subtitle={`${_item.codigoMoeda} - AOA`} price={_item.taxa.toString()} backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #003d6d 100%)'/>
+									<CardExchange key={"CNY"} currency={"Yuhan"} subtitle={`${_item.genericResponse[0].codigoMoeda} - AOA`} price={_item.genericResponse[0].taxa.toString()} backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #003d6d 100%)'/>
 								)
 							}
-							if (_item.codigoMoeda === "ZAR") {
+							if (_item.genericResponse[0].codigoMoeda === "ZAR") {
 								return (
-									<CardExchange key={"ZAR"} currency={"Rand"} subtitle={`${_item.codigoMoeda} - AOA`} price={_item.taxa.toString()} backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #003d6d 100%)'/>
+									<CardExchange key={"ZAR"} currency={"Rand"} subtitle={`${_item.genericResponse[0].codigoMoeda} - AOA`} price={_item.genericResponse[0].taxa.toString()} backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #003d6d 100%)'/>
 								)
 							}
 							
-						})}
+						}) : (
+							<>
+							<Skeleton borderRadius={10} height={80} width={200}/>
+							<Skeleton borderRadius={10} height={80} width={200}/>
+							<Skeleton borderRadius={10} height={80} width={200}/>
+							<Skeleton borderRadius={10} height={80} width={200}/>
+							</>
+						)	
+						}
 					</div>
 				</div>
 				<div className="bottom">
 					<div className="bottomLeft">
 						<h1>Ultimas transações</h1>
 						<div className="content">
-							<CardDashboardTransaction balance='Kz 2000,00' date='25 Jan 2024' status={1} type='Pagamento' imageUrl="../assets/images/wallets/paypal.png"/>
-							<CardDashboardTransaction balance='Kz 2000,00' date='25 Jan 2024' status={1} type='Pagamento' imageUrl="../assets/images/wallets/paypal.png"/>
-							<CardDashboardTransaction balance='Kz 2000,00' date='25 Jan 2024' status={1} type='Pagamento' imageUrl="../assets/images/wallets/paypal.png"/>
-							<CardDashboardTransaction balance='Kz 2000,00' date='25 Jan 2024' status={1} type='Pagamento' imageUrl="../assets/images/wallets/paypal.png"/>
-							<CardDashboardTransaction balance='Kz 2000,00' date='25 Jan 2024' status={1} type='Pagamento' imageUrl="../assets/images/wallets/paypal.png"/>
-							<CardDashboardTransaction balance='Kz 2000,00' date='25 Jan 2024' status={1} type='Pagamento' imageUrl="../assets/images/wallets/paypal.png"/>
-							<CardDashboardTransaction balance='Kz 2000,00' date='25 Jan 2024' status={1} type='Pagamento' imageUrl="../assets/images/wallets/paypal.png"/>
-							<CardDashboardTransaction balance='Kz 2000,00' date='25 Jan 2024' status={1} type='Pagamento' imageUrl="../assets/images/wallets/paypal.png"/>
-							<CardDashboardTransaction balance='Kz 2000,00' date='25 Jan 2024' status={1} type='Pagamento' imageUrl="../assets/images/wallets/paypal.png"/>
-						
+							<TransactionList accountNumber={account?.number || ""}/>
 						</div>
 					</div>
-					<div className="bottomRight">
-						<div className='btTop'><h1>Enviar para amigos</h1><CiSquarePlus /></div>
-						<div className="content">
-							<CardFriend name={"Elisandro Franco"} email='elisandrofranco@gmai.com' imageUrl={picture}/>
-							<CardFriend name={"Elisandro Franco"} email='elisandrofranco@gmai.com' imageUrl={picture}/>
-							<CardFriend name={"Elisandro Franco"} email='elisandrofranco@gmai.com'  imageUrl={picture}/>
-						</div>
-					</div>
-				</div>
+					<CardFriends biNumber={biNumber} number={account?.number || ""} emailFrom={emailFrom}/>
+			</div>
+			
 			</div>
 			<div className="dashboard_right">
 				<h1 className="title">Meus cartões</h1>
@@ -187,8 +224,8 @@ export default function Dashboard({biNumber, titular,picture, exchanges}: IProps
           {(
             <>
               {[
-                { label: "Saldo contabilístico", value: `${account?.available_balance},00 Kz`},
-                { label: "Saldo autorizado", value: `${account?.authorized_balance},00 Kz`},
+                { label: "Saldo contabilístico", value: `${account?.available_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}`},
+                { label: "Saldo autorizado", value: `${account?.authorized_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}`},
                 
               ].map((item, _index) => (
                 <div key={item.label}>

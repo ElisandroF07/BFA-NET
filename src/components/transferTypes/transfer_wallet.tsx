@@ -39,6 +39,14 @@ export default function TransferWallet({number}: {number: string}) {
 		}
 	}, []);
 
+	function getDataAtual() {
+		const data = new Date();
+		const dia = String(data.getDate()).padStart(2, '0');
+		const mes = String(data.getMonth() + 1).padStart(2, '0');
+		const ano = data.getFullYear();
+		return `${dia}/${mes}/${ano}`;
+	}
+
 	return (
 		<div className="pt1_container">
 			<div className="top">
@@ -143,7 +151,7 @@ export default function TransferWallet({number}: {number: string}) {
 									type="text"
 									disabled
 									style={{ border: "none", background: "none" }}
-									value="26 / 09 / 2024"
+									value={getDataAtual()}
 								/>
 							</div>
 							<div className="input_field">
@@ -152,13 +160,6 @@ export default function TransferWallet({number}: {number: string}) {
 									type="text"
 									placeholder="Código emitido pela carteira digital"
 								/>
-							</div>
-							<div className="input_field">
-								<label htmlFor="email">Montante</label>
-								<div className="input_phone">
-									<p>Kz</p>
-									<input type="text" placeholder="Montante" />
-								</div>
 							</div>
 							<div className="buttonContainer">
 								<button type="button">
