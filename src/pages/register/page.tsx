@@ -1,5 +1,5 @@
 "use client";
-
+import axios from "axios";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -15,7 +15,7 @@ import RegisterInfoModal from "@/components/modals/registerInfo";
 import business from "@/assets/images/wellcome.svg";
 import "@/styles/globals.css";
 import "@/styles/phone.css";
-import api from "@/services/api";
+import { TailSpin } from 'react-loader-spinner'
 
 const FormSchema = z.object({
     email: z.string().min(1, "O email é obrigatório!").email("Email inválido! Corrija o email").transform((email) => {
@@ -52,25 +52,23 @@ export default function Register() {
         const { email } = data;
         // biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
         return  new Promise(async (resolve, reject) => {
-            await api.get(`/sendEmail/${email}`)
+            await axios.get(`http://localhost:5000/sendEmail/${email}`)
             .then((response) => {
                 if (response.status === 201) {
                     useStore.updateEmail(email);
                     if (typeof window !== "undefined") {
                         localStorage.setItem("email", email);
                     }
-                    setLoading(false)
                     router.push("/email-verification");
                     resolve(response.data.message)
                 }
                 reject(response.data.message) 
+                setLoading(false)
             })
             .catch(()=>{
                 toast.error("Não foi possivel processar a sua solicitação!" ,{description: "Verifique a sua conexão com a internet."})
-            })
-            .finally(()=>{
                 setLoading(false)
-            })  
+            })
         })
         
     }
@@ -104,7 +102,18 @@ export default function Register() {
                                 {errors.email && <InfoError message={errors.email.message} />}
                             </div>
                             <button type="submit" disabled={loading} className="button_auth">
-                                Verificar email
+                            {loading ? (
+                                <TailSpin
+                                    height="25"
+                                    width="25"
+                                    color="#fff"
+                                    ariaLabel="tail-spin-loading"
+                                    radius="1"
+                                    visible={true}
+                                />
+                            ) : (
+                                'Verificar email'
+                            )}
                             </button>
                             <div className="terms">
                                 <p>
