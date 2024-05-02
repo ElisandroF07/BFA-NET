@@ -1,24 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import "@/styles/private.css";
 import { useEffect, useState } from "react";
 import {useRouter} from 'next/navigation'
-import {
-  CiBellOff,
-  CiBellOn,
-  CiCloudOn,
-  CiGps,
-  CiGrid41,
-  CiInboxIn,
-  CiInboxOut,
-  CiLogout,
-  CiMoneyCheck1,
-  CiReceipt,
-  CiSettings,
-  CiShare1,
-  CiSquareAlert,
-} from "react-icons/ci";
-import { FiLogOut } from "react-icons/fi";
+import {CiCloudOn,} from "react-icons/ci";
 import { signOut } from "next-auth/react";
 import ButtonIcon from "@/components/buttons/buttonIcon";
 import Account from "@/privatePages/account/page";
@@ -36,28 +22,58 @@ import axios from "axios";
 import DashboardNavbar from "@/components/others/dasboardNavbar";
 import { SkeletonTheme } from "react-loading-skeleton";
 import NotificationList from "@/components/lists/notificationList";
+import useClientStore from "@/contexts/stores/clientStore";
+import useCardStore from "@/contexts/stores/cardStore";
+import TPA from "@/privatePages/tpa/page";
 
-interface DashboardProps {
-  username: string,
-  biNumber: string,
-  email: string,
-  birthDate: string,
+type Card = {
+  cardNumber: string;
+  pin: string;
+  createdAt: string;
+  role: number;
+  nickname: string;
+  state: string
+};
+
+interface IAddress {
   country: string,
-  address: string,
-  fullName: string
+  full_address: string
 }
 
-interface IAccount {
-	iban: string,
-	nbi: string,
-	role: number,
-	number: string,
-	authorized_balance: number,
-	bic: string,
-	available_balance: number,
-	created_at: string,
-	currency: string,
-	state: string,
+interface IPersonalData {
+  name: [string],
+  birthDate: string,
+  gender: string
+}
+
+type Client = {
+  personalData: IPersonalData,
+	email: string;
+	biNumber: string;
+	pictureProfile: string,
+  address: IAddress
+};
+
+type Accountt = {
+  iban: string,
+  nbi: string,
+  role: number,
+  number: string,
+  authorized_balance: number,
+  bic: string,
+  available_balance: number,
+  up_balance: number,
+  created_at: string,
+  currency: string,
+  state: string,
+};
+
+interface DashboardProps {
+  biNumber: string,
+  email: string,
+  userData: Client,
+  cardData: Card,
+  accountData: Accountt,
 }
 
 interface ICurrency {
@@ -74,37 +90,21 @@ interface ApiResponse {
   success: boolean;
 }
 
-export default function Dashbaord({fullName, username, biNumber, email, birthDate, country, address}: DashboardProps){
+
+export default function Dashbaord({email, biNumber, userData, cardData, accountData}: DashboardProps){
 
   const [page, setPage] = useState("Dashboard")
   const router = useRouter()
   const [picture, setPicture] = useState("")
   const [loading, setLoading] = useState(false)
   const useAccount = useAccountStore()
+  const useClient = useClientStore()
+  const useCard = useCardStore()
   const fetcher = (url: string) => api.get(url).then(res => res.data);
-	const { data: accountData, error: accountError } = useSWR(`/getAccountData/${biNumber}`, fetcher);
+
   const { data: pictureProfile, error: pictureError } = useSWR(`/getProfilePicture/${biNumber}`, fetcher);
   const currencies = ["USD", "EUR", "ZAR", "CNY"]
   const [currency, setCurrency] = useState<ApiResponse>({genericResponse: [], success: false})
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-		if (accountData) {
-      useAccount.updateIban(accountData.account.iban)
-      useAccount.updateNbi(accountData.account.nbi)
-      useAccount.updateRole(accountData.account.role)
-      useAccount.updateNumber(accountData.account.number)
-      useAccount.updateAuthorizedBalance(accountData.account.authorized_balance)
-      useAccount.updateBic(accountData.account.bic)
-      useAccount.updateAuthorizedBalance(accountData.account.available_balance)
-      useAccount.updateCreatedAt(accountData.account.created_at)
-      useAccount.updateCurrency(accountData.account.currency)
-      useAccount.updateState(accountData.account.state)
-		}
-		if (accountError) {
-			toast.error("Não foi possível carregar os dados da sua conta!", { description: "Verifique a sua conexão com a internet." });
-		}
-	}, [accountData, accountError]);
 
   useEffect(() => {
     async function getCurrencies() {
@@ -134,14 +134,41 @@ export default function Dashbaord({fullName, username, biNumber, email, birthDat
      }
     }
     getCurrencies();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    console.log(currency);
-  }, [currency]);
-  
-  
+    if (userData) {
+        useClient.setAddress(userData.address)
+        useClient.setPersonalData(userData.personalData)
+        useClient.setBiNumber(biNumber)
+        useClient.setEmail(email)
+        useClient.setPictureProfile(userData.pictureProfile)
+    }
+    if (cardData) {
+      useCard.setCardNumber(cardData.cardNumber)
+      useCard.setRole(cardData.role)
+      useCard.setCreatedAt(cardData.createdAt)
+      useCard.setNickname(cardData.nickname)
+      useCard.setPin(cardData.pin)
+      useCard.setState(cardData.state)
 
+    }
+    if (accountData) {
+      useAccount.updateAuthorizedBalance(accountData.authorized_balance)
+      useAccount.updateAvailableBalance(accountData.available_balance)
+      useAccount.updateState(accountData.state)
+      useAccount.updateBic(accountData.bic)
+      useAccount.updateCreatedAt(accountData.created_at)
+      useAccount.updateCurrency(accountData.currency)
+      useAccount.updateIban(accountData.iban)
+      useAccount.updateNbi(accountData.nbi)
+      useAccount.updateNumber(accountData.number)
+      useAccount.updateRole(accountData.role)
+      useAccount.updateState(accountData.state)
+      useAccount.updateUpBalance(accountData.up_balance)
+    }
+  }, [userData,  cardData, accountData])
 
   useEffect(() => {
     if (pictureProfile) {
@@ -153,13 +180,10 @@ export default function Dashbaord({fullName, username, biNumber, email, birthDat
   }, [pictureProfile, pictureError])
 
 
+
   useEffect(() => {
-    const buttons = document.querySelectorAll(
-      ".btn[data-active]",
-    ) as NodeListOf<HTMLButtonElement>;
-    const item_list = document.querySelectorAll(
-      ".btn",
-    ) as NodeListOf<HTMLButtonElement>;
+    const buttons = document.querySelectorAll(".btn[data-active]") as NodeListOf<HTMLButtonElement>;
+    const item_list = document.querySelectorAll(".btn") as NodeListOf<HTMLButtonElement>;
     const shadow = document.querySelector(".shadow") as HTMLDivElement;
 
     for (const item of item_list) {
@@ -231,7 +255,7 @@ export default function Dashbaord({fullName, username, biNumber, email, birthDat
         <p>Internet Banking</p>
         <div>
           
-          <NotificationList email={email} biNumber={biNumber}/>
+          <NotificationList email={useClient.email} biNumber={useClient.biNumber}/>
           <ButtonIcon>
             <CiCloudOn className="icon" />
           </ButtonIcon>
@@ -239,19 +263,23 @@ export default function Dashbaord({fullName, username, biNumber, email, birthDat
       </header>
       <section className="privateChildrenContainer">
           {page === "Dashboard" ? (
-            <Dashboard biNumber={biNumber} titular={username} picture={picture} logout={logout} exchanges={currency} emailFrom={email}/>
+            <Dashboard logout={logout} exchanges={currency} biNumber={useClient.biNumber}/>
           ) : page === "Conta" ? (
-            <Account biNumber={biNumber} fullName={fullName} titular={username} birthDate={birthDate} email={email} country={country} address={address} picture={picture}/>
+            <Account/>
           ) : page === "Pagamentos" ? (
-            <Payments authorized_balance={useAccount.authorized_balance} available_balance={useAccount.available_balance}  number={useAccount.number}/>
-          ) : page === "Suporte" ? (
+            <Payments/>
+          )
+          : page === "TPA Virtual" ? (
+            <TPA/>
+          )
+           : page === "Suporte" ? (
             <Support />
           ) : page === "Consultas" ? (
-            <Consults authorized_balance={useAccount.authorized_balance} number={useAccount.number} available_balance={useAccount.available_balance} iban={useAccount.iban} />
+            <Consults/>
           ) : page === "Levantamentos" ? (
-            <Upmoney authorized_balance={useAccount.authorized_balance} available_balance={useAccount.available_balance} email={email}/>
+            <Upmoney/>
           ) : page === "Transferências" ? (
-            <Transfers authorized_balance={useAccount.authorized_balance} biNumber={biNumber} available_balance={useAccount.available_balance} iban={useAccount.iban} number={useAccount.number}/>
+            <Transfers />
           ) : null}
       </section>
     </main>

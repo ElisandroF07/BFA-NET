@@ -46,6 +46,7 @@ export default function Assign() {
 		stepsStore.setCurrent(2);
 		stepsStore.setStep1(true);
 		stepsStore.setStep2(true);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const [selfie, setselfie] = useState<FileState>({
@@ -97,7 +98,7 @@ export default function Assign() {
 				setLoading(false);
 			} 
 			catch {
-				reject("Ocorreu um erro ao processar a sua solicitação! Verifique a sua conexão com a internet.");
+				reject("Sem conexão com o servidor!");
 				setLoading(false);
 			}
 		});
@@ -106,7 +107,7 @@ export default function Assign() {
 	function submitForm() {
 		if (validateForm()) {
 			toast.promise(uploadSelfie(), {
-				loading: "Enviando...",
+				loading: "Armazenando a imagem...",
 				success: (data) => {
 					return data;
 				},

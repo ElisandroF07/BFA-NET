@@ -23,14 +23,13 @@
     justify-content: flex-start;
 }
 .transfers_header > .top > h1 {
-    font-family: Inter_SemiBold;
+    font-family: Rubik;
     font-size: var(--font-page-titles);
     color: var(--color-text);
 }
 .transfers_header > .top > p {
-    font-family: Inter_Regular;
-    font-size: var(--font-small-titles);
-    color: var(--color-text);
+  font-weight: 200;
+  color: #858585;
 }
 .transfers_header > .bottom {
     margin-top: 10px;
@@ -52,19 +51,19 @@
     padding: 10px 20px;
     gap: 5px;
     background-color: var(--color-cards);
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
 .transfers_header > .bottom > div > h2 {
-    font-family: Inter_Regular;
+    font-family: Rubik;
     font-size: var(--font-small);
 }
 .transfers_header > .bottom > div > p {
-    font-family: Inter_Regular;
+    font-family: Rubik;
     font-weight: 600;
     font-size: var(--font-small);
 }
 .transfers_header > .bottom > div > select {
-    font-family: Inter_Regular;
+    font-family: Rubik;
     font-size: var(--font-small);
     background-color: transparent;
     outline: none;
@@ -80,28 +79,31 @@
     border-radius: 10px;
     grid-column: 1;
     grid-row: 2;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
 .transfers_lateral {
     background-color: var(--color-cards);
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     grid-column: 2;
     grid-row: span 2;
     display: flex;
     flex-direction: column;
-    gap: 4%;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    gap: 1%;
+    box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
-.transfers_lateral > .top, .transfers_lateral > .bottom {
-    height: 48%;
+.transfers_lateral > .top{
+    flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-.transfers_lateral > .requests {
+.transfers_lateral > .top > div.requests {
     overflow-y: scroll;
     flex: 1;
+    display: flex;
+    flex-direction: column-reverse !important;
+    justify-content: flex-end !important;
 }
 .transfers_lateral > .requests::-webkit-scrollbar {
     display: none;

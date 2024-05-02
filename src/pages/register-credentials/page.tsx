@@ -1,9 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { FaArrowRight } from "react-icons/fa6";
 import Image from "next/image";
 import useStepsStore from "@/contexts/stores/stepsStore";
 import useUserStore from "@/contexts/stores/userStore";
@@ -19,8 +19,14 @@ export default function RegisterCredentials() {
 	const [loading, setLoading] = useState(false);
 
 	let email_address = "";
+	let local = "";
+	let area = "";
+	let account_type = "";
 	if (typeof window !== "undefined") {
 		email_address = localStorage.getItem("email") ?? useStore.email
+		area = localStorage.getItem("area") ?? "";
+		local = localStorage.getItem("local") ?? "";
+		account_type = localStorage.getItem("accountType") ?? "";
 	}
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -31,36 +37,25 @@ export default function RegisterCredentials() {
 		stepsStore.setStep3(true);
 	}, []);
 
-	async function APICall(): Promise<string> {
+	async function APICall(){
 		setLoading(true);
-		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-		return new Promise(async (resolve, reject) => {
 			try {
-				const response = await api.get(`http://localhost:5000/generateCredentials/${email_address}`);
+				const response = await api.get(`/generateCredentials/${email_address}/${account_type}/${area}/${local}`);
 				if (response.status === 201) {
 					router.replace("/login")
-					resolve(response.data.message);
+					toast.success(response.data.message);
 				} else {
-					reject(response.data.message);
+					toast.error(response.data.message);
 				}
 			} 
 			catch {
-				reject("Não foi possivel processar a sua solicitação! Verifique a sua conexão com a internet.");
+				toast.error("Sem conexão com o servidor!");
 				setLoading(false);
 			}
-		});
 	}
 
 	function submitForm() {
-		toast.promise(APICall(), {
-			loading: "Gerando e enviando...",
-			success: (data) => {
-				return data;
-			},
-			error: (data) => {
-				return data;
-			},
-		});
+		APICall()
 	}
 
 	return (

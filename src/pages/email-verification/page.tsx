@@ -22,36 +22,26 @@ export default function EmailVerification() {
 		email = localStorage.getItem("email") ?? useStore.email
 	}
 
-	function APICall(): Promise<string> {
+	async function APICall(){
 		setLoading(true);
-		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-		return new Promise(async (resolve, reject) => {
-			try {
-				const response = await axios.get(`http://localhost:5000/resendEmail/${email}`,);
-				if (response.status === 201) {
-					resolve(response.data.message);
-				}
-				reject(response.data.message)
-				setLoading(false)
-			} 
-			catch {
-				reject("Não foi possivel processar a sua solicitação! Vertifique a sua coenxão com a internet.");
-				setLoading(false)
-			} 
-			
-		});
+		try {
+			const response = await axios.get(`http://localhost:5000/resendEmail/${email}`,);
+			if (response.status === 201) {
+				toast.success(response.data.message);
+			}
+			else {
+				toast.error(response.data.message)
+			}
+			setLoading(false)
+		} 
+		catch {
+			toast.error("Sem conexão com o servidor");
+			setLoading(false)
+		} 
 	}
 
 	async function resendEmail() {
-		toast.promise(APICall(), {
-			loading: "Reenviando email...",
-			success: (data) => {
-				return data;
-			},
-			error: (data) => {
-				return data;
-			},
-		});
+		APICall()
 	}
 
 	return (

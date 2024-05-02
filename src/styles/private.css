@@ -15,7 +15,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-family: Inter_Regular;
+    font-family: Rubik;
     font-size: var(--font-small);
     padding: 10px 0px 10px 0px;
 }
@@ -54,13 +54,13 @@
     background-color: transparent;
     padding-left: 5px;
     font-size: var(--font-small);
-    font-family: Inter_Regular;
+    font-family: Rubik;
     color: var(--color-text);
 }
 ::placeholder {
     color: var(--color-placeholder);
     font-size: var(--font-small);
-    font-family: Inter_Regular;
+    font-family: Rubik;
 }
 .searchBar > button {
     width: 28px;
@@ -82,7 +82,7 @@
 .privateChildrenContainer {
     grid-column: 2;
     grid-row: 2;
-    background-color: #f5f7fb;
+    background-color: #f7f7f7;
     border-radius: 15px;
     overflow: hidden;
     padding: 15px ;
@@ -97,7 +97,7 @@
 .listTitle {
     margin-top: 20px;
     font-size: var(--font-small);
-    font-family: Inter_Regular;
+    font-family: Rubik;
     color: var(--color-text);
 }
 .navlist > li {
@@ -111,12 +111,13 @@
     background-color: transparent;
     border-radius: 8px;
     font-size: var(--font-small);
-    font-family: Inter_Regular;
-    color: var(--color-text);
+    font-family: Rubik;
+    color: #000;
+    font-weight: 400;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding-left: 20px;
+    padding-left: 12px;
     gap: 15px;
     outline: none;
     transition: .3s;
@@ -127,8 +128,8 @@
 }
 .navlist > li > button[data-active="true"] {
     transition: .3s;
-    background-color: var(--color-focus3);
-    color: var(--color-focus);
+    background-color: #FC6423;
+    color: var(--color-cards);
 }
 .separator {
     width: 100%;
@@ -179,7 +180,7 @@
     justify-content: center;
     gap: 10px;
     font-size: var(--font-small);
-    font-family: Inter;
+    font-family: Rubik;
     font-weight: 500;
 }
 .accountCard > button > svg {
@@ -188,13 +189,13 @@
 }
 .shadow {
     border-radius: 10px;
-    background-color: var(--color-focus);
+    background-color: var(--color-cards);
     position: absolute;
     top: 0;
     left: 0;
     position: fixed;
     z-index: 16;
-    width: 4px;
+    width: 3px;
 }
 
 .notifications {
@@ -208,7 +209,7 @@
     align-items: center;
     justify-content: center;
     font-size: 0.7rem;
-    font-family: Inter;
+    font-family: Rubik;
     font-weight: 500;
     color: #fff;
     background-color: #c80101;

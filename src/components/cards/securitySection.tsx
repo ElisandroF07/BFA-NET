@@ -65,24 +65,24 @@ export default function SecuritySection({biNumber}: IProps) {
         resolver: zodResolver(formSchema2FA)
     })
 
-    function APICall(data: string): Promise<string> {
+    async function APICall(data: string){
 		setLoading(true)
-		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await api.post("http://localhost:5000/privateResetAccessCode", data);
 				if (response.status === 201) {
-					resolve(response.data.message);
+					toast.success(response.data.message);
 				}
-				reject(response.data.message);
+				else {
+                    toast.error(response.data.message);
+                }
 			} 
 			catch {
-				reject("Não foi possivel processar a sua solicitação! Verifique a sua conexão com a internet.");
+				toast.error("Sem conexão com o servidor!");
 			} 
 			finally {
 				setLoading(false)
 			}
-		});
+		
 	}
 
     async function submitForm(data: formType) {
@@ -92,16 +92,7 @@ export default function SecuritySection({biNumber}: IProps) {
 			accessCode,
 			email
 		});
-
-		toast.promise(APICall(formatedData), {
-			loading: "Enviando...",
-			success: (data) => {
-				return data;
-			},
-			error: (data) => {
-				return data;
-			},
-		});
+        APICall(formatedData)
 	}
 
     async  function submitForm2FA(data: formType2FA) {

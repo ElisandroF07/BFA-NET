@@ -5,20 +5,18 @@ import React from "react";
 import { Dispatch, SetStateAction } from "react";
 
 interface IButtonServiceProps {
-  image: StaticImageData;
+  image: string;
   serviceName: string;
-  setWallet?: Dispatch<SetStateAction<string>>;
+  onClick: ()=>void;
 }
 
 function ButtonService({
   image,
   serviceName,
-  setWallet,
+  onClick
 }: IButtonServiceProps) {
   const handleClick = () => {
-    if (setWallet) {
-      setWallet(serviceName);
-    }
+    onClick()
   };
 
   return (

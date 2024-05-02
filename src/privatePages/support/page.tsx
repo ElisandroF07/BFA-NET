@@ -14,7 +14,7 @@ export default function Support() {
 			<div className="support_body">
 				<div className="channels">
 					<div className="image" />
-					<h1 className="title">Fale connosco</h1>
+					<h1 className="title" style={{color: "#3B3D4E"}}>Fale connosco</h1>
 					<p>
 						A Linha de Atendimento BFA está disponível 24h por dia. Se tem
 						dúvidas, sugestões ou reclamações, fale connosco.
@@ -46,7 +46,7 @@ export default function Support() {
 				</div>
 				<div className="channels">
 					<div className="image" />
-					<h1 className="title">Canal de denúncias</h1>
+					<h1 className="title" style={{color: "#3B3D4E"}}>Canal de denúncias</h1>
 					<p>
 						Telefone (+244) 931 053 771 (chamadas pagas de acordo com o serviço
 						nacional).
@@ -837,7 +837,7 @@ export default function Support() {
 				</div>
 				<div className="channels">
 					<div className="image" />
-					<h1 className="title">Reclamações</h1>
+					<h1 className="title" style={{color: "#3B3D4E"}}>Reclamações</h1>
 					<p>
 						Este é o espaço para se aproximar ao BFA. Envie-nos os seus
 						comentários, sugestões e reclamações, teremos o maior prazer em

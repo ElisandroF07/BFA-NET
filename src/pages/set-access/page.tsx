@@ -23,6 +23,7 @@ import useUserStore from "@/contexts/stores/userStore";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { TailSpin } from "react-loader-spinner";
 
 const formSchema = z.object({
   accessCode: z.string().min(1, "Preencha o campo!").max(6, "O código de acesso deve conter apenas 6 dígitos").regex(/^[0-9]{6}$/, "O código de acesso deve conter 6 dígitos!"),
@@ -46,6 +47,7 @@ export default function SetAccessCode() {
   let email = ""
   if (typeof window !== "undefined") {
     email = localStorage.getItem("email") || useStore.email;
+    localStorage.clear()
   }
   
   async function submitForm(data: formType) {
@@ -62,11 +64,11 @@ export default function SetAccessCode() {
     }
     else {
       toast.error("Ocorreu em erro ao processar a sua solicitação!")
+      setLoading(false)
     }
-    setLoading(false)
    }
    catch{
-    toast.error("Não foi possivel processar a sua solicitação!", {description: "Verifique a sua conexão com a internet."})
+    toast.error("Sem conexão com o servidor")
     setLoading(false)
    }
   }
@@ -195,8 +197,19 @@ export default function SetAccessCode() {
                  {errors.confirmCode && <InfoError message={errors.confirmCode.message}/>}
               </div>
 
-              <button type="submit" className="button_auth">
-                Salvar código de acesso
+              <button type="submit" className="button_auth" disabled={loading}>
+              {loading ? (
+                <TailSpin
+                  height="25"
+                  width="25"
+                  color="#fff"
+                  ariaLabel="tail-spin-loading"
+                  radius="1"
+                  visible={true}
+                />
+              ) : (
+                'Definir'
+              )}
               </button>
             </div>
           </form>

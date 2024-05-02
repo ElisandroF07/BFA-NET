@@ -20,8 +20,10 @@
   background-color: transparent;
 }
 .dashboard_top h1 {
-  font-weight: 600;
+  font-family: Rubik;
   font-size: var(--font-page-titles);
+  color: var(--color-text);
+  font-weight: 400;
 }
 .dashboard_top p {
   font-weight: 200;
@@ -56,7 +58,7 @@
   grid-row: span 2;
   padding: 20px;
   background-color: var(--color-cards);
-  box-shadow: #959da533 0px 8px 24px;
+  box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
   overflow-y: scroll;
 }
 .dashboard_right::-webkit-scrollbar {
@@ -86,7 +88,7 @@
     left: 33px;
     color: #ffffffa8;
     font-size: var(--font-small);
-    font-family: 'Inter_Light';
+    font-family: 'Rubik';
 }
 .dashboard_right > .cardImage > p:nth-child(2) {
   position: absolute;
@@ -94,7 +96,7 @@
   right: 19px;
   color: #ffffffa8;
   font-size: 0.5rem;
-  font-family: 'Inter_Light';
+  font-family: 'Rubik';
 }
 .dashboard_right > .cardImage > p:nth-child(3) {
   position: absolute;
@@ -102,7 +104,7 @@
   right: 48px;
   color: #ffffffd6;
   font-size: var(--font-small);
-  font-family: 'Inter_Regular';
+  font-family: 'Rubik';
 }
 .dashboard_middle > .exchanges_container {
   width: 100%;
@@ -111,7 +113,8 @@
   flex-direction: column;
   grid-row: 2;
   background-color: #fff;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  /* box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034); */
+  box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
   border-radius: 10px;
   padding: 20px;
 }
@@ -140,7 +143,7 @@
   width: 100%;
   height: 100%;
   color: #fff;
-  font-family: Inter;
+  font-family: Rubik;
 }
 .exchange > .exchangeText > h1 {
   position: absolute;
@@ -154,7 +157,7 @@
     top: 45px;
     left: 10px;
     font-size: var(--font-small-info);
-    font-family: Inter_Light;
+    font-family: Rubik;
 }
 .exchange > .exchangeText > p:nth-child(3) {
   position: absolute;
@@ -180,7 +183,8 @@
   background-color: var(--color-cards);
   border-radius: 10px;
   margin-bottom: 15px;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  /* box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034); */
+  box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
 .balance:not(:nth-child(3))::after {
   content: "";
@@ -204,7 +208,7 @@
 }
 .balance > h1 {
   font-size: var(--font-small);
-  font-family: Inter;
+  font-family: Rubik;
   font-weight: 400;
   color: #000000a8;
 }
@@ -214,7 +218,7 @@
 }
 .balance > p:nth-child(3) {
   font-size: var(--font-small);
-  font-family: Inter;
+  font-family: Rubik;
   font-weight: 400;
   color: #000000a8;
 }
@@ -226,7 +230,7 @@
   align-items: center;
   gap: 15px;
   margin-top: 15px;
-  font-family: Inter;
+  font-family: Rubik;
   font-size: var(--font-small);
 }
 .bottom .bottomLeft {
@@ -237,7 +241,8 @@
   padding: 10px 20px;
   display: flex;
   flex-direction: column;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  /* box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034); */
+  box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
 .cardDashboardTransaction {
   width: 100%;
@@ -250,8 +255,48 @@
   border-radius: 10px;
   transition: .3s;
 }
+.cardTransfersTransaction {
+  width: 100%;
+  height: max-content;
+  padding: 10px 10px;
+  display: grid;
+  grid-template-columns: 40px calc(100% - 50px);
+  grid-template-rows: 1fr 1fr;
+  column-gap: 10px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  transition: .3s;
+}
+.cardTransfersTransaction > .iconContainer {
+  width: 40px;
+  height: 40px;
+  border-radius: 7px;
+  background-color:#b5070745;
+  grid-column: 1;
+  grid-row: span 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cardTransfersTransaction > .iconContainer svg {
+  color: #b90000;
+  width: 20px;
+  height: 20px;
+}
+.cardTransfersTransaction p:nth-child(2) {
+  grid-column: 2;
+  grid-row: 1;
+  font-weight: 600;
+  text-align: left;
+}
+.cardTransfersTransaction p:nth-child(3) {
+  grid-column: 2;
+  grid-row: 2;
+  text-align: left;
+}
 .cardDashboardTransaction:hover {
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  /* box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034); */
+  box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
   border: var(--border-input);
 }
 .cardDashboardTransaction > p:nth-chlid(2) {
@@ -264,7 +309,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 40px;
+  border-radius: 10px;
 }
 .cardDashboardTransaction > div > .imageContainer {
   width: 24px;
@@ -284,7 +329,8 @@
   padding: 10px 20px;
   display: flex;
   flex-direction: column;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  /* box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034); */
+  box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
 .bottom > .bottomLeft > h1, .bottom > .bottomRight > h1 {
   font-size: var(--font-small-titles);
@@ -341,7 +387,7 @@
 }
 .cardFriend > .text > p:nth-child(2) {
   font-size: var(--font-small-info);
-  font-family: Inter_Light;
+  font-family: Rubik;
 }
 .cardFriend > .layoutProfile {
   width: 40px;

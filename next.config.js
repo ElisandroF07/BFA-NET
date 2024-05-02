@@ -12,6 +12,7 @@ module.exports = withPWA({
   disable: process.env.NODE_ENV === 'development',
 });
 
+
 module.exports = {
   content: [
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
@@ -21,4 +22,14 @@ module.exports = {
   },
   darkMode: "class",
   plugins: [nextui()],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'f005.backblazeb2.com',
+        port: '',
+        pathname: '/file/bfa-cloud-storage/logos/entities/*',
+      },
+    ],
+  },
 };

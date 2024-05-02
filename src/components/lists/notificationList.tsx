@@ -80,7 +80,7 @@ export default function NotificationList({ email, biNumber }: { email: string; b
       }
     }
     catch {
-      toast.error("Erro ao remover a notificação!")
+      toast.error("Sem conexão com o servidor!")
     }
   }
 
@@ -90,7 +90,7 @@ export default function NotificationList({ email, biNumber }: { email: string; b
       setRequest(response.data)
     }
     catch {
-      toast.error("Erro ao obter as notificações!")
+      toast.error("Sem conexão com o servidor!")
     }
   }
 
@@ -139,7 +139,7 @@ export default function NotificationList({ email, biNumber }: { email: string; b
         toast.error("Código de acesso incorreto!")
       }
     } catch (error) {
-      toast.error("Erro ao processar a requisição. Tente novamente mais tarde.");
+      toast.error("Sem conexão com o servidor!");
     } finally {
       setLoading(false);
     }

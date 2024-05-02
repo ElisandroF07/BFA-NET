@@ -2,27 +2,21 @@
 
 import useUserStore from "@/contexts/stores/userStore";
 import { useEffect, useState } from "react";
-import { BiHide, BiShow } from "react-icons/bi";
 import { FaAngleLeft } from "react-icons/fa6";
 import { MdOutlineLock, MdOutlineLockOpen } from "react-icons/md";
 import api from "@/services/api";
 import { toast } from "sonner";
 import useSWR from "swr";
+import useClientStore from "@/contexts/stores/clientStore";
+import useCardStore from "@/contexts/stores/cardStore";
 
-interface ICard {
-  cardNumber: string;
-  pin: string;
-  createdAt: string;
-  role: number;
-  nickname: string;
-}
-
-export default function CardsSection({ biNumber, titular }: { biNumber: string; titular: string }) {
-  const [card, setCard] = useState<ICard | null>(null);
+export default function CardsSection() {
   const [locked, setLocked] = useState(false);
   const [nk, setNk] = useState("");
   const [loading, setLoading] = useState(false);
   const store = useUserStore();
+  const useClient = useClientStore()
+  const useCard = useCardStore()
 
   function convertDate(timestamp: number) {
     const data = new Date(timestamp);
@@ -32,27 +26,15 @@ export default function CardsSection({ biNumber, titular }: { biNumber: string; 
     return `${mes} / ${ano}`;
   }
 
-  const fetcher = (url: string) => api.get(url).then(res => res.data);
-	const { data: cardData, error: cardError, mutate: mutateCard } = useSWR(`/getCardData/${biNumber}`, fetcher);
-
-	useEffect(() => {
-		if (cardData) {
-			setCard(cardData.card);
-		}
-		if (cardError) {
-			toast.error("Não foi possível carregar os dados do seu cartão!", { description: "Verifique a sua conexão com a internet." });
-		}
-	}, [cardData, cardError]);
-
   async function updateCard() {
     try {
       setLoading(true)
-      const response = await api.post("/setNickname", { cardNumber: card?.cardNumber, nickname: nk });
-      mutateCard(response.data, false); 
+      const response = await api.post("/setNickname", { cardNumber: useCard.cardNumber, nickname: nk });
+      useCard.setNickname(response.data.nickname); 
       toast.success('Informações atualizadas com sucesso!');
       setLoading(false)
     } catch (error) {
-      toast.error('Não foi possível atualizar o cartão. Por favor, tente novamente mais tarde.');
+      toast.error('Não foi possível atualizar o cartão. .');
       setLoading(false)
     }
   }
@@ -68,19 +50,19 @@ export default function CardsSection({ biNumber, titular }: { biNumber: string; 
         <div className="left">
           <div className="input_field" style={{ margin: "0px" }}>
             <label htmlFor="email">Apelido do cartão</label>
-            <input type="text" placeholder="Dê um nome ao cartão" onChange={(event) => setNk(event.target.value)} defaultValue={card?.nickname || ""} />
+            <input type="text" placeholder="Dê um nome ao cartão" onChange={(event) => setNk(event.target.value)} defaultValue={useCard.nickname || ""} />
           </div>
           <div className="multiText">
             <h1>Tipo de cartão</h1>
-            <p>{card?.role === 1 ? "Cartão Multicaixa de Débito" : "Teste"}</p>
+            <p>{useCard.role === 1 ? "Cartão BFA - Virtual de Débito" : ""}</p>
           </div>
           <div className="multiText">
             <h1>Número do cartão</h1>
-            <p>{card?.cardNumber}</p>
+            <p>{useCard.cardNumber}</p>
           </div>
           <div className="multiText">
             <h1>Data de validade</h1>
-            <p>{convertDate(parseInt(card?.createdAt || ""))}</p>
+            <p>{convertDate(parseInt(useCard.createdAt || ""))}</p>
           </div>
           <div className="multiText">
             {locked ? (
@@ -93,9 +75,9 @@ export default function CardsSection({ biNumber, titular }: { biNumber: string; 
         </div>
         <div className="right">
           <div className="cardImage">
-            <p>{titular}</p>
-            <p>{convertDate(parseInt(card?.createdAt || ""))}</p>
-            <p>{card?.cardNumber.slice(-4)}</p>
+            <p>{`${useClient.personalData.name[0]} ${useClient.personalData.name[useClient.personalData.name.length - 1]}`}</p>
+            <p>{convertDate(parseInt(useCard.createdAt || ""))}</p>
+            <p>{useCard.cardNumber.slice(-4)}</p>
           </div>
         </div>
       </div>

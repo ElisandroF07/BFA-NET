@@ -27,14 +27,13 @@
     justify-content: flex-start;
   }
   .header > .top > h1 {
-    font-family: Inter_SemiBold;
+    font-family: Rubik;
     font-size: var(--font-page-titles);
     color: var(--color-text);
   }
   .header > .top > p {
-    font-family: Inter_Regular;
-    font-size: var(--font-small-titles);
-    color: var(--color-text);
+    font-weight: 200;
+    color: #858585;
   }
   .header > .bottom {
     margin-top: 10px;
@@ -56,21 +55,21 @@
     padding: 10px 20px;
     gap: 5px;
     background-color: var(--color-cards);
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
   }
   .header > .bottom > div > h2 {
-    font-family: Inter_Regular;
+    font-family: Rubik;
     font-size: var(--font-small);
   }
   .header > .bottom > div > p {
-    font-family: Inter_Regular;
+    font-family: Rubik;
     font-weight: 600;
     font-size: var(--font-small);
 }
 .middle {
     grid-row: 2;
     grid-column: 1;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
 .middle::-webkit-scrollbar {
     display: none;
@@ -81,7 +80,7 @@
     padding: 10px;
     display: flex;
     flex-direction: column;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
 .all-container{
     padding: 20px;
@@ -152,12 +151,13 @@
     justify-content: flex-start;
     gap: 15px;
     color: black;
-    margin-top:10px ;   
+    margin-top:10px ;  
+    background-color: var(--color-cards); 
 }
 .input_montante > p::after {
     content: '';
     width: 1px;
-    height: 14px;
+    height: 18px;
     background-color: var(--color-border);
     position: absolute;
     margin-left: 12px;
@@ -165,7 +165,7 @@
     color: black;
 }
 .input_montante > p {
-    font-family: Inter_Regular;
+    font-family: Rubik;
     transition: .3s;
     color: black;
 }
@@ -174,7 +174,7 @@
     height: 100%;
     border: none;
     outline: none;
-    font-family: Inter_Regular;
+    font-family: Rubik;
     font-size: var(--font-small);
     transition: .3s;
     padding-left: 12px;
@@ -191,29 +191,29 @@
     background: none;
 }
 .input{ 
-    width: 55px;
-    margin: 10px;
-    height: 55px;
+    width: 100%;
+    margin: 15px 0px;
+    height: 45px;
     border-radius: 7px;
     border: var(--border-input);
     text-align: center;
-    font-size: 20px;
+    font-size: var(--font-small);
     color: var(--color-text);
-    font-family: Inter_Regular;
+    font-family: Rubik;
     outline: none;
 }
 .info{ 
     display: flex;
-    border-top: var(--border-input) ;
-    padding-top: 20px;
-    margin-top: 25px;
-    margin-bottom:25px;
-    align-items: center;
-    justify-content: center;
+    border-bottom: var(--border-input) ;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+    justify-content: flex-start;
     font-size: var(--font-small-info);
-    text-align: justify;
+    text-align: left;
     gap: 10px;
-    font-family: Inter_Light;
+    font-family: Rubik;
 }
 .icone{ 
     width: 55px;
@@ -224,10 +224,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-cards);
+    color: var(--color-focus);
     font-size: var(--font-small);
-    font-family: Inter_Regular;
-    background-color: var(--color-focus);
+    font-family: Rubik;
     width: 100%;
     padding: 10px 0px;
     margin: 10px 0px 0px 0px;
@@ -257,7 +256,7 @@
     margin-right:10px ;
 }
 .container-up > p{
-    font-family: Inter_Regular;
+    font-family: Rubik;
     position: absolute;
 }
 .container-up > p:nth-child(2){

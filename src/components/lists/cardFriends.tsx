@@ -131,14 +131,14 @@ export default function CardFriends({biNumber, number, emailFrom}:{biNumber: str
       }
     }
     catch {
-      toast.error("Ocorreu um erro ao processar a sua solicitação! Tente novamente mais tarde")
+      toast.error("Verifique a sua conexão com a internet!")
     }
   }
 
   return (
     <>
     <div className="bottomRight">
-      <div className='btTop'><h1>Enviar para amigos</h1><CiSquarePlus onMouseDown={onOpenAddFriend}/></div>
+      <div className='btTop'><h1 style={{color: "#3B3D4E"}}>Enviar para amigos</h1><CiSquarePlus onMouseDown={onOpenAddFriend}/></div>
       <div className="content">
         <FriendList biNumber={biNumber} accountNumber={number} email={emailFrom} error={error} friends={friends}/>
       </div>

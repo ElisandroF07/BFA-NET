@@ -62,68 +62,7 @@ export default function TransferWallet({number}: {number: string}) {
 							<CiSearch />
 						</button>
 					</div>
-					<ul className="services">
-						<ButtonService
-							image={unitelmoney}
-							serviceName="Unitel Money"
-							setWallet={setWallet}
-						/>
-						<ButtonService
-							image={afrimoney}
-							serviceName="Afrimoney"
-							setWallet={setWallet}
-						/>
-						<ButtonService
-							image={bnix}
-							serviceName="BNI BNIX"
-							setWallet={setWallet}
-						/>
-						<ButtonService
-							image={ekwanza}
-							serviceName="É-Kwanza BAI"
-							setWallet={setWallet}
-						/>
-						<ButtonService
-							image={kwanza}
-							serviceName="Kwanza"
-							setWallet={setWallet}
-						/>
-						<ButtonService
-							image={kwanzaonline}
-							serviceName="Kwanza Online"
-							setWallet={setWallet}
-						/>
-						<ButtonService
-							image={xikila}
-							serviceName="Xikila Money"
-							setWallet={setWallet}
-						/>
-						<ButtonService
-							image={aki}
-							serviceName="Aki"
-							setWallet={setWallet}
-						/>
-						<ButtonService
-							image={wise}
-							serviceName="Wise"
-							setWallet={setWallet}
-						/>
-						<ButtonService
-							image={binance}
-							serviceName="Binance"
-							setWallet={setWallet}
-						/>
-						<ButtonService
-							image={paypay}
-							serviceName="PayPay AO"
-							setWallet={setWallet}
-						/>
-						<ButtonService
-							image={paypal}
-							serviceName="PayPal"
-							setWallet={setWallet}
-						/>
-					</ul>
+
 				</div>
 				<div className="wallet rigth">
 					{wallet === "" ? (

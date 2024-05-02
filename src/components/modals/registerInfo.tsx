@@ -65,13 +65,8 @@ export default function RegisterInfoModal({ isOpen, onOpenChange }: IProps) {
 								</li>
 								<li>
 									<p>
-										<strong>2- Escolha um local calmo e bem iluminado.</strong>
-									</p>
-								</li>
-								<li>
-									<p>
 										<strong>
-											3- Esteja preparado para fornecer fotografias nítidas e
+											2- Esteja preparado para fornecer fotografias nítidas e
 											claras.
 										</strong>
 									</p>
@@ -79,7 +74,7 @@ export default function RegisterInfoModal({ isOpen, onOpenChange }: IProps) {
 								<li>
 									<strong>
 										<p>
-											4- Ao cancelar o processo, será necessário reiniciá-lo.
+											3- Ao cancelar o processo, será necessário reiniciá-lo.
 										</p>
 									</strong>
 								</li>

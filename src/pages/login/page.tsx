@@ -4,6 +4,7 @@ import axios from "axios";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { FaArrowRightLong } from "react-icons/fa6";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -42,8 +43,10 @@ export default function Login() {
 	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 	const useStore = useUserStore();
+	const [email, setEmail] = useState("")
+	const [pass, setPass] = useState("")
 
-	const {register, handleSubmit, formState: { errors }} = useForm<FormType>({
+	const {register, handleSubmit, formState: { errors }, setValue} = useForm<FormType>({
 		resolver: zodResolver(loginSchema),
 	});
 	
@@ -62,13 +65,13 @@ export default function Login() {
 					if (typeof window !== "undefined") {
 						localStorage.setItem("membership_number", response.data.membership_number);
 					}
-					resolve("Autenticado com sucesso!");
+					resolve("Credenciais autenticadas!");
 				} else {
 					reject(response.data.message);
 					setLoading(false);
 				}
 			} catch {
-				reject("Erro interno! Tente novamente mais tarde.");
+				reject("Sem conexão com o servidor!");
 				setLoading(false);
 			}
 		});
@@ -95,10 +98,12 @@ export default function Login() {
 				if (response.status === 201) {
 					resolve(response.data.message);
 				}
-				setLoading(false);
-				reject(response.data.message);
+				else {
+					setLoading(false);
+					reject(response.data.message);
+				}
       } catch  {
-				reject("Não foi possivel processar a sua solicitação!");
+				reject("Sem conexão com o servidor");
 				setLoading(false);
 			} 
 		});
@@ -147,27 +152,53 @@ export default function Login() {
 						</div>
 						<div className="body_form">
 							<div className="input_field">
-								<label htmlFor="membership_number">Email ou número de adesão</label>
+								<label id="LLMN" htmlFor="membership_number">Nº de Adesão ou Email *</label> 
 								<input
-									placeholder="Email ou número de adesão"
+									placeholder="Insira o Nº de Adesão ou Email"
 									{...register("membership_number")}
+									onChange={(event)=>{
+										setEmail(event.target.value)
+										setValue('membership_number', event.target.value)
+									}}
+									onFocus={()=>{
+                                        const label = document.querySelector('#LLMN') as HTMLLabelElement
+										label.style.transition = ".3s"
+                                        label.style.color = "var(--color-focus)"
+                                    }}
+                                    onBlur={()=>{
+                                        const label = document.querySelector('#LLMN') as HTMLLabelElement
+										label.style.transition = ".3s"
+                                        label.style.color = "var(--color-text)"
+                                    }}
 								/>
 								{errors.membership_number && (
 									<InfoError message={errors.membership_number.message} />
 								)}
 							</div>
 							<div className="input_field">
-								<label htmlFor="membership_number">Código de acesso</label>
+								<label id="LLCA" htmlFor="membership_number">Código de acesso *</label>
 								<input
 									type="password"
-									placeholder="Insira o seu código de acesso "
+									placeholder="Insira o Código de Acesso "
 									{...register("access_code")}
+									onChange={(event)=>{
+										setPass(event.target.value)
+										setValue("access_code", event.target.value)
+									}}
+									onFocus={()=>{
+                                        const label = document.querySelector('#LLCA') as HTMLLabelElement
+                                        label.style.color = "var(--color-focus)"
+                                    }}
+                                    onBlur={()=>{
+                                        const label = document.querySelector('#LLCA') as HTMLLabelElement
+                                        label.style.color = "var(--color-text)"
+                                    }}
 								/>
 								{errors.access_code && (
 									<InfoError message={errors.access_code.message} />
 								)}
 							</div>
-							<button type="submit" disabled={loading} className="button_auth">
+							<button type="submit" disabled={!pass || loading} className="button_auth">
 							{loading ? (
 								<TailSpin
 									height="25"
@@ -178,13 +209,13 @@ export default function Login() {
 									visible={true}
 								/>
 							) : (
-								'Entrar'
+								<>Entrar <FaArrowRightLong style={{marginLeft: "10px"}}/></>
 							)}
 							</button>
 							<div className="terms">
 								<p>
-									Esta plataforma é protegida pelo Google ReCaptcha e as{" "}
-									<Link href="/forgot-password">Políticas de Privacidade</Link>{" "}
+									{" "}
+									<Link href="/privacy-policies">Políticas de Privacidade</Link>{" "}
 									são aplicáveis.
 								</p>
 							</div>

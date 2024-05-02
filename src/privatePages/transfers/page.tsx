@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LateralCard from "@/components/cards/requestCard";
 import TransferInterbanc from "@/components/transferTypes/tranfer_interbanc";
 import TransferDefault from "@/components/transferTypes/transfer_default";
@@ -8,18 +8,41 @@ import TransferInternational from "@/components/transferTypes/transfer_internati
 import TransferIntrabanc from "@/components/transferTypes/transfer_intrabanc";
 import TransferWallet from "@/components/transferTypes/transfer_wallet";
 import "@/styles/transfers.css";
+import api from "@/services/api";
+import useSWR from "swr";
+import { toast } from "sonner";
+import SendedTransfersList from "@/components/lists/sendedTransferList";
+import ReceivedTransfersList from "@/components/lists/receivedTransferList";
+import useAccountStore from "@/contexts/stores/accountStore";
+import useClientStore from "@/contexts/stores/clientStore";
 
-
-interface IProps {
-	authorized_balance: number,
-	available_balance: number,
-	iban: string,
-	number: string,
-	biNumber: string
+interface Transacao {
+  balance: string;
+  accountTo: string | null;
+  date: string;
+  status: 'Finalizada' | 'Cancelado' | 'Pendente'; // Ajuste conforme os possíveis valores
+  type: number;
 }
 
-export default function Transfers({authorized_balance, available_balance, iban, number, biNumber}: IProps) {
+interface RespostaAPI {
+  success: boolean;
+  data: Transacao[];
+}
+
+
+export default function Transfers() {
 	const [selectedPage, setSelectedPage] = useState("0");
+	const useAccount = useAccountStore()
+	const useClient = useClientStore()
+
+	function timestampToDateString(timestamp: number): string {
+		const date = new Date(timestamp);
+		const day = date.getDate().toString().padStart(2, '0'); // Obtém o dia do mês e completa com zero à esquerda se necessário
+		const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Obtém o mês (0-indexed) e completa com zero à esquerda se necessário
+		const year = date.getFullYear(); // Obtém o ano
+	
+		return `${day}-${month}-${year}`;
+	}
 
 	return (
 		<div className="transfers_container">
@@ -31,11 +54,11 @@ export default function Transfers({authorized_balance, available_balance, iban, 
 				<div className="bottom">
 					<div>
 						<h2>Saldo contabilístico</h2>
-						<p>{available_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}</p>
+						<p>{useAccount.available_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}</p>
 					</div>
 					<div>
 						<h2>Saldo autorizado</h2>
-						<p>{authorized_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}</p>
+						<p>{useAccount.authorized_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}</p>
 					</div>
 					<div>
 						<h2>Selecione o tipo de transferência</h2>
@@ -49,102 +72,24 @@ export default function Transfers({authorized_balance, available_balance, iban, 
 							</option>
 							<option value="1">Transferência interbancária</option>
 							<option value="2">Transferência intrabancária</option>
-							<option value="3">Transferência internacional</option>
-							<option value="4">Carregamento de carteira digital</option>
+							{/* <option value="3">Transferência internacional</option>
+							<option value="4">Carregamento de carteira digital</option> */}
 						</select>
 					</div>
 				</div>
 			</div>
 			<div className="transfers_body">
 				{selectedPage === "0" && <TransferDefault />}
-				{selectedPage === "1" && <TransferInterbanc number={number} biNumber={biNumber}/>}
-				{selectedPage === "2" && <TransferIntrabanc number={number} biNumber={biNumber}/>}
+				{selectedPage === "1" && <TransferInterbanc number={useAccount.number} biNumber={useClient.biNumber}/>}
+				{selectedPage === "2" && <TransferIntrabanc number={useAccount.number} biNumber={useClient.biNumber}/>}
 				{selectedPage === "3" && <TransferInternational />}
-				{selectedPage === "4" && <TransferWallet number={number}/>}
+				{selectedPage === "4" && <TransferWallet number={useAccount.number}/>}
 			</div>
 			<div className="transfers_lateral">
 				<div className="top">
-					<h1 className="title">Transferências enviadas</h1>
-					<div className="separator" />
+					<h1 className="title" style={{marginBottom: "5px"}}>Transferências enviadas</h1>
 					<div className="requests">
-						<LateralCard
-							text1="45.000,00 Kz"
-							text2="Paratus"
-							text3="12/09/2023"
-							text4="Internet Service"
-						/>
-						<LateralCard
-							text1="12.000 USD"
-							text2="Vercel"
-							text3="11/09/2023"
-							text4="Premium Cloud Storage"
-						/>
-						<LateralCard
-							text1="45.000,00 Kz"
-							text2="Paratus"
-							text3="12/09/2023"
-							text4="Internet Service"
-						/>
-						<LateralCard
-							text1="12.000 USD"
-							text2="Vercel"
-							text3="11/09/2023"
-							text4="Premium Cloud Storage"
-						/>
-						<LateralCard
-							text1="45.000,00 Kz"
-							text2="Paratus"
-							text3="12/09/2023"
-							text4="Internet Service"
-						/>
-						<LateralCard
-							text1="12.000 USD"
-							text2="Vercel"
-							text3="11/09/2023"
-							text4="Premium Cloud Storage"
-						/>
-					</div>
-				</div>
-				<div className="bottom">
-					<h1 className="title">Transferências recebidas</h1>
-					<div className="separator" />
-					<div className="requests">
-						<LateralCard
-							text1="45.000,00 Kz"
-							text2="Paratus"
-							text3="12/09/2023"
-							text4="Internet Service"
-						/>
-						<LateralCard
-							text1="12.000 USD"
-							text2="Vercel"
-							text3="11/09/2023"
-							text4="Premium Cloud Storage"
-						/>
-						<LateralCard
-							text1="45.000,00 Kz"
-							text2="Paratus"
-							text3="12/09/2023"
-							text4="Internet Service"
-						/>
-						<LateralCard
-							text1="12.000 USD"
-							text2="Vercel"
-							text3="11/09/2023"
-							text4="Premium Cloud Storage"
-						/>
-						<LateralCard
-							text1="45.000,00 Kz"
-							text2="Paratus"
-							text3="12/09/2023"
-							text4="Internet Service"
-						/>
-						<LateralCard
-							text1="12.000 USD"
-							text2="Vercel"
-							text3="11/09/2023"
-							text4="Premium Cloud Storage"
-						/>
+					<SendedTransfersList accountNumber={useAccount.number}/>
 					</div>
 				</div>
 			</div>

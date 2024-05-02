@@ -42,7 +42,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
 					}}
 					position="top-right"
 					closeButton
-					duration={3500}
+					duration={5000}
 					richColors
 					expand={true}
 				/>

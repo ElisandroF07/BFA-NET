@@ -40,7 +40,7 @@
 }
 
 .not_found_title {
-    font-size: 3.5rem;
+    font-size: 3rem;
     color: var(--color-focus);
     font-weight: 600;
     max-width: 400px;

@@ -62,7 +62,7 @@ export default function CardFriend(props: IProps) {
       }
     }
     catch {
-      toast.error("Occorreu um erro ao remover este amigo!")
+      toast.error("Sem conexão com o servidor!")
     }
   }
 
@@ -139,8 +139,7 @@ export default function CardFriend(props: IProps) {
       }
     }
     catch(error) {
-      console.log(error)
-      toast.error("Occorreu um erro ao realizar a requisição de dinheiro!")
+      toast.error("Sem conexão com o servidor!")
     }
   }
 

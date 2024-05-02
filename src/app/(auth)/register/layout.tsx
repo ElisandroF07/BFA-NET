@@ -34,11 +34,11 @@ export default function RegisterLayout({ children }: RegisterProps) {
 		}),
 		ActiveLabelTitle: () => ({
 			color: "#fc6423",
-			fontFamily: "Inter_Regular",
+			fontFamily: "Rubik",
 		}),
 		LabelTitle: () => ({
 			color: "#545454",
-			fontFamily: "Inter_Light",
+			fontFamily: "Rubik",
 		}),
 		ActiveNode: () => ({
 			backgroundColor: "#fc6423",
@@ -176,15 +176,15 @@ export default function RegisterLayout({ children }: RegisterProps) {
 							orientation="vertical"
 							steps={[
 								{
-									stepLabel: "Dados pessoais",
+									stepLabel: "Tipo de conta",
 									completed: stepsStore.step1,
 								},
 								{
-									stepLabel: "Validação de identidade",
+									stepLabel: "Dados pessoais",
 									completed: stepsStore.step2,
 								},
 								{
-									stepLabel: "Assinatura",
+									stepLabel: "Documentação",
 									completed: stepsStore.step3,
 								},
 								{
@@ -212,7 +212,7 @@ export default function RegisterLayout({ children }: RegisterProps) {
 								},
 								{
 									completed: stepsStore.step4,
-								},
+								}
 							]}
 							currentStepIndex={stepsStore.current}
 							styles={styles}

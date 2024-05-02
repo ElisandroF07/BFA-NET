@@ -26,7 +26,7 @@ export default function VerifiedToken() {
 						<div className="body_form">
 							<Link
 								type="button"
-								href={"/register/personal-data"}
+								href={"/register/account-type"}
 								className="button_auth"
 							>
 								Avançar{" "}

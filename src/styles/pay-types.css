@@ -17,7 +17,7 @@
     justify-content: center;
 }
 .pt1_container .top > h1, .pt3_container > .top > h1 {
-    font-family: Inter_Regular;
+    font-family: Rubik;
     font-size: var(--font-small);
     color: var(--color-text);
     text-align: center;
@@ -37,7 +37,7 @@
     width: 30%;
     height: 100%;
     font-size: var(--font-small);
-    font-family: Inter_Regular;
+    font-family: Rubik;
     display: flex;
     flex-direction: column;
     align-items: flex-start;

@@ -1,7 +1,12 @@
-import { CiGrid41, CiReceipt, CiInboxOut, CiShare1, CiInboxIn, CiMoneyCheck1, CiGps, CiSquareAlert, CiLogout } from "react-icons/ci";
+import useAccountStore from "@/contexts/stores/accountStore";
+import { CiGrid41, CiBarcode, CiReceipt, CiInboxOut, CiShare1, CiInboxIn, CiMoneyCheck1, CiGps, CiSquareAlert, CiLogout } from "react-icons/ci";
 import { TailSpin } from "react-loader-spinner";
 
+
 export default function DashboardNavbar({logout, loading}: {logout: ()=>void, loading: boolean}) {
+
+  const useAccount = useAccountStore()
+
   return (
     <nav className="privateNavbar">
         {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
@@ -52,6 +57,17 @@ export default function DashboardNavbar({logout, loading}: {logout: ()=>void, lo
             <button
               className="btn"
               data-active="false"
+              data-page="Conta"
+              type="button"
+            >
+              <CiMoneyCheck1 />
+              Conta
+            </button>
+          </li>
+          <li>
+            <button
+              className="btn"
+              data-active="false"
               data-page="Consultas"
               type="button"
             >
@@ -70,6 +86,17 @@ export default function DashboardNavbar({logout, loading}: {logout: ()=>void, lo
               Pagamentos
             </button>
           </li>
+          {useAccount.role === 1 ? null : <li>
+            <button
+              className="btn"
+              data-active="false"
+              data-page="TPA Virtual"
+              type="button"
+            >
+              <CiBarcode />
+              TPA Virtual
+            </button>
+          </li>}
           <li>
             <button
               className="btn"
@@ -92,17 +119,7 @@ export default function DashboardNavbar({logout, loading}: {logout: ()=>void, lo
               Levantamentos
             </button>
           </li>
-          <li>
-            <button
-              className="btn"
-              data-active="false"
-              data-page="Conta"
-              type="button"
-            >
-              <CiMoneyCheck1 />
-              Conta
-            </button>
-          </li>
+          
           <div className="separator" />
           <li>
             <button

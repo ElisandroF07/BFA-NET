@@ -22,14 +22,13 @@
   justify-content: flex-start;
 }
 .consults_header > .top > h1 {
-  font-family: Inter_SemiBold;
+  font-family: Rubik;
   font-size: var(--font-page-titles);
   color: var(--color-text);
 }
 .consults_header > .top > p {
-  font-family: Inter_Regular;
-  font-size: var(--font-small-titles);
-  color: var(--color-text);
+  font-weight: 200;
+  color: #858585;
 }
 .consults_header > .bottom {
   margin-top: 10px;
@@ -51,19 +50,19 @@
   padding: 10px 20px;
   gap: 5px;
   background-color: var(--color-cards);
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
 .consults_header > .bottom > div > h2 {
-  font-family: Inter_Regular;
+  font-family: Rubik;
   font-size: var(--font-small);
 }
 .consults_header > .bottom > div > p {
-  font-family: Inter_Regular;
+  font-family: Rubik;
   font-weight: 600;
   font-size: var(--font-small);
 }
 .consults_header > .bottom > div > select {
-  font-family: Inter_Regular;
+  font-family: Rubik;
   font-size: var(--font-small);
   background-color: transparent;
   outline: none;
@@ -81,7 +80,7 @@
   padding: 20px;
   display: grid;
   grid-template-rows: 34px calc(100% - 34px);
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
 .consults_body > h1 {
   grid-row: 1;
@@ -93,8 +92,8 @@
   grid-row: span 2;
   padding: 20px;
   font-size: var(--font-small);
-  font-family: Inter_Regular;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  font-family: Rubik;
+  box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
 
 .generator {

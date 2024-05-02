@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import axios from "axios";
@@ -62,8 +63,9 @@ export default function IdentityValidation() {
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		stepsStore.setCurrent(1);
+		stepsStore.setCurrent(2);
 		stepsStore.setStep1(true);
+		stepsStore.setStep2(true);
 	}, []);
 
 	useEffect(() => {
@@ -97,7 +99,7 @@ export default function IdentityValidation() {
 	useEffect(() => {
 		if (success) {
 			toast.promise(uploadFront(), {
-				loading: "Enviando a imagem do BI...",
+				loading: "Armazenando a imagem do BI...",
 				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 				success: (data: any) => {
 					return data;
@@ -108,10 +110,10 @@ export default function IdentityValidation() {
 				},
 			});
 			toast.promise(uploadBack(), {
-				loading: "Enviando a selfie...",
+				loading: "Armazenando a selfie...",
 				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 				success: (data: any) => {
-					router.push("/register/assign-validation");
+					router.push("/register/credentials");
 					return data;
 				},
 				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -123,7 +125,6 @@ export default function IdentityValidation() {
 	}, [success]);
 
 	function compareBI(bi1: string, bi2: string) {
-		console.log(bi1, bi2);
 		if (bi1.toLocaleUpperCase() === bi2.toLocaleUpperCase()) {
 			return true;
 		}
@@ -230,8 +231,7 @@ export default function IdentityValidation() {
 				idCard.descriptor,
 				idSelfie.descriptor,
 			);
-			console.log(distance);
-			if (distance < 0.4) {
+			if (distance < 0.5) {
 				toast.success("Validação facial concluida!");
 				verify();
 			} else {
@@ -290,8 +290,10 @@ export default function IdentityValidation() {
 				if (response.status === 200) {
 					resolve(response.data.message);
 				}
-				reject(response.data.message)
-				setLoading(false);
+				else {
+					reject(response.data.message)
+					setLoading(false);
+				}
 				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 			} catch (error: any) {
 				reject(error.response?.data.message);
@@ -318,8 +320,10 @@ export default function IdentityValidation() {
 				if (response.status === 200) {
 					resolve(response.data.message);
 				}
-				reject(response.data.message);
-				setLoading(false);
+				else {
+					reject(response.data.message);
+					setLoading(false);
+				}
 				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 			} catch (error: any) {
 				reject(error.response?.data.message);

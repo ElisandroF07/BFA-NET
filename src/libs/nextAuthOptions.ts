@@ -2,7 +2,6 @@ import api from "@/services/api"
 import axios from "axios"
 import { NextAuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-import type { Session } from 'next-auth';
 
 const nextAuthOptions: NextAuthOptions = {
 	providers: [
@@ -13,51 +12,44 @@ const nextAuthOptions: NextAuthOptions = {
 				OTP: { label: 'text', type: 'text' }
 			},
 			async authorize(credentials) {
-				const body = JSON.stringify({
-					email: credentials?.email,
-					OTP: credentials?.OTP
-				})
-				try {
-					const response = await axios.post('http://localhost:5000/verifyOTP', body, {
-					headers: {
-						'Content-type': 'application/json',
-						Authorization: "Bearer fregr554ytg5e"
-					}
-				})
+				const body = JSON.stringify({email: credentials?.email, OTP: credentials?.OTP})
 
-				if (response.data && response.status === 201) {
+					const response = await axios.post('http://localhost:5000/verifyOTP', body, {headers: {'Content-type': 'application/json'}
+				})
+				if (response.data?.success) {
 					api.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
-					return response.data
+					return response.data.user
 				}
 				return null
-				}
-				catch(err){
-					console.log(err);
-				}
 			},
 		})
 	],
+	secret: process.env.NEXTAUTH_SECRET,
+	session: {
+		strategy: 'jwt',
+		maxAge: 1 * 24 * 60 * 60, 
+	},
 	pages: {
 		signIn: '/login'
 	},
 	callbacks: {
 		async jwt({ token, user }) {
 			if (user) {
-				token.user = user	
+				token.id = user.id
 			}
       return token;
 		},
 		async session({ session, token }){
-			session = token.user as Session
-			if (typeof token.user === 'object' && token.user !== null && 'biNumber' in token.user && typeof token.user.biNumber === 'string') {
-				const biNumber = token.user.biNumber;
-				const response = await  api.get(`/getUserData/${biNumber}`)
-
-				session = {user: response.data.client, expires: "1h"}
+			if (token?.id) {
+				session.user = {email: token.email || "", biNumber: token.biNumber as string}
 			}
-      return session
+			return session
+			// session = token.user as UserSession
+			// const biNumber = token.user.user.biNumber as string
+			// const response = await  api.get(`/getUserData/${biNumber}`)
+			// session = {user: response.data.client, token: token.token}
+      // return session
 		}
 	}
 }
-
 export default nextAuthOptions

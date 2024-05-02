@@ -11,6 +11,9 @@ import { useState } from "react";
 import api from "@/services/api";
 import { toast } from "sonner";
 import { TailSpin } from "react-loader-spinner";
+import useAccountStore from "@/contexts/stores/accountStore";
+import TwoFAModal from "../modals/2faModal";
+import useClientStore from "@/contexts/stores/clientStore";
 
 const formSchema = z.object({
 	account_number: z.string().regex(/^[0-9]{14}$/, "O número de conta deve conter 14 dígitos. Sem pontos e espaços.").transform((string)=>{
@@ -35,9 +38,11 @@ export default function TransferIntrabanc({number, biNumber}: {number: string, b
 	const [loading, setLoading] = useState(false)
 	const [transfer, setTransfer] = useState({accountNumber: "", transferDescription: "", receiverDescription: "", balance: "", receiver: ""})
 	const [loading2, setLoading2] = useState(false)
+	const { isOpen: isOpen2FA, onOpen: onOpen2FA, onClose: onClose2FA } = useDisclosure();
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	const { isOpen: isOpenCheck, onOpen: onOpenCheck, onClose: onCloseCheck } = useDisclosure();
-
+	const useAccount = useAccountStore()
+	const useClient = useClientStore()
+	
 	const {handleSubmit, formState: {errors}, register} = useForm<formType>({resolver: zodResolver(formSchema)})
 	const {handleSubmit: handleSubmit2, formState: {errors: errors2}, register: register2} = useForm<form2Type>({resolver: zodResolver(form2Schema)})
 
@@ -57,7 +62,7 @@ export default function TransferIntrabanc({number, biNumber}: {number: string, b
 				setTransfer({
 					balance: data.balance,
 					accountNumber: data.account_number,
-          receiver: receiver.data.client.name.join(" "),
+          			receiver: receiver.data.client.name.join(" "),
 					receiverDescription: data.receiverDescription,
 					transferDescription: data.transferDescription,
 				})
@@ -69,45 +74,32 @@ export default function TransferIntrabanc({number, biNumber}: {number: string, b
 			}
 		}
 		catch {
-			toast.error("Não foi possivel processar a sua solicitação!")
+			toast.error("Sem conexão com o servidor")
 			setLoading(false)
 		}
 	}
 
-	function closeModal2() {
-		setLoading2(false)
-		setLoading(false)
-		onCloseCheck()
-	}
-
-	function closeModal1() {
-		setLoading2(false)
-		setLoading(false)
-		onClose()
-	}
-
-	async function submitForm2(data: form2Type) {
+	async function submitForm2FA(data: {otp: string}) {
 		setLoading2(true)
 		try {
-			const bodyCheck = JSON.stringify({
-				accessCode: data.accessCode,
-        biNumber
-			})
-			const response = await api.post("/checkAccessCode", bodyCheck)
+			const response = await api.get(`/check2FA/${data.otp}/${useClient.biNumber}`)
 			if (response.data.valid) {
 				const body = JSON.stringify({
-          balance: transfer.balance.toString(),
-					accountTo: transfer.accountNumber.toString(),
+          			balance: transfer.balance,
+					accountTo: transfer.accountNumber,
 					accountFrom: number,
-					tranfer_description: transfer.transferDescription.toString(),
-					receptor_description: transfer.receiverDescription.toString(),
-        })
-        const response = await api.post("/transferIntrabanc", body)
+					tranfer_description: transfer.transferDescription,
+					receptor_description: transfer.receiverDescription,
+        		})
+        		const response = await api.post("/transferIntrabanc", body)
 				if (response.status === 201) {
+					useAccount.updateAuthorizedBalance(response.data.authorized_balance)
+					useAccount.updateAvailableBalance(response.data.availabe_balance)
 					toast.success("Transferência realizada com sucesso!")
-          closeModal2()
-					closeModal1()
 					setLoading2(false)
+					setLoading(false)
+					onClose2FA()
+					onClose()
 				} 
 				else {
 					toast.error(response.data.message)
@@ -118,11 +110,11 @@ export default function TransferIntrabanc({number, biNumber}: {number: string, b
 				toast.error("Código de acesso incorreto!")
 				setLoading2(false)
 			}
-    }
-    catch{
-      toast.error("Não foi possivel processar a sua solicitação!")
-      setLoading2(false)
-    }
+        }
+		catch{
+			toast.error("Sem conexão com o servidor")
+			setLoading2(false)
+		}
 	}
 
 	return (
@@ -151,9 +143,15 @@ export default function TransferIntrabanc({number, biNumber}: {number: string, b
 						<label htmlFor="email">Montante</label>
 						<div className="input_phone">
 							<p>Kz</p>
-							<input type="text" placeholder="Montante" {...register("balance")}/>
+							<input type="number" maxLength={7} max={5000000} min={500} placeholder="Montante" {...register("balance")}/>
 						</div>
 						{errors.balance && <InfoError message={errors.balance.message} />}
+					</div>
+					<div className="info" style={{border: "none"}}>
+						<p>
+							* Mínimo: 500 Kz     
+							* Máximo: 5 000 000 000 Kz
+						</p>
 					</div>
 				</div>
 				<div className="right">
@@ -233,54 +231,35 @@ export default function TransferIntrabanc({number, biNumber}: {number: string, b
                             />
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="danger" variant="flat" onPress={closeModal1}>
+                            <Button color="danger" variant="flat" onPress={onClose}>
                                 Cancelar
                             </Button>
-                            <Button color="primary" type="button" onPress={onOpenCheck}>
-														Confirmar
+                            <Button color="primary" type="button" onPress={async()=>{
+								setLoading(true)
+									try {
+										const resp = await api.post(`/sendOTP/${useClient.email}/${useClient.biNumber}`)
+										if (resp.status === 201) {
+											toast.success("Código de autenticação enviado!")
+											onOpen2FA()
+											setLoading(false)
+										}
+										else {
+											toast.error(resp.data.message)
+											setLoading(false)
+										}
+
+									}
+									catch {
+										toast.error("Sem conexão com o servidor!")
+									}
+								}}>
+								Confirmar
                             </Button>
                         </ModalFooter>
                 </ModalContent>
             </Modal>
         )}
-			{isOpenCheck && (
-            <Modal isOpen={isOpenCheck} onClose={onCloseCheck} placement="top-center">
-                <ModalContent>
-                    <form onSubmit={handleSubmit2(submitForm2)}>
-                        <ModalHeader className="flex flex-col gap-1">Finalizar transferência</ModalHeader>
-                        <ModalBody>
-                            <Input
-                                autoFocus
-                                label="Código de acesso"
-                                type="text"
-                                variant="flat"
-																{...register2("accessCode")}
-                            />
-														{errors2.accessCode && <InfoError message={errors2.accessCode.message} />}
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button color="danger" variant="flat" onPress={closeModal2} disabled={loading2}>
-                                Cancelar
-                            </Button>
-                            <Button color="primary" type="submit" disabled={loading2}>
-														{loading2 ? (
-															<TailSpin
-																height="25"
-																width="25"
-																color="#fff"
-																ariaLabel="tail-spin-loading"
-																radius="1"
-																visible={true}
-															/>
-														) : (
-															'Finalizar'
-														)}
-                            </Button>
-                        </ModalFooter>
-                    </form>
-                </ModalContent>
-            </Modal>
-        )}
+		<TwoFAModal isOpen2FA={isOpen2FA} onClose2FA={onClose2FA} onOpen2FA={onOpen2FA} submitForm2FA={submitForm2FA} loading={loading2}/>
 		</div>
 	);
 }

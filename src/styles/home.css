@@ -25,7 +25,7 @@
     text-decoration: none;
     color: var(--color-text);
     font-size: var(--font-small);
-    font-family: Inter_Regular;
+    font-family: Rubik;
     width: 100%;
     height: 100%;
     cursor: pointer;
@@ -62,14 +62,14 @@
 }
 .right > p {
     font-size: var(--font-small);
-    font-family: Inter_Light;
+    font-family: Rubik;
     color: var(--color-text);
     width: 80%;
     text-align: justify;
     line-height: 25px;
 }
 .right > h1 {
-    font-family: Inter_Regular;
+    font-family: Rubik;
     font-size: 3rem;
     width: 80%;
     line-height: 60px;
@@ -88,7 +88,7 @@
     height: 45px;
     font-size: var(--font-small);
     font-weight: 600;
-    font-family: Inter_Regular;
+    font-family: Rubik;
     border-radius: 10px;
     text-decoration: none;
     text-align: center;
@@ -122,7 +122,7 @@
     height: 45px;
     font-size: var(--font-small);
     font-weight: 600;
-    font-family: Inter_Regular;
+    font-family: Rubik;
     border-radius: 10px;
     text-decoration: none;
     text-align: center;
@@ -147,14 +147,14 @@
         height: 500px;
     }
     .right > h1 {
-        font-family: Inter_Regular;
+        font-family: Rubik;
         font-size: 2.5rem;
         width: 88%;
         line-height: 50px;
     }
     .right > p {
         font-size: var(--font-small);
-        font-family: Inter_Light;
+        font-family: Rubik;
         color: var(--color-text);
         width: 88%;
         text-align: justify;
@@ -174,7 +174,7 @@
         height: 410px;
     }
     .right > h1 {
-        font-family: Inter_Regular;
+        font-family: Rubik;
         font-size: 2.3rem;
         width: 88%;
         line-height: 38px;
@@ -182,7 +182,7 @@
     }
     .right > p {
         font-size: var(--font-small);
-        font-family: Inter_Light;
+        font-family: Rubik;
         color: var(--color-text);
         width: 88%;
         text-align: justify;

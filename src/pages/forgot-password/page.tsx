@@ -15,6 +15,7 @@ import "@/styles/globals.css";
 import "@/styles/phone.css";
 import api from "@/services/api";
 import { TailSpin } from 'react-loader-spinner'
+import { FaArrowRightLong } from "react-icons/fa6";
 
 const FormSchema = z.object({
 	email: z
@@ -32,16 +33,14 @@ export default function ForgotPassword() {
 	const router = useRouter();
 	const useStore = useUserStore();
 	const [loading, setLoading] = useState(false);
-
-	const {register, formState: { errors }, handleSubmit} = useForm<FormType>({
+	const [place, setPlace] = useState("")
+	const {register, formState: { errors }, handleSubmit, setValue} = useForm<FormType>({
 		resolver: zodResolver(FormSchema),
 	});
 
-	function APICall(data: FormType): Promise<string> {
+	async function APICall(data: FormType){
 		setLoading(true);
 		const { email } = data;
-		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await api.get(`/resetPassword/${email}`);
 				if (response.status === 201) {
@@ -49,30 +48,22 @@ export default function ForgotPassword() {
 					if (typeof window !== "undefined") {
 						localStorage.setItem("email", email);
 					}
-					resolve(response.data.message);
+					toast.success(response.data.message);
+					router.push('/email-verification')
 				} else {
-					reject(response.data.message);
+					toast.error(response.data.message);
 					setLoading(false);
 				}
 			} 
 			catch {
-				reject("Não foi possivel processar a sua solicitação! Verifique a sua conexão com a interent.");
+				toast.error("Sem conexão com o servidor");
 				setLoading(false);
 			} 
-		});
+
 	}
 
 	async function submitForm(data: FormType) {
-		toast.promise(APICall(data), {
-			loading: "Enviando...",
-			success: (data) => {
-				router.push("/email-verification");
-				return data;
-			},
-			error: (data) => {
-				return data;
-			},
-		});
+		APICall(data)
 	}
 
 	return (
@@ -94,15 +85,29 @@ export default function ForgotPassword() {
 						</div>
 						<div className="body_form">
 							<div className="input_field">
-								<label htmlFor="email">Endereço de email</label>
+								<label id="LFPE" htmlFor="email">Endereço de email *</label>
 								<input
 									type="text"
 									placeholder="Insira o seu endereço de email "
 									{...register("email")}
+									onChange={(event)=>{
+										setPlace(event.target.value)
+										setValue("email", event.target.value)
+									}}
+									onFocus={()=>{
+                                        const label = document.querySelector('#LFPE') as HTMLLabelElement
+                                        label.style.transition = ".3s"
+                                        label.style.color = "var(--color-focus)"
+                                    }}
+                                    onBlur={()=>{
+                                        const label = document.querySelector('#LFPE') as HTMLLabelElement
+                                        label.style.transition = ".3s"
+                                        label.style.color = "var(--color-text)"
+                                    }}
 								/>
 								{errors.email && <InfoError message={errors.email.message} />}
 							</div>
-							<button type="submit" disabled={loading} className="button_auth">
+							<button type="submit" disabled={loading || !place} className="button_auth">
 							{loading ? (
 								<TailSpin
 									height="25"
@@ -113,7 +118,7 @@ export default function ForgotPassword() {
 									visible={true}
 								/>
 							) : (
-								'Verificar email'
+								<>Verificar email <FaArrowRightLong style={{marginLeft: "10px"}}/></>
 							)}
 							</button>
 							<div className="terms">

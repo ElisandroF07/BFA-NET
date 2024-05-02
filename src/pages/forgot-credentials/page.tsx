@@ -47,25 +47,24 @@ export default function SetCredentials() {
 		resolver: zodResolver(FormSchema),
 	});
 
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	function APICall(data: any): Promise<string> {
+
+	async function APICall(data: any){
 		setLoading(true)
-		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post("http://localhost:5000/setAccessCode", data, { headers: { "Content-Type": "application/json" } });
 				if (response.status === 201) {
 					router.push("/login")
-					resolve(response.data.message);
+					toast.success(response.data.message);
 				}
-				reject(response.data.message);
-				setLoading(false)
+				else {
+					toast.error(response.data.message);
+				}
 			} 
 			catch {
-				reject("Não foi possivel processar a sua solicitação! Verifique a sua conexão com a internet.");
+				toast.error("Sem conexão com o servidor!");
 				setLoading(false)
 			}
-		});
+		
 	}
 
 	async function submitForm(data: FormType) {
@@ -76,15 +75,7 @@ export default function SetCredentials() {
 			email
 		});
 
-		toast.promise(APICall(formatedData), {
-			loading: "Enviando...",
-			success: (data) => {
-				return data;
-			},
-			error: (data) => {
-				return data;
-			},
-		});
+		APICall(formatedData)
 	}
 
 	return (

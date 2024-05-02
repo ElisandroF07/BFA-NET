@@ -21,14 +21,13 @@
     justify-content: flex-start;
 }
 .support_header > .top > h1 {
-    font-family: Inter_SemiBold;
+    font-family: Rubik;
     font-size: var(--font-page-titles);
     color: var(--color-text);
 }
 .support_header > .top > p {
-    font-family: Inter_Regular;
-    font-size: var(--font-small-titles);
-    color: var(--color-text);
+  font-weight: 200;
+  color: #858585;
 }
 .support_body {
     width: 100%;
@@ -37,7 +36,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-family: Inter;
+    font-family: Rubik;
     font-size: var(--font-small);
 }
 .support_body > .channels {
@@ -47,7 +46,7 @@
     background-color: var(--color-cards);
     padding: 20px;
     overflow-y: scroll;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
     font-size: var(--font-small)
 }
 .support_body > .channels::-webkit-scrollbar {
@@ -74,7 +73,7 @@
 }
 .channels > .title {
     font-size: 1.2rem;
-    font-family:  Inter_Regular;
+    font-family:  Rubik;
     font-weight: 600;
     margin-top: 20px;
 }
@@ -90,7 +89,7 @@
 }
 .channels h1 {
     font-size: var(--font-small);
-    font-family:  Inter_Regular;
+    font-family:  Rubik;
     font-weight: 600;
 }
 .channels > svg {

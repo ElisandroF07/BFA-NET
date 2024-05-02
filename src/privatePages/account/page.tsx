@@ -1,86 +1,33 @@
 "use client"
 
-import { useEffect, useState } from "react";
 import useUserStore from "@/contexts/stores/userStore";
-import api from "@/services/api";
 import CardsSection from "@/components/cards/cardsSection";
 import ManageInfoSection from "@/components/cards/manageInfoSection";
 import OptionsSection from "@/components/cards/optionsSecton";
 import SecuritySection from "@/components/cards/securitySection";
 import "@/styles/account.css";
-import { toast } from "sonner";
 import { CiLocationArrow1, CiImport } from "react-icons/ci";
-import useSWR from "swr";
-
-
-interface IProps {
-  biNumber: string;
-  titular: string;
-  email: string;
-  country: string;
-  address: string;
-  birthDate: string;
-  fullName: string;
-  picture: string;
-}
-
-interface IAccount {
-  iban: string;
-  nbi: string;
-  role: number;
-  number: string;
-  authorized_balance: number;
-  bic: string;
-  available_balance: number;
-  created_at: string;
-  currency: string;
-  state: string;
-}
+import useClientStore from "@/contexts/stores/clientStore";
+import useAccountStore from "@/contexts/stores/accountStore";
 
 interface Sections {
   [key: string]: JSX.Element;
 }
 
-export default function Account({
-  biNumber,
-  titular,
-  email,
-  birthDate,
-  country,
-  address,
-  fullName,
-  picture,
-}: IProps) {
-  
-  const [account, setAccount] = useState<IAccount | null>(null);
+export default function Account() {
+
   const store = useUserStore();
-
-  const fetcher = (url: string) => api.get(url).then(res => res.data);
-	const { data: accountData, error: accountError } = useSWR(`/getAccountData/${biNumber}`, fetcher);
-
-	useEffect(() => {
-		if (accountData) {
-			setAccount(accountData.account);
-		}
-		if (accountError) {
-			toast.error("Não foi possível carregar os dados da sua conta!", { description: "Verifique a sua conexão com a internet." });
-		}
-	}, [accountData, accountError]);
+  const useAccount = useAccountStore()
+  const useClient = useClientStore()
 
   const sections: Sections = {
     options: <OptionsSection />,
     manageInfo: (
       <ManageInfoSection
-        biNumber={biNumber}
-        titular={fullName}
-        birthDate={birthDate}
-        email={email}
-        country={country}
-        address={address}
       />
     ),
-    cards: <CardsSection biNumber={biNumber} titular={titular} />,
-    security: <SecuritySection  biNumber={biNumber} />,
+    cards: <CardsSection/>,
+    security: <SecuritySection biNumber={useClient.biNumber}/>,
   };
 
   return (
@@ -95,48 +42,48 @@ export default function Account({
         <div className="settings">
           <div
             className="image"
-            style={{ backgroundImage: `url(${picture})` }}
+            style={{ backgroundImage: `url(${useClient.pictureProfile})` }}
           />
-          <h1>{fullName}</h1>
-          <p>Conta Particular</p>
+          <h1>{useClient.personalData.name.join(' ')}</h1>
+          <p>{useAccount.role === 1 ? "Particular" : "Comerciante"}</p>
           {sections[store.validation]}
         </div>
       </div>
       <div className="account_lateral">
-        <h1 className="title">Minha conta</h1>
+        <h1 className="title" style={{color: "#3B3D4E"}}>Minha conta</h1>
         <div className="separator" />
         <div className="infoContainer">
-          {account && (
+          {
             <>
               {[
-                { label: "Número da conta", value: account.number },
-                { label: "IBAN", value: account.iban },
-                { label: "NBA", value: account.nbi },
-                { label: "BIC/SWIFT", value: account.bic },
-                { label: "Divísa", value: account.currency },
+                { label: "Número da conta", value: useAccount.number.replace('.', ' ') },
+                { label: "IBAN", value: useAccount.iban.replace('AO06', '') },
+                { label: "NBA", value: useAccount.nbi.replace('AO06', '') },
+                { label: "BIC/SWIFT", value: useAccount.bic },
+                { label: "Moeda", value: useAccount.currency },
                 {
                   label: "Titular",
-                  value: titular,
+                  value: `${useClient.personalData.name[0]} ${useClient.personalData.name[useClient.personalData.name.length - 1]}`,
                 },
                 {
                   label: "Data de abertura",
                   value: new Intl.DateTimeFormat("pt-BR").format(
-                    new Date(parseInt(account.created_at))
+                    new Date(parseInt(useAccount.created_at))
                   ),
                 },
                 {
                   label: "Tipo de conta",
-                  value: account.role === 1 ? "Conta à ordem" : "",
+                  value: useAccount.role === 1 ? "Conta à Ordem" : "Conta Simplificada",
                 },
                 {
                   label: "Saldo disponível",
-                  value: `${account.available_balance} Kz`,
+                  value: `${useAccount.available_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}`,
                 },
                 {
                   label: "Saldo autorizado",
-                  value: `${account.authorized_balance} Kz`,
+                  value: `${useAccount.authorized_balance.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}`,
                 },
-                { label: "Estado", value: account.state },
+                { label: "Estado", value: useAccount.state },
               ].map((item, index) => (
                 <div key={item.label}>
                   <h1>{item.label}</h1>
@@ -144,7 +91,7 @@ export default function Account({
                 </div>
               ))}
             </>
-          )}
+          }
         </div>
         <div className="separator" />
         <p className="pLink">

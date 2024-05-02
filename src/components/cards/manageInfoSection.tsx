@@ -1,18 +1,10 @@
+import useClientStore from "@/contexts/stores/clientStore";
 import useUserStore from "@/contexts/stores/userStore";
 import { FaAngleLeft } from "react-icons/fa6";
 
-interface IProps{
-	biNumber: string,
-	titular: string,
-	email: string,
-	country: string,
-	address: string,
-	birthDate: string
-}
-
-export default function ManageInfoSection({biNumber, titular, email, birthDate, country, address}: IProps) {
+export default function ManageInfoSection() {
 	const store = useUserStore();
-
+	const useClient = useClientStore()
 	function convertData(dataString: string){
 		const data = new Date(dataString);
 
@@ -44,20 +36,20 @@ export default function ManageInfoSection({biNumber, titular, email, birthDate, 
 					<input
 						type="text"
 						placeholder="Insira o seu nome completo"
-						value={titular}
+						value={useClient.personalData.name.join(' ')}
 						disabled
 					/>
 				</div>
 				<div className="input_field" style={{width: "400px"}}>
 					<label htmlFor="email">Data de Nascimento</label>
-					<input type="text" value={convertData(birthDate)} disabled />
+					<input type="text" value={convertData(useClient.personalData.birthDate)} disabled />
 				</div>
 				<div className="input_field" style={{width: "400px"}}>
 					<label htmlFor="email">Email</label>
 					<input
 						type="text"
 						placeholder="Insira o seu número de telefone"
-						value={email}
+						value={useClient.email}
 						disabled
 					/>
 				</div>
@@ -66,7 +58,7 @@ export default function ManageInfoSection({biNumber, titular, email, birthDate, 
 					<input
 						type="text"
 						placeholder="Insira o seu endereço de email"
-						value={biNumber}
+						value={useClient.biNumber}
 						disabled
 					/>
 				</div>
@@ -75,7 +67,7 @@ export default function ManageInfoSection({biNumber, titular, email, birthDate, 
 					<input
 						type="text"
 						placeholder="Insira o seu número de telefone"
-						value={country}
+						value={useClient.address.country}
 						disabled
 					/>
 				</div>
@@ -84,7 +76,7 @@ export default function ManageInfoSection({biNumber, titular, email, birthDate, 
 					<input
 						type="text"
 						placeholder="Insira o seu endereço de email"
-						value={address}
+						value={useClient.address.full_address}
 						disabled
 					/>
 				</div>

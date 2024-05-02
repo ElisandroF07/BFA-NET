@@ -21,15 +21,14 @@
     justify-content: flex-start;
 }
 .account_header > .top > h1 {
-    font-family: Inter_SemiBold;
+    font-family: Rubik;
     font-size: var(--font-page-titles);
     color: var(--color-text);
 }
 .account_header > .top > p {
-    font-family: Inter_Regular;
-    font-size: var(--font-small-titles);
-    color: var(--color-text);
-}
+    font-weight: 200;
+    color: #858585;
+  }
 .account_body {
     background-color: transparent;
     grid-row: 2;
@@ -37,7 +36,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: Inter;
+    font-family: Rubik;
     font-size: var(--font-small);
 }
 .settings {
@@ -84,7 +83,12 @@
     height: 110px;
 }
 .optionsContainer > div:hover {
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow:
+  0.8px 0px 3.6px rgba(0, 0, 0, 0.007),
+  2.1px 0px 10px rgba(0, 0, 0, 0.01),
+  5.1px 0px 24.1px rgba(0, 0, 0, 0.013),
+  17px 0px 80px rgba(0, 0, 0, 0.02)
+;
     border: var(--border-input);
 }
 .optionsContainer > div > svg {
@@ -115,10 +119,10 @@
     grid-row: span 2;
     padding: 20px;
     font-size: var(--font-small);
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
 .title {
-    font-family: Inter_SemiBold;
+    font-family: Rubik;
     font-size: var(--font-small-titles);
     margin-bottom: 10px;
 }
@@ -146,7 +150,7 @@
     font-weight: 500;
 }
 .pLink {
-    margin-top: 20px;
+    margin-top: 15px;
     text-decoration: underline;
     color: var(--color-focus); display: flex;
     gap: 10px;
@@ -165,7 +169,7 @@
     width: max-content;
     height: 100%;
     padding: 20px;
-    font-family: Inter_Regular;
+    font-family: Rubik;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -202,7 +206,7 @@
     grid-row: 1fr 1fr;
     column-gap: 30px;
     row-gap: 10px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
 .manageInfoContainer .bottom > .input_field {
     margin: 0px;
@@ -238,7 +242,7 @@
     font-size: var(--font-small);
     font-weight: 500;
     border-radius: 8px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
 
 /*»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»*/
@@ -258,7 +262,7 @@
     margin-top: 20px;
     height: max-content;
     display: flex;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
 .cardsbottom > .left {
     height: max-content;
@@ -326,7 +330,7 @@
     left: 45px;
     color: #ffffffa8;
     font-size: var(--font-small-titles);
-    font-family: 'Inter_Light';
+    font-family: 'Rubik';
 }
 .cardsbottom > .right > .cardImage > p:nth-child(2) {
     position: absolute;
@@ -334,7 +338,7 @@
     right: 45px;
     color: #ffffffa8;
     font-size: 0.6rem;
-    font-family: 'Inter_Light';
+    font-family: 'Rubik';
 }
 .cardsbottom > .right > .cardImage > p:nth-child(3) {
     position: absolute;
@@ -342,7 +346,7 @@
     right: 92px;
     color: #ffffffd6;
     font-size: var(--font-small-titles);
-    font-family: 'Inter_Regular';
+    font-family: 'Rubik';
 }
 .cards.manageInfoContainer > .buttonContainer {
     width: 100%;
