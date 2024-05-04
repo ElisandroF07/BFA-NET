@@ -23,10 +23,10 @@ export default function RegisterCredentials() {
 	let area = "";
 	let account_type = "";
 	if (typeof window !== "undefined") {
-		email_address = localStorage.getItem("email") ?? useStore.email
-		area = localStorage.getItem("area") ?? "";
-		local = localStorage.getItem("local") ?? "";
-		account_type = localStorage.getItem("accountType") ?? "";
+		email_address = localStorage.getItem("email")
+		area = localStorage.getItem("area");
+		local = localStorage.getItem("local");
+		account_type = localStorage.getItem("accountType");
 	}
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
