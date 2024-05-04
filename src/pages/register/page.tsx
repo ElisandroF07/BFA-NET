@@ -4,6 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { FaArrowRightLong } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import { useDisclosure } from "@nextui-org/react";
 import { toast } from "sonner";
@@ -28,31 +29,22 @@ type FormType = z.infer<typeof FormSchema>;
 export default function Register() {
     const router = useRouter();
     const useStore = useUserStore()
+    const [place, setPlace] = useState("")
     const [loading, setLoading] = useState(false)
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-    const {register, formState: { errors }, handleSubmit} = useForm<FormType>({
+    const {register, formState: { errors }, handleSubmit, setValue} = useForm<FormType>({
         resolver: zodResolver(FormSchema),
     });
 
     async function submitForm(data: FormType) {
-        toast.promise(APICall(data), {
-            loading: "Enviando...",
-            success: (data) => {
-                return data;
-            },
-            error: (data) => {
-                return data;
-            },
-        });
+        APICall(data)
     }
 
-	async  function APICall(data: FormType): Promise<string> {
+	async function APICall(data: FormType){
 		setLoading(true)
         const { email } = data;
-        // biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-        return  new Promise(async (resolve, reject) => {
-            await axios.get(`https://bfa-nodejs-api.onrender.com/sendEmail/${email}`)
+            await axios.get(`http://localhost:5000/sendEmail/${email}`)
             .then((response) => {
                 if (response.status === 201) {
                     useStore.updateEmail(email);
@@ -60,17 +52,17 @@ export default function Register() {
                         localStorage.setItem("email", email);
                     }
                     router.push("/email-verification");
-                    resolve(response.data.message)
+                    toast.success(response.data.message)
                 }
-                reject(response.data.message) 
-                setLoading(false)
+                else {
+                    toast.error(response.data.message) 
+                    setLoading(false)
+                }
             })
             .catch(()=>{
-                toast.error("Não foi possivel processar a sua solicitação!" ,{description: "Verifique a sua conexão com a internet."})
+                toast.error("Sem conexão com o servidor" ,{description: "Sem conexão com o servidor!"})
                 setLoading(false)
-            })
-        })
-        
+            }) 
     }
 
     useEffect(() => onOpen(), [onOpen]);
@@ -93,15 +85,29 @@ export default function Register() {
                         </div>
                         <div className="body_form">
                             <div className="input_field">
-                                <label htmlFor="email">Endereço de email</label>
+                                <label id="LRE" htmlFor="email">Endereço de email *</label>
                                 <input
                                     type="email"
                                     placeholder="Insira o seu endereço de email "
                                     {...register("email")}
+                                    onChange={(event)=>{
+                                        setPlace(event.target.value)
+                                        setValue("email", event.target.value)
+                                    }}
+                                    onFocus={()=>{
+                                        const label = document.querySelector('#LRE') as HTMLLabelElement
+                                        label.style.transition = ".3s"
+                                        label.style.color = "var(--color-focus)"
+                                    }}
+                                    onBlur={()=>{
+                                        const label = document.querySelector('#LRE') as HTMLLabelElement
+                                        label.style.transition = ".3s"
+                                        label.style.color = "var(--color-text)"
+                                    }}
                                 />
                                 {errors.email && <InfoError message={errors.email.message} />}
                             </div>
-                            <button type="submit" disabled={loading} className="button_auth">
+                            <button type="submit" disabled={loading || !place} className="button_auth">
                             {loading ? (
                                 <TailSpin
                                     height="25"
@@ -112,7 +118,7 @@ export default function Register() {
                                     visible={true}
                                 />
                             ) : (
-                                'Verificar email'
+                                <>Aderir <FaArrowRightLong style={{marginLeft: "10px"}}/></>
                             )}
                             </button>
                             <div className="terms">
