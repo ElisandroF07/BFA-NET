@@ -59,8 +59,9 @@ export default function Register() {
                     setLoading(false)
                 }
             })
-            .catch(()=>{
-                toast.error("Sem conexão com o servidor" ,{description: "Sem conexão com o servidor!"})
+            .catch((err)=>{
+                toast.error("Sem conexão com o servidor")
+		    console.log(err)
                 setLoading(false)
             }) 
     }
