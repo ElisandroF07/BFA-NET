@@ -68,7 +68,7 @@ export default function SecuritySection({biNumber}: IProps) {
     async function APICall(data: string){
 		setLoading(true)
 			try {
-				const response = await api.post("http://localhost:5000/privateResetAccessCode", data);
+				const response = await api.post("https://bfa-nodejs-api.onrender.com/privateResetAccessCode", data);
 				if (response.status === 201) {
 					toast.success(response.data.message);
 				}

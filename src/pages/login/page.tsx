@@ -55,7 +55,7 @@ export default function Login() {
 		return new Promise(async (resolve, reject) => {
 			try {
 				setLoading(true);
-				const response = await axios.post("http://localhost:5000/login", data, {headers: { "Content-Type": "application/json" }});
+				const response = await axios.post("https://bfa-nodejs-api.onrender.com/login", data, {headers: { "Content-Type": "application/json" }});
 				if (response.status === 201) {
 					useStore.updateEmail(response.data.email)
 					if (typeof window !== "undefined") {
@@ -94,7 +94,7 @@ export default function Login() {
 				}
 				}
 				}
-				const response = await axios.get(`http://localhost:5000/2fa/${membership_number.toLowerCase()}`,);
+				const response = await axios.get(`https://bfa-nodejs-api.onrender.com/2fa/${membership_number.toLowerCase()}`,);
 				if (response.status === 201) {
 					resolve(response.data.message);
 				}

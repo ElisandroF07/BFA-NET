@@ -44,7 +44,7 @@ export default function Register() {
 	async function APICall(data: FormType){
 		setLoading(true)
         const { email } = data;
-            await axios.get(`http://localhost:5000/sendEmail/${email}`)
+            await axios.get(`https://bfa-nodejs-api.onrender.com/sendEmail/${email}`)
             .then((response) => {
                 if (response.status === 201) {
                     useStore.updateEmail(email);

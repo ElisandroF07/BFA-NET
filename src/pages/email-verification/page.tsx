@@ -25,7 +25,7 @@ export default function EmailVerification() {
 	async function APICall(){
 		setLoading(true);
 		try {
-			const response = await axios.get(`http://localhost:5000/resendEmail/${email}`,);
+			const response = await axios.get(`https://bfa-nodejs-api.onrender.com/resendEmail/${email}`,);
 			if (response.status === 201) {
 				toast.success(response.data.message);
 			}
