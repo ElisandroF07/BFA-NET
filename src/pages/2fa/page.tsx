@@ -16,6 +16,7 @@ import "@/styles/globals.css";
 import "@/styles/phone_verification.css";
 import business from "@/assets/images/Two factor authentication-pana.svg";
 import { TailSpin } from 'react-loader-spinner'
+import { FaArrowRightLong } from "react-icons/fa6";
 
 const FormSchema = z.object({
 	value1: z.string().min(1, "O campo é obrigatório!"),
@@ -49,33 +50,23 @@ export default function TwoFactorAuthentication() {
 		resolver: zodResolver(FormSchema)
 	})
 
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	function APICall(): Promise<any> {
+	
+	async function APICall(){
 		setLoading(true);
-		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
-		return new Promise(async (resolve, reject) => {
-			try {
-				const response = await axios.get(`https://bfa-nodejs-api.onrender.com/2fa/${membership_number.toLowerCase()}`);
-				if (response.status === 201) {
-					resolve(response.data.message);
-				}
-			} catch {
-				reject("Erro ao processar a sua solicitação!");
-				setLoading(false)
+		try {
+			const response = await axios.get(`http://localhost:5000/2fa/${membership_number.toLowerCase()}`);
+			if (response.status === 201) {
+				toast.success(response.data.message);
 			}
-		});
+		} catch {
+			toast.error("Sem conexão com o servidor!");
+			setLoading(false)
+		}
+		
 	}
 
 	async function resendEmail() {
-		toast.promise(APICall(), {
-			loading: "Reenviando email...",
-			success: (data) => {
-				return data;
-			},
-			error: (data) => {
-				return data;
-			},
-		});
+		APICall()
 	}
 
 	async function submitForm(OTP: string) {
@@ -104,7 +95,7 @@ export default function TwoFactorAuthentication() {
 				}
 			}
 			catch{
-				toast.error("Não foi possivel processar a sua solicitação!", {description: "Verifique a sua conexão com a internet."})
+				toast.error("Sem conexão com o servidor", {description: "Sem conexão com o servidor!"})
 			}
 		}
 	}
@@ -175,8 +166,9 @@ export default function TwoFactorAuthentication() {
 							</div>
 							<button
 								type="button"
-								disabled={loading}
+								disabled={loading || currentInput!==6}
 								className="button_auth"
+
 							>
 								{loading ? (
 									<TailSpin
@@ -188,7 +180,7 @@ export default function TwoFactorAuthentication() {
 										visible={true}
 									/>
 								) : (
-									'Autenticar'
+									<>Entrar <FaArrowRightLong style={{marginLeft: "10px"}}/></>
 								)}
 							</button>
 							<div className="terms">
