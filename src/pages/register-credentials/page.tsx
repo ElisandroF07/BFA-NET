@@ -24,8 +24,8 @@ export default function RegisterCredentials() {
 	let account_type = "";
 	if (typeof window !== "undefined") {
 		email_address = localStorage.getItem("email") ?? ""
-		area = localStorage.getItem("area") ?? ""
-		local = localStorage.getItem("local") ?? ""
+		area = localStorage.getItem("area") ?? "Nenhum"
+		local = localStorage.getItem("local") ?? "Nenhum"
 		account_type = localStorage.getItem("accountType") ?? ""
 	}
 
