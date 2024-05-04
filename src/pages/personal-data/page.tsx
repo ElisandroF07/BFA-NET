@@ -104,8 +104,8 @@ export default function PersonalData() {
 	let email_address = "";
 	let account_type = "";
 	if (typeof window !== "undefined") {
-		email_address = localStorage.getItem("email") 
-		account_type = localStorage.getItem("accountType")
+		email_address = localStorage.getItem("email")  || ""
+		account_type = localStorage.getItem("accountType") || ""
 	}
 
 	useEffect(()=>{
