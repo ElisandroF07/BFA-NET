@@ -145,7 +145,7 @@ export default function PersonalData() {
 		const formatedData = JSON.stringify({
 			name: data.name,
 			biNumber: data.biNumber,
-			email: email_address,
+			email,
 			birthDate: parsedBirthDate,
 		});
 
