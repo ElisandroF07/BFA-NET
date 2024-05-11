@@ -121,27 +121,27 @@ export default function Dashboard({exchanges, logout}: IProps) {
 				<div className="exchanges_container">
 					<h1 className="title" style={{color: "#3B3D4E"}}>Taxas de câmbio</h1>
 					<div className="exchanges">
-					{ exchanges.genericResponse.length !== 0 ? exchanges.genericResponse.map((_item: { genericResponse: { taxa: { toString: () => string; }, codigoMoeda: { toString: () => string}; }[]; })=>{
-							if (_item.genericResponse[0]?.codigoMoeda === "USD") {
-								return (
-									<CardExchange key={"USD"} currency={"Dólar Americano"} subtitle={`${_item.genericResponse[0].codigoMoeda} - AOA`} price={_item.genericResponse[0].taxa.toString()} backgroundColor='linear-gradient(-134deg, #ff5000 0, #6d3901 100%)'/> || <Skeleton borderRadius={10} height={35} width={300}/>
-								)
-							}
-							if (_item.genericResponse[0]?.codigoMoeda === "EUR") {
-								return (
-									<CardExchange key={"EUR"} currency={"Euro"} subtitle={`${_item.genericResponse[0].codigoMoeda} - AOA`} price={_item.genericResponse[0].taxa.toString()} backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #003d6d 100%)'/>
-								)
-							}
-							if (_item.genericResponse[0]?.codigoMoeda === "CNY") {
-								return (
-									<CardExchange key={"CNY"} currency={"Yuhan"} subtitle={`${_item.genericResponse[0].codigoMoeda} - AOA`} price={_item.genericResponse[0].taxa.toString()} backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #003d6d 100%)'/>
-								)
-							}
-							if (_item.genericResponse[0]?.codigoMoeda === "ZAR") {
-								return (
-									<CardExchange key={"ZAR"} currency={"Rand"} subtitle={`${_item.genericResponse[0].codigoMoeda} - AOA`} price={_item.genericResponse[0].taxa.toString()} backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #003d6d 100%)'/>
-								)
-							}
+					{ exchanges.genericResponse.length !== 0 ? exchanges?.genericResponse?.map((_item: { genericResponse: { taxa: { toString: () => string; }, codigoMoeda: { toString: () => string}; }[]; })=>{
+							// if (_item?.genericResponse[0]?.codigoMoeda === "USD") {
+							// 	return (
+							// 		<CardExchange key={"USD"} currency={"Dólar Americano"} subtitle={`${_item.genericResponse[0].codigoMoeda} - AOA`} price={_item.genericResponse[0].taxa.toString()} backgroundColor='linear-gradient(-134deg, #ff5000 0, #6d3901 100%)'/> || <Skeleton borderRadius={10} height={35} width={300}/>
+							// 	)
+							// }
+							// if (_item?.genericResponse[0]?.codigoMoeda === "EUR") {
+							// 	return (
+							// 		<CardExchange key={"EUR"} currency={"Euro"} subtitle={`${_item.genericResponse[0].codigoMoeda} - AOA`} price={_item.genericResponse[0].taxa.toString()} backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #003d6d 100%)'/>
+							// 	)
+							// }
+							// if (_item?.genericResponse[0]?.codigoMoeda === "CNY") {
+							// 	return (
+							// 		<CardExchange key={"CNY"} currency={"Yuhan"} subtitle={`${_item.genericResponse[0].codigoMoeda} - AOA`} price={_item.genericResponse[0].taxa.toString()} backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #003d6d 100%)'/>
+							// 	)
+							// }
+							// if (_item?.genericResponse[0]?.codigoMoeda === "ZAR") {
+							// 	return (
+							// 		<CardExchange key={"ZAR"} currency={"Rand"} subtitle={`${_item.genericResponse[0].codigoMoeda} - AOA`} price={_item.genericResponse[0].taxa.toString()} backgroundColor='linear-gradient(-134deg, rgb(0 143 251) 0, #003d6d 100%)'/>
+							// 	)
+							// }
 							
 						}) : (
 							<>

@@ -11,6 +11,7 @@ import { IoIosArrowRoundForward } from "react-icons/io";
 import { toast } from "sonner";
 import { z } from "zod";
 import InfoError from "../others/infoError";
+import { TailSpin } from "react-loader-spinner";
 
 interface IProps {
     biNumber: string
@@ -71,6 +72,9 @@ export default function SecuritySection({biNumber}: IProps) {
 				const response = await api.post("https://bfa-nodejs-api.onrender.com/privateResetAccessCode", data);
 				if (response.status === 201) {
 					toast.success(response.data.message);
+                    onEmailModalClose()
+                    onClose2FA()
+                    onClose()
 				}
 				else {
                     toast.error(response.data.message);
@@ -96,6 +100,7 @@ export default function SecuritySection({biNumber}: IProps) {
 	}
 
     async  function submitForm2FA(data: formType2FA) {
+        setLoading(true)
         const response = await api.get(`/check2FA/${data.otp}/${biNumber}`)
         if (response.data.valid) {
             const resp = await api.get(`/setEmail/${newEmail}/${biNumber}`)
@@ -109,9 +114,11 @@ export default function SecuritySection({biNumber}: IProps) {
                 onEmailModalClose()
                 onClose2FA()
             }
+            setLoading(false)
         }
         else {
             toast.error("Código de verificação inválido!")
+            setLoading(false)
         }
     }
 
@@ -121,19 +128,23 @@ export default function SecuritySection({biNumber}: IProps) {
             biNumber
         })
        const response = await api.post("/checkAccessCode", body)
+       setLoading(true)
        if (response.data.valid) {
             const resp = await api.get(`/private2fa/${data.emailAddress}/${biNumber}`)
             if (resp.status === 201) {
                 toast.success("Código de verificação enviado para o novo endereço de email")
                 setNewEmail(data.emailAddress)
+                setLoading(false)
                 onOpen2FA()
             }
             else {
                 toast.error(resp.data.message)
+                setLoading(false)
             }
        }
        else {
         toast.error("Código de acesso incorreto!")
+        setLoading(false)
        }
     }
 
@@ -191,7 +202,18 @@ export default function SecuritySection({biNumber}: IProps) {
                                 Cancelar
                             </Button>
                             <Button color="primary" type="submit" disabled={loading}>
-                                Confirmar alteração
+                            {loading ? (
+                                    <TailSpin
+                                    height="25"
+                                    width="25"
+                                    color="#fff"
+                                    ariaLabel="tail-spin-loading"
+                                    radius="1"
+                                    visible={true}
+                                    />
+                                ) : (
+                                    'Confirmar alteração'
+                                )}
                             </Button>
                         </ModalFooter>
                     </form>
@@ -233,7 +255,18 @@ export default function SecuritySection({biNumber}: IProps) {
                                 Cancelar
                             </Button>
                             <Button color="primary" type="submit" disabled={loading}>
-                                Confirmar alteração
+                            {loading ? (
+                                    <TailSpin
+                                    height="25"
+                                    width="25"
+                                    color="#fff"
+                                    ariaLabel="tail-spin-loading"
+                                    radius="1"
+                                    visible={true}
+                                    />
+                                ) : (
+                                    'Confirmar alteração'
+                                )}
                             </Button>
                         </ModalFooter>
                     </form>
@@ -261,14 +294,24 @@ export default function SecuritySection({biNumber}: IProps) {
                                 Cancelar
                             </Button>
                             <Button color="primary" type="submit" disabled={loading}>
-                                Verificar
+                            {loading ? (
+                                    <TailSpin
+                                    height="25"
+                                    width="25"
+                                    color="#fff"
+                                    ariaLabel="tail-spin-loading"
+                                    radius="1"
+                                    visible={true}
+                                    />
+                                ) : (
+                                    'Verificar'
+                                )}
                             </Button>
                         </ModalFooter>
                     </form>
                 </ModalContent>
             </Modal>
         )}
-
       </div>
     );
 }

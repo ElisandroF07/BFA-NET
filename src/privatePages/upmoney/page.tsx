@@ -283,8 +283,19 @@ export default function Upmoney() {
 										/>
 										{errors2.confirmPin && <InfoError message={errors2.confirmPin.message}/>}
 									</div>
-									<button className="botao" type="submit" style={{backgroundColor: "var(--color-focus3)"}}>
-										Confirmar
+									<button className="botao" disabled={loading} type="submit" style={{backgroundColor: "var(--color-focus3)"}}>
+									{loading ? (
+										<TailSpin
+										height="25"
+										width="25"
+										color="#fc6423"
+										ariaLabel="tail-spin-loading"
+										radius="1"
+										visible={true}
+										/>
+									) : (
+										'Confirmar'
+									)}
 									</button>
 								</form>
 							</div>
@@ -363,8 +374,19 @@ export default function Upmoney() {
 										/>
 										{errors.confirmPin && <InfoError message={errors.confirmPin.message}/>}
 									</div>
-									<button className="botao" type="submit" style={{backgroundColor: "var(--color-focus3)"}}>
-										Confirmar
+									<button className="botao" disabled={loading} type="submit" style={{backgroundColor: "var(--color-focus3)"}}>
+									{loading ? (
+										<TailSpin
+										height="25"
+										width="25"
+										color="#fc6423"
+										ariaLabel="tail-spin-loading"
+										radius="1"
+										visible={true}
+										/>
+									) : (
+										'Confirmar'
+									)}
 									</button>
 								</form>
 							</div>

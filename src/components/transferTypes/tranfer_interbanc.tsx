@@ -68,10 +68,10 @@ export default function TransferInterbanc({number, biNumber}: {number: string, b
 				toast.error("IBAN inexistente!")
 				setLoading(false)
 			}
+			setLoading(false)
 		}
 		catch(err) {
 			toast.error("Sem conexão com o servidor")
-			console.log(err)
 			setLoading(false)
 		}
 	}
@@ -230,25 +230,37 @@ export default function TransferInterbanc({number, biNumber}: {number: string, b
                                 Cancelar
                             </Button>
                             <Button color="primary" type="button" onPress={async() => {
-								setLoading(true)
+								setLoading2(true)
 									try {
 										const resp = await api.post(`/sendOTP/${useClient.email}/${useClient.biNumber}`)
 										if (resp.status === 201) {
 											toast.success("Código de autenticação enviado!")
 											onOpen2FA()
-											setLoading(false)
+											setLoading2(false)
 										}
 										else {
 											toast.error(resp.data.message)
-											setLoading(false)
+											setLoading2(false)
 										}
 
 									}
 									catch {
 										toast.error("Sem conexão com o servidor!")
+										setLoading2(false)
 									}
 								}}>
-								Confirmar
+								{loading2 ? (
+										<TailSpin
+										height="25"
+										width="25"
+										color="#fff"
+										ariaLabel="tail-spin-loading"
+										radius="1"
+										visible={true}
+										/>
+									) : (
+										'Confirmar'
+									)}
                             </Button>
                         </ModalFooter>
                 </ModalContent>

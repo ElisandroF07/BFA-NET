@@ -8,6 +8,7 @@ import CardUpmoney from "../cards/cardUpmoney";
 import { toast } from "sonner";
 import useAccountStore from "@/contexts/stores/accountStore";
 import utils from "@/services/utils";
+import { TailSpin } from "react-loader-spinner";
 
 interface ITransactions {
   accountFrom: string;
@@ -239,11 +240,24 @@ export default function UpmoneyList({accountNumber, upmoneyList, setUpmoneyList}
                     useAccount.updateAvailableBalance(resp.data.balance.available_balance)
                     useAccount.updateUpBalance(resp.data.balance.up_balance)
                     setUpmoneyList({success: true, data: resp.data.upmoneyList})
+                    onClose()
                   }
                   else {
                     toast.error("Falha ao cancelar levantamento!")
                   }
-                }}>Cancelar levantamento</Button>
+                  setLoading(false)
+                }}>{loading ? (
+                  <TailSpin
+                  height="25"
+                  width="25"
+                  color="#f00"
+                  ariaLabel="tail-spin-loading"
+                  radius="1"
+                  visible={true}
+                  />
+                ) : (
+                  'Cancelar levantamento'
+                )}</Button>
                 <Button color="default" variant="flat" onPress={onClose}>
                   Fechar
                 </Button>

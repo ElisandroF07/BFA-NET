@@ -10,7 +10,7 @@ import { useDisclosure, Modal, ModalContent, ModalHeader, ModalBody, Input, Moda
 import TwoFAModal from "../modals/2faModal";
 import useClientStore from "@/contexts/stores/clientStore";
 import useAccountStore from "@/contexts/stores/accountStore";
-import { json } from "stream/consumers";
+import { TailSpin } from "react-loader-spinner";
 
 
 const formSchema = z.object({
@@ -39,6 +39,7 @@ export default function PayReference({number}: {number: string}) {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [reference, setReference] = useState("")
 	const [loading, setLoading] = useState(false)
+	const [loading2, setLoading2] = useState(false)
 	const useClient = useClientStore()
 	const useAccount = useAccountStore()
 	const { isOpen: isOpen2FA, onOpen: onOpen2FA, onClose: onClose2FA } = useDisclosure();
@@ -92,15 +93,18 @@ export default function PayReference({number}: {number: string}) {
 	  }
 
 	  async function submitForm(data: formType) {
+		setLoading(true)
 		const response = await api.get(`/getReference2/${data.reference}`)
 		if (response.data.success) {
 			setReferenceData(response.data.reference)
 			setReference(data.reference)
+
 			onOpen()
 		}
 		else {
 			toast.error("Referência inválida!")
 		}
+		setLoading(false)
 	  }
 
 	return (
@@ -137,7 +141,18 @@ export default function PayReference({number}: {number: string}) {
 					</div>
 				</div>
 				<button type="submit" style={{backgroundColor: "var(--color-focus3)", padding: "10px 20px", borderRadius: "10px", color: "var(--color-focus)", transition: '.3s'}}>
-					Confirmar pagamento 
+				{loading ? (
+					<TailSpin
+					height="25"
+					width="25"
+					color="#fc6423"
+					ariaLabel="tail-spin-loading"
+					radius="1"
+					visible={true}
+					/>
+				) : (
+					'Confirmar pagamento'
+				)}
 				</button>
 			</form>
 			{isOpen &&(
@@ -199,24 +214,35 @@ export default function PayReference({number}: {number: string}) {
                                         <ModalFooter>
                                           
                                           <Button color="success" variant="flat" onPress={async()=>{
-								setLoading(true)
-									try {
-											const resp = await api.post(`/sendOTP/${useClient.email}/${useClient.biNumber}`)
+											setLoading2(true)
+											try {
+												const resp = await api.post(`/sendOTP/${useClient.email}/${useClient.biNumber}`)
 														if (resp.status === 201) {
 															toast.success("Código de autenticação enviado!")
 															onOpen2FA()
-															setLoading(false)
+															setLoading2(false)
 														}
 														else {
 															toast.error(resp.data.message)
-															setLoading(false)
+															setLoading2(false)
 														}
 													}
 													catch {
 														toast.error("Sem conexão com o servidor!")
 													}
 												}}>
-                                              Pagar
+                                              {loading2 ? (
+													<TailSpin
+													height="25"
+													width="25"
+													color="#0f0"
+													ariaLabel="tail-spin-loading"
+													radius="1"
+													visible={true}
+													/>
+												) : (
+													'Pagar'
+												)}
                                           </Button>
                                       </ModalFooter>
                         </ModalContent>

@@ -10,6 +10,7 @@ import TwoFAModal from "../modals/2faModal";
 import api from "@/services/api";
 import useClientStore from "@/contexts/stores/clientStore";
 import { toast } from "sonner";
+import { TailSpin } from "react-loader-spinner";
 
 interface SubProduct {
 	id: number;
@@ -323,8 +324,8 @@ export default function PayServices() {
 								Cancelar
 							</Button>
 							<Button color="success" variant="flat" onPress={async()=>{
-								setLoading(true)
 									try {
+										setLoading(true)
 										const resp = await api.post(`/sendOTP/${useClient.email}/${useClient.biNumber}`)
 										if (resp.status === 201) {
 											toast.success("Código de autenticação enviado!")
@@ -339,9 +340,21 @@ export default function PayServices() {
 									}
 									catch {
 										toast.error("Sem conexão com o servidor!")
+										setLoading(false)
 									}
 								}}>
-								Confirmar
+								{loading ? (
+										<TailSpin
+										height="25"
+										width="25"
+										color="#0f0"
+										ariaLabel="tail-spin-loading"
+										radius="1"
+										visible={true}
+										/>
+									) : (
+										'Confirmar'
+									)}
 							</Button>
 						</ModalFooter>
 					</ModalContent>

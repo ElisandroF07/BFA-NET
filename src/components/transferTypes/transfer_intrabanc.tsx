@@ -66,6 +66,7 @@ export default function TransferIntrabanc({number, biNumber}: {number: string, b
 					receiverDescription: data.receiverDescription,
 					transferDescription: data.transferDescription,
 				})
+				setLoading(false)
 				onOpen()
 			}
 			else {
@@ -187,7 +188,7 @@ export default function TransferIntrabanc({number, biNumber}: {number: string, b
 				<div className="information">
 					<CiCircleInfo className="icone" />
 					<p>Envie e receba dinheiro instantânemante.</p>
-					<button type="submit">
+					<button type="submit" disabled={loading}>
 					{loading ? (
 							<TailSpin
 								height="25"
@@ -234,18 +235,18 @@ export default function TransferIntrabanc({number, biNumber}: {number: string, b
                             <Button color="danger" variant="flat" onPress={onClose}>
                                 Cancelar
                             </Button>
-                            <Button color="primary" type="button" onPress={async()=>{
-								setLoading(true)
+                            <Button color="primary" type="button" disabled={loading2} onPress={async()=>{
+								setLoading2(true)
 									try {
 										const resp = await api.post(`/sendOTP/${useClient.email}/${useClient.biNumber}`)
 										if (resp.status === 201) {
 											toast.success("Código de autenticação enviado!")
 											onOpen2FA()
-											setLoading(false)
+											setLoading2(false)
 										}
 										else {
 											toast.error(resp.data.message)
-											setLoading(false)
+											setLoading2(false)
 										}
 
 									}
@@ -253,7 +254,18 @@ export default function TransferIntrabanc({number, biNumber}: {number: string, b
 										toast.error("Sem conexão com o servidor!")
 									}
 								}}>
-								Confirmar
+								{loading2 ? (
+									<TailSpin
+									height="25"
+									width="25"
+									color="#fff"
+									ariaLabel="tail-spin-loading"
+									radius="1"
+									visible={true}
+									/>
+									) : (
+										'Confirmar'
+									)}
                             </Button>
                         </ModalFooter>
                 </ModalContent>
