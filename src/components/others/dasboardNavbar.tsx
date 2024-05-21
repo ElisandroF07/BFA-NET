@@ -1,5 +1,5 @@
 import useAccountStore from "@/contexts/stores/accountStore";
-import { CiGrid41, CiBarcode, CiReceipt, CiInboxOut, CiShare1, CiInboxIn, CiMoneyCheck1, CiGps, CiSquareAlert, CiLogout } from "react-icons/ci";
+import { CiGrid41, CiBarcode, CiReceipt, CiInboxOut, CiShare1, CiInboxIn, CiMoneyCheck1, CiGps, CiSquareAlert, CiLogout, CiRepeat, CiWallet } from "react-icons/ci";
 import { TailSpin } from "react-loader-spinner";
 
 
@@ -82,7 +82,7 @@ export default function DashboardNavbar({logout, loading}: {logout: ()=>void, lo
               data-page="Pagamentos"
               type="button"
             >
-              <CiInboxOut />
+              <CiWallet  />
               Pagamentos
             </button>
           </li>
@@ -104,7 +104,7 @@ export default function DashboardNavbar({logout, loading}: {logout: ()=>void, lo
               data-page="Transferências"
               type="button"
             >
-              <CiShare1 />
+              <CiRepeat  />
               Transferências
             </button>
           </li>
@@ -115,11 +115,21 @@ export default function DashboardNavbar({logout, loading}: {logout: ()=>void, lo
               data-page="Levantamentos"
               type="button"
             >
-              <CiInboxIn />
+              <CiInboxOut />
               Levantamentos
             </button>
           </li>
-          
+          <li>
+            <button
+              className="btn"
+              data-active="false"
+              data-page="Depósitos"
+              type="button"
+            >
+              <CiInboxIn />
+              Depósitos
+            </button>
+          </li>
           <div className="separator" />
           <li>
             <button

@@ -244,6 +244,10 @@ export default function Upmoney() {
 											className="montante"
 											placeholder="Insira o montante"
 											{...register2("balance")}
+											pattern="[0-9]*" onInput={(event)=>{
+												event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
+											}}
+											maxLength={6}
 										/>
 									</div>
 									{errors2.balance && <InfoError message={errors2.balance.message}/>}
@@ -263,6 +267,9 @@ export default function Upmoney() {
 											maxLength={3}
 											max={3}
 											{...register2("pin")}
+											pattern="[0-9]*" onInput={(event)=>{
+												event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
+											}}
 											style={{backgroundColor: "var(--color-cards)"}}
 										/>
 										{errors2.pin && <InfoError message={errors2.pin.message}/>}
@@ -279,6 +286,9 @@ export default function Upmoney() {
 											maxLength={3}
 											max={3}
 											{...register2("confirmPin")}
+											pattern="[0-9]*" onInput={(event)=>{
+												event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
+											}}
 											style={{backgroundColor: "var(--color-cards)"}}
 										/>
 										{errors2.confirmPin && <InfoError message={errors2.confirmPin.message}/>}
@@ -309,7 +319,7 @@ export default function Upmoney() {
 									<div id="Kz" className="input_field">
 										<h4 className="static-text">Endereço de email do beneficiário</h4>
 										<input
-											type="text"
+											type="email"
 											className="montante"
 											placeholder="Insira o endereço de email do beneficiário"
 											{...register("emailTo")}
@@ -325,6 +335,10 @@ export default function Upmoney() {
 											className="montante"
 											placeholder="Insira o montante"
 											{...register("balance")}
+											pattern="[0-9]*" onInput={(event)=>{
+												event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
+											}}
+											maxLength={6}
 										/>
 									</div>
 									<div className="info">
@@ -354,6 +368,9 @@ export default function Upmoney() {
 											maxLength={3}
 											max={3}
 											{...register("pin")}
+											pattern="[0-9]*" onInput={(event)=>{
+												event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
+											}}
 											style={{backgroundColor: "var(--color-cards)"}}
 										/>
 										{errors.pin && <InfoError message={errors.pin.message}/>}
@@ -370,6 +387,9 @@ export default function Upmoney() {
 											maxLength={3}
 											max={3}
 											{...register("confirmPin")}
+											pattern="[0-9]*" onInput={(event)=>{
+												event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
+											}}
 											style={{backgroundColor: "var(--color-cards)"}}
 										/>
 										{errors.confirmPin && <InfoError message={errors.confirmPin.message}/>}

@@ -137,14 +137,18 @@ export default function TransferIntrabanc({number, biNumber}: {number: string, b
 					</div>
 					<div className="input_field">
 						<label htmlFor="email">Número da conta receptora</label>
-						<input type="text" placeholder="Número do conta" {...register("account_number")}/>
+						<input type="text" pattern="[0-9]*" onInput={(event)=>{
+								event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
+							}} placeholder="Número da conta" maxLength={13} {...register("account_number")}/>
 						{errors.account_number && <InfoError message={errors.account_number.message} />}
 					</div>
 					<div className="input_field">
 						<label htmlFor="email">Montante</label>
 						<div className="input_phone">
 							<p>Kz</p>
-							<input type="number" maxLength={7} max={5000000} min={500} placeholder="Montante" {...register("balance")}/>
+							<input type="text" pattern="[0-9]*" onInput={(event)=>{
+								event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
+							}} maxLength={7} max={5000000} min={500} placeholder="Montante" {...register("balance")}/>
 						</div>
 						{errors.balance && <InfoError message={errors.balance.message} />}
 					</div>
@@ -186,8 +190,6 @@ export default function TransferIntrabanc({number, biNumber}: {number: string, b
 					</div>
 				</div>
 				<div className="information">
-					<CiCircleInfo className="icone" />
-					<p>Envie e receba dinheiro instantânemante.</p>
 					<button type="submit" disabled={loading}>
 					{loading ? (
 							<TailSpin
@@ -199,7 +201,7 @@ export default function TransferIntrabanc({number, biNumber}: {number: string, b
 								visible={true}
 							/>
 						) : (
-							<>Confirmar transferência <CiCircleChevRight /></>
+							<>Confirmar transferência</>
 						)}
 					</button>
 				</div>

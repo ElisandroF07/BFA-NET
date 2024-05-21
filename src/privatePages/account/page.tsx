@@ -56,9 +56,9 @@ export default function Account() {
           {
             <>
               {[
-                { label: "Número da conta", value: useAccount.number.replace('.', ' ') },
+                { label: "Número da conta", value: useAccount.number.replaceAll('.', ' ') },
                 { label: "IBAN", value: useAccount.iban.replace('AO06', '') },
-                { label: "NBA", value: useAccount.nbi.replace('AO06', '') },
+                { label: "NIB", value: useAccount.nbi.replace('AO06', '') },
                 { label: "BIC/SWIFT", value: useAccount.bic },
                 { label: "Moeda", value: useAccount.currency },
                 {

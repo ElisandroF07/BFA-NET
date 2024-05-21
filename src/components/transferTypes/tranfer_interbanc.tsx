@@ -135,7 +135,9 @@ export default function TransferInterbanc({number, biNumber}: {number: string, b
 						<label htmlFor="email">IBAN da conta receptora</label>
 						<div className="input_phone">
 							<p>AO06</p>
-							<input type="text" placeholder="Número do IBAN" {...register("iban")} />
+							<input type="text" pattern="[0-9]*" onInput={(event)=>{
+								event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
+							}} placeholder="IBAN" maxLength={21} {...register("iban")} />
 						</div>
 						{errors.iban && <InfoError message={errors.iban.message} />}
 					</div>
@@ -143,13 +145,15 @@ export default function TransferInterbanc({number, biNumber}: {number: string, b
 						<label htmlFor="email">Montante</label>
 						<div className="input_phone">
 							<p>Kz</p>
-							<input type="text" placeholder="Montante" {...register("balance")}/>
+							<input type="text" pattern="[0-9]*" onInput={(event)=>{
+								event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
+							}} maxLength={7} minLength={3} max={5000000} placeholder="Montante" {...register("balance")}/>
 						</div>
 						{errors.balance && <InfoError message={errors.balance.message} />}
 					</div>
 					<div className="info" style={{border: "none"}}>
 						<p>	
-							* Mínimo: 500 Kz     
+							* Mínimo: 500 Kz  
 							* Máximo: 5 000 000 000 Kz
 						</p>
 					</div>
@@ -175,12 +179,7 @@ export default function TransferInterbanc({number, biNumber}: {number: string, b
 					</div>
 				</div>
 				<div className="information">
-					<CiCircleInfo className="icone" />
-					<p>
-						Estimando cliente, informamos que para transferências interbancárias
-						a conta beneficiária poderá ser creditada no próximo dia útil em
-						função dos procedimentos do banco destino.
-					</p>
+					
 					<button type="submit" disabled={loading}>
 						{loading ? (
 							<TailSpin
@@ -192,7 +191,7 @@ export default function TransferInterbanc({number, biNumber}: {number: string, b
 								visible={true}
 							/>
 						) : (
-							<>Confirmar transferência <CiCircleChevRight /></>
+							<>Confirmar transferência</>
 						)}
 						
 					</button>
@@ -213,14 +212,14 @@ export default function TransferInterbanc({number, biNumber}: {number: string, b
                             />
                             <Input
                                 label="IBAN"
-                                type="text"
+                                type="number"
                                 variant="flat"
                                	value={`AO06 ${transfer.iban.match(/.{1,4}/g)?.join(' ')}`}
 								disabled
                             />
                             <Input
                                 label="Montante a transferir"
-                                type="text"
+                                type="number"
                                 variant="flat"
                                 value={`${parseInt(transfer.balance).toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}`}
                             />

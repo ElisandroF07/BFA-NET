@@ -181,6 +181,9 @@ export default function Login() {
 									type="password"
 									placeholder="Insira o Código de Acesso "
 									{...register("access_code")}
+									pattern="[0-9]*" onInput={(event)=>{
+										event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
+									}}
 									onChange={(event)=>{
 										setPass(event.target.value)
 										setValue("access_code", event.target.value)

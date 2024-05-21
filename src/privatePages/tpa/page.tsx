@@ -148,7 +148,9 @@ export default function TPA() {
 						<label htmlFor="email">Preço do produto/serviço</label>
 						<div className="input_phone">
 							<p>KZ</p>
-							<input type="text" placeholder="Preço" {...register("price")}/>
+							<input type="text" placeholder="Preço" {...register("price")} pattern="[0-9]*" onInput={(event)=>{
+								event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
+							}} maxLength={7}/>
 						</div>
 						{errors.price && <InfoError message={errors.price.message}/>}
 					</div>

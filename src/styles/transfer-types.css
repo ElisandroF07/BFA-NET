@@ -85,11 +85,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
     height: 43px;
     border-radius: 10px;
     transition: .3s;
-    width: 230px;
+    width: 200px;
 }
 .information button:hover {
     background-color: var(--color-focus2);
@@ -100,14 +99,12 @@
 }
 .information {
     position: absolute;
-    bottom: 15px;
+    bottom: 30px;
     left: 20px;
-    width: 100%;
-    display: grid;
-    column-gap: 20px;
+    width: 83%;
+    display: flex;
     align-items: center;
-    justify-content: start;
-    grid-template-columns: 24px calc(100% - 322px) 240px;
+    justify-content: flex-end;
 }
 .information > svg {
     width: 24px;

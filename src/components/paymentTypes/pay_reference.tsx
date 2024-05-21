@@ -98,7 +98,6 @@ export default function PayReference({number}: {number: string}) {
 		if (response.data.success) {
 			setReferenceData(response.data.reference)
 			setReference(data.reference)
-
 			onOpen()
 		}
 		else {
@@ -126,7 +125,9 @@ export default function PayReference({number}: {number: string}) {
 					</div>
 					<div className="input_field">
 						<label htmlFor="email">Referência</label>
-						<input type="text" placeholder="Introduza o número de referência" {...register("reference")} />
+						<input type="text" pattern="[0-9]*" onInput={(event)=>{
+								event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
+							}} maxLength={6} placeholder="Introduza o número de referência" {...register("reference")} />
 					</div>
 				</div>
 				<div className="right">

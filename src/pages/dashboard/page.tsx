@@ -25,6 +25,7 @@ import NotificationList from "@/components/lists/notificationList";
 import useClientStore from "@/contexts/stores/clientStore";
 import useCardStore from "@/contexts/stores/cardStore";
 import TPA from "@/privatePages/tpa/page";
+import Deposit from "@/privatePages/deposit/page";
 
 type Card = {
   cardNumber: string;
@@ -280,6 +281,9 @@ export default function Dashbaord({email, biNumber, userData, cardData, accountD
             <Upmoney/>
           ) : page === "Transferências" ? (
             <Transfers />
+          )
+          : page === "Depósitos" ? (
+            <Deposit />
           ) : null}
       </section>
     </main>
