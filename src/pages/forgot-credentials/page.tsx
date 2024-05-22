@@ -51,7 +51,7 @@ export default function SetCredentials() {
 	async function APICall(data: any){
 		setLoading(true)
 			try {
-				const response = await axios.post("https://bfa-nodejs-api.onrender.com/setAccessCode", data, { headers: { "Content-Type": "application/json" } });
+				const response = await axios.post("https://maximum-janith-franco07-5ccaf5a9.koyeb.app/setAccessCode", data, { headers: { "Content-Type": "application/json" } });
 				if (response.status === 201) {
 					router.push("/login")
 					toast.success(response.data.message);
