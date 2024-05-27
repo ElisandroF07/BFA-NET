@@ -14,7 +14,7 @@ export default async function Dashboard() {
     return <Dashbaord email={session?.user.email || ""} biNumber={response.data.biNumber} userData={user.data.client} cardData={card.data.card} accountData={account.data.account}/>;
   }
   catch (error) {
-    console.log(error)
+    //console.log(error)
     return <Custom500INT/>
   }
   

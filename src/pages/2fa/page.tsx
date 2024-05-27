@@ -54,7 +54,7 @@ export default function TwoFactorAuthentication() {
 	async function APICall(){
 		setLoading(true);
 		try {
-			const response = await axios.get(`https://maximum-janith-franco07-5ccaf5a9.koyeb.app/2fa/${membership_number.toLowerCase()}`);
+			const response = await axios.get(`http://localhost:5000/2fa/${membership_number.toLowerCase()}`);
 			if (response.status === 201) {
 				toast.success(response.data.message);
 			}
@@ -78,25 +78,26 @@ export default function TwoFactorAuthentication() {
     })
 
     if (result?.error) {
-      toast.error("Código de autenticação inválido!")
-			setLoading(false)
+      	toast.error("Código de autenticação inválido!")
+		setLoading(false)
     }
-		else {
-			try {
-				const response = await api.get(`/verifyLogin/${email}`);
-				if(response.data  === true) {
-					router.replace("/set-access")
-				}
-				else if(response.data === false) {
-					router.replace("/dashboard")
-				}
-				else {
-					toast.warning("Um serviço está indisponível!")
-				}
+	else {
+		try {
+			const response = await api.get(`/verifyLogin/${email}`);
+			console.log(response.data)
+			if(response.data  === true) {
+				router.replace("/set-access")
 			}
-			catch{
-				toast.error("Sem conexão com o servidor", {description: "Sem conexão com o servidor!"})
+			else if(response.data === false) {
+				router.replace("/dashboard")
 			}
+			else {
+				toast.warning("Um serviço está indisponível!")
+			}
+		}
+		catch{
+			toast.error("Sem conexão com o servidor")
+		}
 		}
 	}
 

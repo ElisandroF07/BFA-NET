@@ -88,7 +88,7 @@ export default function Assign() {
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
 		return new Promise(async (resolve, reject) => {
 			try {
-				const response = await axios.post(`https://maximum-janith-franco07-5ccaf5a9.koyeb.app/upload/${email ?? useStore.email}/4`, formData,{ headers: { "Content-Type": "multipart/form-data" } },);
+				const response = await axios.post(`http://localhost:5000/upload/${email ?? useStore.email}/4`, formData,{ headers: { "Content-Type": "multipart/form-data" } },);
 				if (response.status === 200) {
 					router.push("/register/credentials")
 					resolve(response.data.message);

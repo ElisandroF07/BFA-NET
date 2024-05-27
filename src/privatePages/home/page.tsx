@@ -88,7 +88,7 @@ export default function Dashboard({exchanges, logout}: IProps) {
 						<DropdownMenu aria-label="User Actions" variant="flat">
 							<DropdownItem key="profile" className="h-14 gap-2">
 								<p className="font-bold">{useAccount.role === 1 ? "Particular" : "Comerciante"}</p>
-								<p className="font-bold">{useAccount.number.replaceAll(".", " ")}</p>
+								<p className="font-bold">{useAccount.number}</p>
 							</DropdownItem>
 							<DropdownItem key="logout" onClick={logout} color="danger">
 								Sair
