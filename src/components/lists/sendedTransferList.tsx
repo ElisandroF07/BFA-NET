@@ -85,6 +85,13 @@ export default function SendedTransfersList({accountNumber}: {accountNumber: str
 
   return (
     <>
+
+    {transacoesEnviadas && transacoesEnviadas.transactions.length === 0 && !error2 && (
+        <div className="withoutTransactions">
+        Sem transferências
+      </div>
+      )}
+
       {
         transacoesEnviadas.transactions.map((_item) => (
           _item.transfer_type.type_id === 2 ? (

@@ -25,7 +25,7 @@
     transition: .3s;
 }
 
-.not_found_svg_container > svg {
+.not_found_svg_container > svg, .not_found_svg_container > img {
     width: 500px;
 }
 
@@ -87,7 +87,7 @@
         height: max-content;
     }
 
-    .not_found_svg_container > svg  {
+    .not_found_svg_container > svg, .not_found_svg_container > img  {
         width: 70%;
     }
     .not_found_text_container { 
@@ -131,7 +131,7 @@
     .not_found_title {
         font-size: var(--font-page-subtitles);
     }
-    .not_found_svg_container > svg  {
+    .not_found_svg_container > svg, .not_found_svg_container > img  {
         width: 90%;
     }
 }

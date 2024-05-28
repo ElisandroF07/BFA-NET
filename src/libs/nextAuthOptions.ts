@@ -15,7 +15,6 @@ const nextAuthOptions: NextAuthOptions = {
 				const body = JSON.stringify({email: credentials?.email, OTP: credentials?.OTP})
 					const response = await axios.post('http://localhost:5000/verifyOTP', body, {headers: {'Content-type': 'application/json'}
 				})
-				console.log(response.data)
 				if (response.data?.success) {
 					api.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
 					return response.data.user

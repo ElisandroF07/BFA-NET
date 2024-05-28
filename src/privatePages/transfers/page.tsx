@@ -85,14 +85,14 @@ export default function Transfers() {
 				{selectedPage === "3" && <TransferInternational />}
 				{selectedPage === "4" && <TransferWallet number={useAccount.number}/>}
 			</div>
-			<div className="transfers_lateral">
-				<div className="top">
-					<h1 className="title" style={{marginBottom: "5px"}}>Transferências enviadas</h1>
-					<div className="requests">
+			<div className="lateral">
+				<h1 className="title" style={{margin: "10px 0px 0px 0px"}}>Últimas transferências</h1>
+				<div className="separator" />
+				<div className="requests">
 					<SendedTransfersList accountNumber={useAccount.number}/>
-					</div>
 				</div>
 			</div>
+			
 		</div>
 	);
 }

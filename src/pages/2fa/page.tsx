@@ -57,12 +57,12 @@ export default function TwoFactorAuthentication() {
 			const response = await axios.get(`http://localhost:5000/2fa/${membership_number.toLowerCase()}`);
 			if (response.status === 201) {
 				toast.success(response.data.message);
+				setLoading(false)
 			}
 		} catch {
 			toast.error("Sem conexão com o servidor!");
 			setLoading(false)
-		}
-		
+		}		
 	}
 
 	async function resendEmail() {

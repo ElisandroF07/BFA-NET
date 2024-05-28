@@ -7,7 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
-import { log } from "console";
 import InfoError from "@/components/others/infoError";
 import useUserStore from "@/contexts/stores/userStore";
 import "@/styles/globals.css";

@@ -1,9 +1,10 @@
 import useAccountStore from "@/contexts/stores/accountStore";
+import { useEffect, useState } from "react";
 import { CiGrid41, CiBarcode, CiReceipt, CiInboxOut, CiShare1, CiInboxIn, CiMoneyCheck1, CiGps, CiSquareAlert, CiLogout, CiRepeat, CiWallet } from "react-icons/ci";
 import { TailSpin } from "react-loader-spinner";
 
 
-export default function DashboardNavbar({logout, loading}: {logout: ()=>void, loading: boolean}) {
+export default function DashboardNavbar({logout, loading} : {logout: ()=>void, loading: boolean}) {
 
   const useAccount = useAccountStore()
 
@@ -44,6 +45,7 @@ export default function DashboardNavbar({logout, loading}: {logout: ()=>void, lo
         <ul className="navlist">
           <li>
             <button
+             
               className="btn"
               data-active="true"
               data-page="Dashboard"
@@ -137,7 +139,7 @@ export default function DashboardNavbar({logout, loading}: {logout: ()=>void, lo
               data-active="false"
               data-page="Agências"
               type="button"
-              disabled
+
             >
               <CiGps />
               Agências

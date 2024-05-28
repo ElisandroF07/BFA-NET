@@ -845,8 +845,6 @@ export default function Support() {
 					</p>
 					<div className="separator" />
 					<form>
-						<input type="text" placeholder="Nome completo" />
-						<input type="email" placeholder="Email" />
 						<textarea placeholder="Mensagem" />
 						<button type="submit">
 							Enviar formulário <CiPaperplane />

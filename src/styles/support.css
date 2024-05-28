@@ -120,9 +120,9 @@
     outline: none;
 }
 .channels form > textarea {
-    height: 120px;
+    height: 90px;
     resize: none;
-    padding-top: 20px;
+    padding: 10px;
 }
 .channels form > button {
     padding: 10px 25px;

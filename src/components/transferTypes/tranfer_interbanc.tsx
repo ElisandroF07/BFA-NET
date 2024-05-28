@@ -51,29 +51,41 @@ export default function TransferInterbanc({number, biNumber}: {number: string, b
 	}
 
 	async function submitForm(data: formType) {
-		try {
-			setLoading(true)
-			const receiver = await api.get(`/getAccountByIban/AO06${data.iban}`)
-			if (receiver.data.exists) {
-				setTransfer({
-					balance: data.balance,
-					iban: data.iban,
-          			receiver: receiver.data.client.name.join(" "),
-					receiverDescription: data.receiverDescription,
-					transferDescription: data.transferDescription,
-				})
-				onOpen()
-			}
-			else {
-				toast.error("IBAN inexistente!")
+		if (data.iban === useAccount.iban.replace('AO06', '')) {
+			toast.error('Não pode transferir para sí mesmo!')
+		}
+		else if (parseInt(data.balance) < 500) {
+			toast.error('Montante mínimo: Kz 500!')
+		}
+		else if (parseInt(data.balance) > 5000000) {
+			toast.error('Montante máximo diário: Kz 5 000 000!')
+		}
+		else {
+			try {
+				setLoading(true)
+				const receiver = await api.get(`/getAccountByIban/AO06${data.iban}`)
+				if (receiver.data.exists) {
+					setTransfer({
+						balance: data.balance,
+						iban: data.iban,
+						  receiver: receiver.data.client.name.join(" "),
+						receiverDescription: data.receiverDescription,
+						transferDescription: data.transferDescription,
+					})
+					onOpen()
+				}
+				else {
+					toast.error("IBAN inexistente!")
+					setLoading(false)
+				}
 				setLoading(false)
 			}
-			setLoading(false)
+			catch(err) {
+				toast.error("Sem conexão com o servidor")
+				setLoading(false)
+			}
 		}
-		catch(err) {
-			toast.error("Sem conexão com o servidor")
-			setLoading(false)
-		}
+		
 	}
 
 	async function submitForm2FA(data: {otp: string}) {
@@ -214,14 +226,14 @@ export default function TransferInterbanc({number, biNumber}: {number: string, b
                                 label="IBAN"
                                 type="number"
                                 variant="flat"
-                               	value={`AO06 ${transfer.iban.match(/.{1,4}/g)?.join(' ')}`}
+                               	value={transfer.iban}
 								disabled
                             />
                             <Input
                                 label="Montante a transferir"
                                 type="number"
                                 variant="flat"
-                                value={`${parseInt(transfer.balance).toLocaleString('pt-AO', { style: 'currency', currency: 'AOA', maximumFractionDigits: 0 })}`}
+                                value={`${parseInt(transfer.balance)}`}
                             />
                         </ModalBody>
                         <ModalFooter>

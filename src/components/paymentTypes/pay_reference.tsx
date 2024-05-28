@@ -78,8 +78,8 @@ export default function PayReference({number}: {number: string}) {
 
 	function formatTimestamp(timestamp: number) {
 		const months = [
-			"Jan", "Feb", "Mar", "Apr", "May", "Jun",
-			"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+			"Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+            "Jul", "Ago", "Set", "Out", "Nov", "Dez"
 		];
 	
 		const date = new Date(timestamp);
@@ -127,7 +127,7 @@ export default function PayReference({number}: {number: string}) {
 						<label htmlFor="email">Referência</label>
 						<input type="text" pattern="[0-9]*" onInput={(event)=>{
 								event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
-							}} maxLength={6} placeholder="Introduza o número de referência" {...register("reference")} />
+							}} maxLength={9} placeholder="Introduza o número de referência" {...register("reference")} />
 					</div>
 				</div>
 				<div className="right">

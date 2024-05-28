@@ -17,7 +17,7 @@ import useClientStore from "@/contexts/stores/clientStore";
 
 const formSchema = z.object({
 	account_number: z.string().regex(/^[0-9]{14}$/, "O número de conta deve conter 14 dígitos. Sem pontos e espaços.").transform((string)=>{
-		return string.replace('10001', '.10.001')
+		return string.replace('30001', '.30.001')
 	}),
 	balance: z.string().min(1, "Preenchimento obrigatório!"),
 	transferDescription: z.string(),
@@ -55,28 +55,39 @@ export default function TransferIntrabanc({number, biNumber}: {number: string, b
 	}
 
 	async function submitForm(data: formType) {
-		try {
-			setLoading(true)
-			const receiver = await api.get(`/getAccountByNumber/${data.account_number}`)
-			if (receiver.data.exists) {
-				setTransfer({
-					balance: data.balance,
-					accountNumber: data.account_number,
-          			receiver: receiver.data.client.name.join(" "),
-					receiverDescription: data.receiverDescription,
-					transferDescription: data.transferDescription,
-				})
-				setLoading(false)
-				onOpen()
-			}
-			else {
-				toast.error("Conta destino inexistente!")
-				setLoading(false)
-			}
+		if (data.account_number === useAccount.number.replaceAll('.', '')) {
+			toast.error('Não pode transferir para sí mesmo!')
 		}
-		catch {
-			toast.error("Sem conexão com o servidor")
-			setLoading(false)
+		else if (parseInt(data.balance) < 500) {
+			toast.error('Montante mínimo: Kz 500!')
+		}
+		else if (parseInt(data.balance) > 5000000) {
+			toast.error('Montante máximo diário: Kz 5 000 000!')
+		}
+		else {
+			try {
+				setLoading(true)
+				const receiver = await api.get(`/getAccountByNumber/${data.account_number}`)
+				if (receiver.data.exists) {
+					setTransfer({
+						balance: data.balance,
+						accountNumber: data.account_number,
+						  receiver: receiver.data.client.name.join(" "),
+						receiverDescription: data.receiverDescription,
+						transferDescription: data.transferDescription,
+					})
+					setLoading(false)
+					onOpen()
+				}
+				else {
+					toast.error("Conta destino inexistente!")
+					setLoading(false)
+				}
+			}
+			catch {
+				toast.error("Sem conexão com o servidor")
+				setLoading(false)
+			}
 		}
 	}
 
@@ -139,7 +150,7 @@ export default function TransferIntrabanc({number, biNumber}: {number: string, b
 						<label htmlFor="email">Número da conta receptora</label>
 						<input type="text" pattern="[0-9]*" onInput={(event)=>{
 								event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
-							}} placeholder="Número da conta" maxLength={13} {...register("account_number")}/>
+							}} placeholder="Número da conta" maxLength={14} {...register("account_number")}/>
 						{errors.account_number && <InfoError message={errors.account_number.message} />}
 					</div>
 					<div className="input_field">
@@ -223,8 +234,8 @@ export default function TransferIntrabanc({number, biNumber}: {number: string, b
                                 label="Número de conta"
                                 type="text"
                                 variant="flat"
-                               	value={`${transfer.accountNumber.match(/.{1,4}/g)?.join(' ')}`}
-																disabled
+                               	value={`${transfer.accountNumber.replaceAll('.', ' ')}`}
+								disabled
                             />
                             <Input
                                 label="Montante a transferir"

@@ -72,8 +72,8 @@ export default function PayList({accountNumber}: IProps) {
 
   function formatTimestamp(timestamp: number) {
     const months = [
-        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        "Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+            "Jul", "Ago", "Set", "Out", "Nov", "Dez"
     ];
 
     const date = new Date(timestamp);
@@ -111,7 +111,7 @@ export default function PayList({accountNumber}: IProps) {
 
       {transactions && transactions.transactions.length === 0 && !error && (
         <div className="withoutTransactions">
-        Não há transações
+        Não há pagamentos
       </div>
       )}
 

@@ -175,7 +175,6 @@ export default function Upmoney() {
 					pin: upData.pin,
 					balance: upData.balance
 				}
-				console.log(body)
 				const resp = await api.post("/createUpmoney", body)
 				if (resp.data.success) {
 					setLoading(false)
@@ -416,6 +415,7 @@ export default function Upmoney() {
 			</div>
 			<div className="lateral">
 				<h4 style={{margin: "10px 0px 0px 0px", color: "#3B3D4E"}}>Levantamentos efetuados</h4>
+				<div className="separator" />
 				<div className="requests">
 					<UpmoneyList accountNumber={useAccount.number} setUpmoneyList={setUpmoneyList} upmoneyList={upmoneyList}/>
 				</div>
