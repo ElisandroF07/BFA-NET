@@ -53,7 +53,7 @@ export default function Deposit(){
           <p>-</p>
         </div>
       </div>
-      <div className="actionButtons"><Link target="_blank" href="https://www.bfa.ao/media/4249/ficha-tecnica-informativa-dp-bfa-10.pdf">Ficha técnica</Link> <button>Constituir</button></div>
+      <div className="actionButtons"><Link target="_blank" href="https://www.bfa.ao/media/4249/ficha-tecnica-informativa-dp-bfa-10.pdf">Ficha técnica</Link> <button type="button">Constituir</button></div>
      </div>
      <div className="cardDeposit">
       <h2>DP BFA 13%</h2>
@@ -76,7 +76,7 @@ export default function Deposit(){
           <p>-</p>
         </div>
       </div>
-      <div className="actionButtons"><Link target="_blank" href="https://www.bfa.ao/media/4250/ficha-tecnica-informativa-dp-bfa-13.pdf">Ficha técnica</Link> <button>Constituir</button></div>
+      <div className="actionButtons"><Link target="_blank" href="https://www.bfa.ao/media/4250/ficha-tecnica-informativa-dp-bfa-13.pdf">Ficha técnica</Link> <button type="button">Constituir</button></div>
      </div>
      <div className="cardDeposit">
       <h2>DP ESPECIAL CRESCENTE</h2>
@@ -99,7 +99,7 @@ export default function Deposit(){
           <p>-</p>
         </div>
       </div>
-      <div className="actionButtons"><Link target="_blank" href="https://www.bfa.ao/media/5506/ficha-te-cnica-informativa-dp-especial-crescente.pdf">Ficha técnica</Link> <button>Constituir</button></div>
+      <div className="actionButtons"><Link target="_blank" href="https://www.bfa.ao/media/5506/ficha-te-cnica-informativa-dp-especial-crescente.pdf">Ficha técnica</Link> <button type="button">Constituir</button></div>
      </div>
      </div>
       

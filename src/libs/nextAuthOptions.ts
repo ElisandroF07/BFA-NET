@@ -13,7 +13,7 @@ const nextAuthOptions: NextAuthOptions = {
 			},
 			async authorize(credentials) {
 				const body = JSON.stringify({email: credentials?.email, OTP: credentials?.OTP})
-					const response = await axios.post('http://localhost:5000/verifyOTP', body, {headers: {'Content-type': 'application/json'}
+					const response = await axios.post('https://maximum-janith-franco07-5ccaf5a9.koyeb.app/verifyOTP', body, {headers: {'Content-type': 'application/json'}
 				})
 				if (response.data?.success) {
 					api.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
