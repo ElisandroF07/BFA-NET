@@ -197,56 +197,58 @@ export default function ReferenceList({accountNumber}: IProps) {
                                                 />}
                                         </ModalBody>
                                         <ModalFooter>
+                                          {referenceData.state === 2 ? 
                                           <Button color="success" variant="flat" onPress={async ()=>{
-                                              setLoading2(true)
-                                              const response = await api.get(`/generatePDF/5/${referenceData.id}`, {
-                                                responseType: 'arraybuffer' // Define o tipo de resposta como arraybuffer
-                                              });
-                                              
-                                              const blob = new Blob([response.data], { type: 'application/pdf' }); // Cria um objeto Blob a partir do arraybuffer
-                                              const url = window.URL.createObjectURL(blob); // Cria uma URL para o Blob
-                                              
-                                              const a = document.createElement('a'); // Cria um elemento <a> para o link de download
-                                              a.href = url; // Define o atributo href do elemento <a> com a URL do Blob
-                                              a.download = `referencia-${referenceData.id}.pdf`; // Define o atributo download do elemento <a> com o nome do arquivo
-                                              a.click();
-                                                setLoading2(false)
-                                                //window.open(response)
-                                            }}>
-                                            {loading2 ? (
-                                              <TailSpin
-                                                height="25"
-                                                width="25"
-                                                ariaLabel="tail-spin-loading"
-                                                radius="1"
-                                                visible={true}
-                                              />
-                                            ) : (
-                                              <TbFileDownload style={{width: "24px", height: "24px"}}/>
-                                            )}
+                                            setLoading2(true)
+                                            const response = await api.get(`/generatePDF/5/${referenceData.id}`, {
+                                              responseType: 'arraybuffer' // Define o tipo de resposta como arraybuffer
+                                            });
                                             
-                                          </Button>
+                                            const blob = new Blob([response.data], { type: 'application/pdf' }); // Cria um objeto Blob a partir do arraybuffer
+                                            const url = window.URL.createObjectURL(blob); // Cria uma URL para o Blob
+                                            
+                                            const a = document.createElement('a'); // Cria um elemento <a> para o link de download
+                                            a.href = url; // Define o atributo href do elemento <a> com a URL do Blob
+                                            a.download = `referencia-${referenceData.id}.pdf`; // Define o atributo download do elemento <a> com o nome do arquivo
+                                            a.click();
+                                              setLoading2(false)
+                                              //window.open(response)
+                                          }}>
+                                          {loading2 ? (
+                                            <TailSpin
+                                              height="25"
+                                              width="25"
+                                              ariaLabel="tail-spin-loading"
+                                              radius="1"
+                                              visible={true}
+                                            />
+                                          ) : (
+                                            <TbFileDownload style={{width: "24px", height: "24px"}}/>
+                                          )}
+                                          
+                                        </Button> : null}
+                                          {referenceData.state === 1 ? 
                                           <Button color="danger" variant="flat" disabled={loading2} onPress={async()=>{
-                                                  setLoading2(true)
-                                                  const response = await api.post(`/cancelReference/${referenceData.id}`) 
-                                                    setReferences(response.data)
-                                                    toast.success("Referência cancelada com sucesso!")
-                                                    onClose()
-                                                    setLoading2(false)
-                                                  }}>
-                                                   {loading2 ? (
-                                                        <TailSpin
-                                                          height="25"
-                                                          width="25"
-                                                          color="#fff"
-                                                          ariaLabel="tail-spin-loading"
-                                                          radius="1"
-                                                          visible={true}
-                                                        />
-                                                      ) : (
-                                                        'Cancelar referência'
-                                                      )}
-                                          </Button>
+                                            setLoading2(true)
+                                            const response = await api.post(`/cancelReference/${referenceData.id}`) 
+                                              setReferences(response.data)
+                                              toast.success("Referência cancelada com sucesso!")
+                                              onClose()
+                                              setLoading2(false)
+                                            }}>
+                                             {loading2 ? (
+                                                  <TailSpin
+                                                    height="25"
+                                                    width="25"
+                                                    color="#fff"
+                                                    ariaLabel="tail-spin-loading"
+                                                    radius="1"
+                                                    visible={true}
+                                                  />
+                                                ) : (
+                                                  'Cancelar referência'
+                                                )}
+                                    </Button> : null}
                                           <Button color="default" variant="flat" onPress={()=>{
                                             onClose()
                                             }}>

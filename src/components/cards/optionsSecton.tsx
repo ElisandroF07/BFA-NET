@@ -19,7 +19,7 @@ export default function OptionsSection() {
 				}}
 			>
 				<CiViewTimeline />
-				<p>Gerir Informações</p>
+				<p>Informações do Cliente</p>
 			</div>
 			{/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
 			<div
