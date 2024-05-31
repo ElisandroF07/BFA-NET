@@ -133,7 +133,7 @@ export default function DashboardNavbar({logout, loading} : {logout: ()=>void, l
             </button>
           </li>
           <div className="separator" />
-          <li>
+          {/* <li>
             <button
               className="btn"
               data-active="false"
@@ -144,7 +144,7 @@ export default function DashboardNavbar({logout, loading} : {logout: ()=>void, l
               <CiGps />
               Agências
             </button>
-          </li>
+          </li> */}
           <li>
             <button
               className="btn"

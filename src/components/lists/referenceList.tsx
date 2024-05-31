@@ -12,6 +12,7 @@ import { TailSpin } from "react-loader-spinner";
 import { toast } from "sonner";
 import CardReference from "../cards/cardReference";
 import useAccountStore from "@/contexts/stores/accountStore";
+import { IoMailOutline } from "react-icons/io5";
 
 
 interface IReferences {
@@ -198,7 +199,7 @@ export default function ReferenceList({accountNumber}: IProps) {
                                         </ModalBody>
                                         <ModalFooter>
                                           {referenceData.state === 2 ? 
-                                          <Button color="success" variant="flat" onPress={async ()=>{
+                                          (<><Button color="success" variant="flat" onPress={async ()=>{
                                             setLoading2(true)
                                             const response = await api.get(`/generatePDF/5/${referenceData.id}`, {
                                               responseType: 'arraybuffer' // Define o tipo de resposta como arraybuffer
@@ -226,7 +227,10 @@ export default function ReferenceList({accountNumber}: IProps) {
                                             <TbFileDownload style={{width: "24px", height: "24px"}}/>
                                           )}
                                           
-                                        </Button> : null}
+                                        </Button>
+                                        
+                                        </>
+                                      ) : null}
                                           {referenceData.state === 1 ? 
                                           <Button color="danger" variant="flat" disabled={loading2} onPress={async()=>{
                                             setLoading2(true)

@@ -9,6 +9,10 @@ import "@/styles/account.css";
 import { CiLocationArrow1, CiImport } from "react-icons/ci";
 import useClientStore from "@/contexts/stores/clientStore";
 import useAccountStore from "@/contexts/stores/accountStore";
+import { useState } from "react";
+import api from "@/services/api";
+import { TailSpin } from "react-loader-spinner";
+import { toast } from "sonner";
 
 interface Sections {
   [key: string]: JSX.Element;
@@ -19,6 +23,33 @@ export default function Account() {
   const store = useUserStore();
   const useAccount = useAccountStore()
   const useClient = useClientStore()
+  const [loading, setLoading] = useState(false)
+  const [loading2, setLoading2] = useState(false)
+
+  async function getAccountExtract(){
+    setLoading(true)
+    const response = await api.get(`/generatePDF/7/${useAccount.number.replaceAll('.', '')}`, {responseType: 'arraybuffer'});
+    const blob = new Blob([response.data], { type: 'application/pdf' }); 
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Extrato de Conta N-${useAccount.number.replaceAll('.', '')}.pdf`; 
+    a.click();
+    setLoading(false)
+  }
+
+  async function sendEmailExtract(){
+    setLoading2(true)
+    const response = await api.get(`/sendPDF/7/${useAccount.number.replaceAll('.', '')}/${useClient.email}`, {responseType: 'arraybuffer'});
+    if (response.status === 201) {
+      toast.success("Extrato enviado com sucesso!")
+    }
+    else {
+      toast.error("Falha ao enviar extrato!")
+    }
+    setLoading2(false)
+  }
+
 
   const sections: Sections = {
     options: <OptionsSection />,
@@ -94,11 +125,33 @@ export default function Account() {
           }
         </div>
         <div className="separator" />
-        <p className="pLink">
-          Enviar para email <CiLocationArrow1 />
+        <p className="pLink" onClick={sendEmailExtract}>
+          Enviar para email
+          {loading2 ? <TailSpin
+              height="25"
+              width="25"
+              color="#fc6423"
+              ariaLabel="tail-spin-loading"
+              radius="1"
+              visible={true}
+              />
+             : 
+              <CiLocationArrow1 />
+            }
         </p>
-        <p className="pLink">
-          Salvar como PDF <CiImport />
+        <p className="pLink" onClick={getAccountExtract}>
+          Salvar como PDF {loading ? (
+              <TailSpin
+              height="25"
+              width="25"
+              color="#fc6423"
+              ariaLabel="tail-spin-loading"
+              radius="1"
+              visible={true}
+              />
+            ) : (
+            <CiImport />
+            )}
         </p>
       </div>
     </div>

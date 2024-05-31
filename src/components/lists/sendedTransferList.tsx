@@ -11,6 +11,8 @@ import CardTransfersTransaction from "../cards/cardTransfersTransaction";
 import { TailSpin } from 'react-loader-spinner'
 import utils from "@/services/utils";
 import useAccountStore from "@/contexts/stores/accountStore";
+import useClientStore from "@/contexts/stores/clientStore";
+import { IoMailOutline } from "react-icons/io5";
 
 interface IClient {
   name: string[];
@@ -68,6 +70,8 @@ export default function SendedTransfersList({accountNumber}: {accountNumber: str
   const useUtils = new utils
   const useAccount = useAccountStore()
   const [loading2, setLoading2] = useState(false)
+  const [loading3, setLoading3] = useState(false)
+  const useClient = useClientStore()
   const [transactionData, setTransactionData] = useState<IQuery>({status: false, client: {name: [""], birthDate: new Date(Date.now()), gender: ""}, transaction: {accountFrom: "", emissor_description: "", accountTo: "", balance: "", date: "", id: 0, receptor_description: "", status: "", transfer_description: "", transfer_type: {name: "", type_id: 0}}})
   
   useEffect(()=>{
@@ -221,6 +225,30 @@ export default function SendedTransfersList({accountNumber}: {accountNumber: str
                   )}
                   
                 </Button>
+                <Button color="success" disabled={loading3} variant="flat" onPress={async ()=>{
+							setLoading3(true)
+							const response = await api.get(`/sendPDF/${transactionData.transaction.accountFrom !== useAccount.nbi ? "1" : "2"}/${transactionData.transaction.id}/${useClient.email}`, {responseType: 'arraybuffer'});
+							if (response.status === 201) {
+							  toast.success("Extrato enviado com sucesso!")
+							}
+							else {
+							  toast.error("Falha ao enviar extrato!")
+							}
+							setLoading3(false)
+						}}>
+							{loading3 ? (
+								<TailSpin
+								height="25"
+								width="25"
+								ariaLabel="tail-spin-loading"
+								radius="1"
+								visible={true}
+								/>
+							) : (
+								<IoMailOutline  style={{width: "24px", height: "24px"}}/>
+							)}
+							
+						</Button>
                 <Button color="default" variant="flat" onPress={onClose}>
                   Fechar
                 </Button>
@@ -323,6 +351,30 @@ export default function SendedTransfersList({accountNumber}: {accountNumber: str
                   )}
                   
                 </Button>
+                <Button color="success" disabled={loading3} variant="flat" onPress={async ()=>{
+							setLoading3(true)
+							const response = await api.get(`/sendPDF/${transactionData.transaction.accountFrom !== useAccount.nbi ? "1" : "2"}/${transactionData.transaction.id}/${useClient.email}`, {responseType: 'arraybuffer'});
+							if (response.status === 201) {
+							  toast.success("Extrato enviado com sucesso!")
+							}
+							else {
+							  toast.error("Falha ao enviar extrato!")
+							}
+							setLoading3(false)
+						}}>
+							{loading3 ? (
+								<TailSpin
+								height="25"
+								width="25"
+								ariaLabel="tail-spin-loading"
+								radius="1"
+								visible={true}
+								/>
+							) : (
+								<IoMailOutline  style={{width: "24px", height: "24px"}}/>
+							)}
+							
+						</Button>
                 <Button color="default" variant="flat" onPress={onClose}>
                   Fechar
                 </Button>

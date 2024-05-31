@@ -1,15 +1,32 @@
 import LateralCard from "@/components/cards/requestCard";
 import TransactionList from "@/components/lists/transactionList";
 import useAccountStore from "@/contexts/stores/accountStore";
+import api from "@/services/api";
+import utils from "@/services/utils";
 import "@/styles/consults.css";
+import { useState } from "react";
 import {
 	CiCirclePlus,
 	CiImport,
 } from "react-icons/ci";
+import { TailSpin } from "react-loader-spinner";
 
 export default function Consults() {
 
 	const useAccount = useAccountStore()
+	const [loading, setLoading] = useState(false)
+	async function generateExtract() {
+		setLoading(true)
+		const response = await api.get(`/generatePDF/8/${useAccount.number.replaceAll('.', '')}`, {responseType: 'arraybuffer'});
+		const blob = new Blob([response.data], { type: 'application/pdf' }); 
+		const url = window.URL.createObjectURL(blob);
+		
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = `Extrato de Movimentos -${new utils().formatWithoutHours(Date.now().toString())}.pdf`; 
+		a.click();
+		setLoading(false)
+	}
 
 	return (
 		<div className="consults_container">
@@ -43,9 +60,19 @@ export default function Consults() {
 				<div>
 					<h1 className="title" style={{color: "#3B3D4E"}}>Extratos</h1>
 				</div>
-				<div className="generator">
+				<div className="generator" onClick={generateExtract}>
 					<p>
-						Gerar extrato <CiImport />
+						Gerar extrato {loading ? (
+								<TailSpin
+								height="25"
+								width="25"
+								ariaLabel="tail-spin-loading"
+								radius="1"
+								visible={true}
+								/>
+							) : (
+								<CiImport />
+							)} 
 					</p>
 				</div>
 				<div className="separator" />
