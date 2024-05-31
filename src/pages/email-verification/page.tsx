@@ -25,7 +25,7 @@ export default function EmailVerification() {
 	async function APICall(){
 		setLoading(true);
 		try {
-			const response = await axios.get(`http://localhost:5000/resendEmail/${email}`,);
+			const response = await axios.get(`https://maximum-janith-franco07-5ccaf5a9.koyeb.app/resendEmail/${email}`,);
 			if (response.status === 201) {
 				toast.success(response.data.message);
 			}
