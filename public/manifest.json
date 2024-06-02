@@ -3,7 +3,7 @@
     "background_color": "#ffffff",
     "display": "standalone",
     "scope": "/",
-    "start_url":"https://bfanet.vercel.app",
+    "start_url":"http://localhost:3000",
     "name": "BFA NET",
     "short_name": "BFA NET",
     "lang":"pt-PT",

@@ -4,7 +4,7 @@ import useAccountStore from "@/contexts/stores/accountStore";
 import api from "@/services/api";
 import { Dispatch, SetStateAction, useEffect } from "react"
 import { BiMoneyWithdraw, BiTransfer, BiTransferAlt } from "react-icons/bi";
-import { CiBarcode } from "react-icons/ci";
+import { CiBarcode, CiInboxIn } from "react-icons/ci";
 import { GoArrowDownLeft, GoArrowUpRight } from "react-icons/go";
 import { GoArrowSwitch } from "react-icons/go";
 import { MdAccountBalanceWallet, MdOutlineAccountBalanceWallet } from "react-icons/md";
@@ -83,7 +83,8 @@ export default function CardDashboardTransaction(props: IProps) {
         props.typeId === 6 ? <BiMoneyWithdraw style={{width: "18px", height: "18px", color: "var(--color-cards)"}}/> : 
         props.typeId === 7 ? <MdOutlineAccountBalanceWallet style={{width: "18px", height: "18px", color: "var(--color-cards)"}}/> : 
         props.typeId === 8 ? <MdOutlineAccountBalanceWallet style={{width: "18px", height: "18px", color: "var(--color-cards)"}}/> :
-        props.typeId === 9 ? <CiBarcode style={{width: "18px", height: "18px", color: "var(--color-cards)"}}/> : null
+        props.typeId === 9 ? <CiBarcode style={{width: "18px", height: "18px", color: "var(--color-cards)"}}/> : 
+        props.typeId === 10 ? <CiInboxIn style={{width: "18px", height: "18px", color: "var(--color-cards)"}}/> : null
       }
       </div>
       <p>

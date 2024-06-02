@@ -254,6 +254,9 @@ export default function PayServices() {
 										maxLength={entity.products[product].referenceLenght}
 										name={ref}
 										required
+										pattern="[0-9]*" onInput={(event)=>{
+											event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
+										}}
 									/>
 								</div>
 							))}

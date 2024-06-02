@@ -4,20 +4,51 @@ import useAccountStore from "@/contexts/stores/accountStore";
 import api from "@/services/api";
 import utils from "@/services/utils";
 import "@/styles/consults.css";
-import { useState } from "react";
+import { Input } from "@nextui-org/react";
+import { useEffect, useState } from "react";
 import {
 	CiCirclePlus,
 	CiImport,
 } from "react-icons/ci";
 import { TailSpin } from "react-loader-spinner";
+import { toast } from "sonner";
 
 export default function Consults() {
 
 	const useAccount = useAccountStore()
 	const [loading, setLoading] = useState(false)
+
+	const [maxDate, setMaxDate] = useState('');
+	const [minDate, setMinDate] = useState('');
+
+	const [date1, setDate1] = useState('');
+	const [date2, setDate2] = useState('');
+
+    useEffect(() => {
+        const today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); // Janeiro é 0!
+        const yyyy = today.getFullYear();
+
+        const formattedDate = `${yyyy}-${mm}-${dd}`;
+        setMaxDate(formattedDate);
+
+		const accountCreationDate = new Date(useAccount.created_at);
+        const acDd = String(accountCreationDate.getDate()).padStart(2, '0');
+        const acMm = String(accountCreationDate.getMonth() + 1).padStart(2, '0'); // Janeiro é 0!
+        const acYyyy = accountCreationDate.getFullYear();
+
+        const formattedAccountCreationDate = `${acYyyy}-${acMm}-${acDd}`;
+        setMinDate(formattedAccountCreationDate);
+    }, [useAccount.created_at]);
+
 	async function generateExtract() {
 		setLoading(true)
-		const response = await api.get(`/generatePDF/8/${useAccount.number.replaceAll('.', '')}`, {responseType: 'arraybuffer'});
+		const body = JSON.stringify({
+			initial: new Date(date1).getTime(),
+			final: new Date(date2).getTime()
+		})
+		const response = await api.get(`/generatePDF/8.${date1}.${date2}/${useAccount.number.replaceAll('.', '')}`, {responseType: 'arraybuffer'});
 		const blob = new Blob([response.data], { type: 'application/pdf' }); 
 		const url = window.URL.createObjectURL(blob);
 		
@@ -60,7 +91,13 @@ export default function Consults() {
 				<div>
 					<h1 className="title" style={{color: "#3B3D4E"}}>Extratos</h1>
 				</div>
-				<div className="generator" onClick={generateExtract}>
+				{/* <div  style={{display: "flex", alignItems: "center", justifyContent: "center", width: "100%", flexDirection: "column", gap: "10px"}}>
+				<Input type="date" label="Inicio" max={maxDate}  min={minDate} onChange={(e)=>setDate1(e.target.value)}/>
+				<Input type="date" max={maxDate}  min={minDate} label="Fim" onChange={(e)=>setDate2(e.target.value)} />
+				</div> */}
+				<div className="generator" onClick={()=>{
+					generateExtract()
+				}}>
 					<p>
 						Gerar extrato {loading ? (
 								<TailSpin

@@ -182,10 +182,11 @@ export default function PayReference({number}: {number: string}) {
                         <Input
                                                         autoFocus
                                                         label="Referência"
-                                                        type="text"
+                                                        type="number"
                                                         variant="flat"
                                                         value={referenceData.reference}
                                                         disabled
+														
                                                 />
 
                         <Input
@@ -217,7 +218,8 @@ export default function PayReference({number}: {number: string}) {
                                           <Button color="success" variant="flat" onPress={async()=>{
 											setLoading2(true)
 											if (referenceData.entity === useAccount.nbi) {
-												toast.error("Você não pode pagar para sí  !")
+												toast.error("Você não pode pagar à sí mesmo!")
+												setLoading2(false)
 											}
 											else {
 												try {
