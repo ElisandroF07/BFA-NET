@@ -216,21 +216,27 @@ export default function PayReference({number}: {number: string}) {
                                           
                                           <Button color="success" variant="flat" onPress={async()=>{
 											setLoading2(true)
-											try {
-												const resp = await api.post(`/sendOTP/${useClient.email}/${useClient.biNumber}`)
-														if (resp.status === 201) {
-															toast.success("Código de autenticação enviado!")
-															onOpen2FA()
-															setLoading2(false)
+											if (referenceData.entity === useAccount.nbi) {
+												toast.error("Você não pode pagar para sí  !")
+											}
+											else {
+												try {
+													const resp = await api.post(`/sendOTP/${useClient.email}/${useClient.biNumber}`)
+															if (resp.status === 201) {
+																toast.success("Código de autenticação enviado!")
+																onOpen2FA()
+																setLoading2(false)
+															}
+															else {
+																toast.error(resp.data.message)
+																setLoading2(false)
+															}
 														}
-														else {
-															toast.error(resp.data.message)
-															setLoading2(false)
+														catch {
+															toast.error("Sem conexão com o servidor!")
 														}
-													}
-													catch {
-														toast.error("Sem conexão com o servidor!")
-													}
+											}
+											
 												}}>
                                               {loading2 ? (
 													<TailSpin

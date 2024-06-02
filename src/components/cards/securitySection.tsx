@@ -69,7 +69,7 @@ export default function SecuritySection({biNumber}: IProps) {
     async function APICall(data: string){
 		setLoading(true)
 			try {
-				const response = await api.post("https://maximum-janith-franco07-5ccaf5a9.koyeb.app/privateResetAccessCode", data);
+				const response = await api.post("http://localhost:5000/privateResetAccessCode", data);
 				if (response.status === 201) {
 					toast.success(response.data.message);
                     onEmailModalClose()

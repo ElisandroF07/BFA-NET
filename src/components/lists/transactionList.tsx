@@ -852,6 +852,140 @@ export default function TransactionList({accountNumber}: IProps) {
 				</ModalContent>
 			</Modal>
 		:
+		transactionData.transaction.transfer_type.type_id === 10  ? 	
+			<Modal isOpen={isOpen} onClose={()=>{
+				onClose()
+				}} placement="top-center">
+				<ModalContent>
+					<ModalHeader className="flex flex-col gap-1">Aplicação de Depósito à Prazo
+					</ModalHeader>
+					<ModalBody>
+							<Input
+								autoFocus
+								label="NIB do Aplicante"
+								type="text"
+								variant="flat"
+								value={transactionData.transaction.accountFrom}
+								disabled
+							/>
+							<Input
+								autoFocus
+								label="Descrição do Aplicante"
+								type="text"
+								variant="flat"
+								value={transactionData.transaction.emissor_description}
+								disabled
+							/>
+							<Input
+								autoFocus
+								label="Modalidade"
+								type="text"
+								variant="flat"
+								value="Depósito à Prazo"
+								disabled
+							/>
+							<Input
+								autoFocus
+								label="Descrição do produto"
+								type="text"
+								variant="flat"
+								value={transactionData.transaction.transfer_description}
+								disabled
+							/>
+							<Input
+								label="Taxa Anual Nominal Bruta"
+								type="text"
+								variant="flat"
+								disabled
+								value={transactionData.transaction.accountTo.split('.')[0] === "1" ? "10%" : transactionData.transaction.accountTo.split('.')[0] === "2" ? "13%" : "5.50% - 7.50% - 12.50%"}
+							/>
+							<Input
+								label="Montante aplicado"
+								type="text"
+								variant="flat"
+								value={useUtils.formatBalance(parseInt(transactionData.transaction.balance))}
+								disabled
+							/>
+							<Input
+								label="Juros líquidos"
+								type="text"
+								variant="flat"
+								disabled
+								value={new utils().formatBalance(parseInt(transactionData.transaction.accountTo.split('.')[1]))}
+							/>
+							<Input
+								label="Data da aplicação"
+								type="text"
+								variant="flat"
+								disabled
+								value={useUtils.formatWithoutHours(transactionData.transaction.date)}
+							/>
+							<Input
+								label="Data de validade da aplicação"
+								type="text"
+								variant="flat"
+								disabled
+								value={useUtils.formatWithoutHours(transactionData.transaction.receptor_description)}
+							/>
+
+					</ModalBody>
+					<ModalFooter>
+						<Button color="success" variant="flat" onPress={async ()=>{
+							setLoading2(true)
+							const response = await api.get(`/generatePDF/9/${transactionData.transaction.id}`, {responseType: 'arraybuffer'});
+							const blob = new Blob([response.data], { type: 'application/pdf' }); 
+							const url = window.URL.createObjectURL(blob);
+							
+							const a = document.createElement('a');
+							a.href = url;
+							a.download = `Comprovativo de DP-${transactionData.transaction.id}.pdf`; 
+							a.click();
+							setLoading2(false)
+						}}>
+							{loading2 ? (
+								<TailSpin
+								height="25"
+								width="25"
+								ariaLabel="tail-spin-loading"
+								radius="1"
+								visible={true}
+								/>
+							) : (
+								<TbFileDownload style={{width: "24px", height: "24px"}}/>
+							)}
+							
+						</Button>
+						<Button color="success" disabled={loading3} variant="flat" onPress={async ()=>{
+							setLoading3(true)
+							const response = await api.get(`/sendPDF/9/${transactionData.transaction.id}/${useClient.email}`, {responseType: 'arraybuffer'});
+							if (response.status === 201) {
+							  toast.success("Extrato enviado com sucesso!")
+							}
+							else {
+							  toast.error("Falha ao enviar extrato!")
+							}
+							setLoading3(false)
+						}}>
+							{loading3 ? (
+								<TailSpin
+								height="25"
+								width="25"
+								ariaLabel="tail-spin-loading"
+								radius="1"
+								visible={true}
+								/>
+							) : (
+								<IoMailOutline  style={{width: "24px", height: "24px"}}/>
+							)}
+							
+						</Button>
+						<Button color="default" variant="flat" onPress={onClose}>
+							Fechar
+						</Button>
+					</ModalFooter>
+				</ModalContent>
+			</Modal>
+		:
 		null
 		)}
     </>
