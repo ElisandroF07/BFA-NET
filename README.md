@@ -27,7 +27,7 @@ Follow the steps below to get started with BFA_NET:
     `npm run dev`
 
 7. **Access in Browser:** 🌐
-Open your browser and go to `http://localhost:3000` to view the application.
+Open your browser and go to `https://bfanet.vercel.app` to view the application.
 
 ## Contributing
 
