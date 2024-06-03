@@ -84,7 +84,8 @@ export default function CardDashboardTransaction(props: IProps) {
         props.typeId === 7 ? <MdOutlineAccountBalanceWallet style={{width: "18px", height: "18px", color: "var(--color-cards)"}}/> : 
         props.typeId === 8 ? <MdOutlineAccountBalanceWallet style={{width: "18px", height: "18px", color: "var(--color-cards)"}}/> :
         props.typeId === 9 ? <CiBarcode style={{width: "18px", height: "18px", color: "var(--color-cards)"}}/> : 
-        props.typeId === 10 ? <CiInboxIn style={{width: "18px", height: "18px", color: "var(--color-cards)"}}/> : null
+        props.typeId === 10 ? <CiInboxIn style={{width: "18px", height: "18px", color: "var(--color-cards)"}}/> : 
+        props.typeId === 11 ? <CiInboxIn style={{width: "18px", height: "18px", color: "var(--color-cards)"}}/> : null
       }
       </div>
       <p>

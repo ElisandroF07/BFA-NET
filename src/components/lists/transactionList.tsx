@@ -93,6 +93,24 @@ export default function TransactionList({accountNumber}: IProps) {
 		  }
 	}
 
+	async function applyDP(expires: number) {
+		try {
+			const response = await api.put(`/finalizeDP/${expires}/${useClient.email}`);
+			if (response.data.success) {
+			  useAccount.updateAuthorizedBalance(response.data.balance.authorized_balance)
+			  useAccount.updateAvailableBalance(response.data.balance.available_balance)
+			  useAccount.updateUpBalance(response.data.balance.up_balance)
+			  toast.warning("Depóstivo finalizado com sucesso!")
+			}
+			else {
+			  toast.error(response.data.message)
+			}
+		  }
+		  catch {
+			toast.error("Sem conexão com o servidor!")
+		  }
+	}
+
 	transactions?.transactions.forEach(element => {
 		if (element.transfer_type.type_id === 6) {
 			const tmsLev = parseInt(element.date) + (24 * 60 * 60 * 1000)
@@ -103,7 +121,7 @@ export default function TransactionList({accountNumber}: IProps) {
 		else if (element.transfer_type.type_id === 10) {
 			const tmsLev = parseInt(element.receptor_description)
 			if (Date.now() > tmsLev) {
-				toast.error("Depósito vencido")
+				applyDP(parseInt(element.receptor_description))
 			}		
 		}
 	});
@@ -967,7 +985,7 @@ export default function TransactionList({accountNumber}: IProps) {
 
 					</ModalBody>
 					<ModalFooter>
-						<Button color="success" variant="flat" onPress={async ()=>{
+						{/* <Button color="success" variant="flat" onPress={async ()=>{
 							setLoading2(true)
 							const response = await api.get(`/generatePDF/9/${transactionData.transaction.id}`, {responseType: 'arraybuffer'});
 							const blob = new Blob([response.data], { type: 'application/pdf' }); 
@@ -1015,7 +1033,136 @@ export default function TransactionList({accountNumber}: IProps) {
 								<IoMailOutline  style={{width: "24px", height: "24px"}}/>
 							)}
 							
+						</Button> */}
+						<Button color="default" variant="flat" onPress={onClose}>
+							Fechar
 						</Button>
+					</ModalFooter>
+				</ModalContent>
+			</Modal>
+		:
+		transactionData.transaction.transfer_type.type_id === 11  ? 	
+			<Modal isOpen={isOpen} onClose={()=>{
+				onClose()
+				}} placement="top-center">
+				<ModalContent>
+					<ModalHeader className="flex flex-col gap-1">Reembolso de Poupança Líquida
+					</ModalHeader>
+					<ModalBody>
+							<Input
+								autoFocus
+								label="NIB"
+								type="text"
+								variant="flat"
+								value={transactionData.transaction.accountTo}
+								disabled
+							/>
+							<Input
+								autoFocus
+								label="Nome"
+								type="text"
+								variant="flat"
+								value={transactionData.transaction.receptor_description}
+								disabled
+							/>
+							<Input
+								autoFocus
+								label="Modalidade"
+								type="text"
+								variant="flat"
+								value="Depósito à Prazo"
+								disabled
+							/>
+							<Input
+								autoFocus
+								label="Descrição"
+								type="text"
+								variant="flat"
+								value={transactionData.transaction.transfer_description}
+								disabled
+							/>
+							<Input
+								label="Taxa Anual Nominal Bruta"
+								type="text"
+								variant="flat"
+								disabled
+								value={transactionData.transaction.accountFrom === "1" ? "10%" : transactionData.transaction.accountFrom === "2" ? "13%" : "5.50% - 7.50% - 12.50%"}
+							/>
+							<Input
+								label="Montante aplicado"
+								type="text"
+								variant="flat"
+								value={useUtils.formatBalance(parseInt(transactionData.transaction.emissor_description))}
+								disabled
+							/>
+							<Input
+								label="Poupança líquida"
+								type="text"
+								variant="flat"
+								value={useUtils.formatBalance(parseInt(transactionData.transaction.balance))}
+								disabled
+							/>
+
+							<Input
+								label="Data da reembolso"
+								type="text"
+								variant="flat"
+								disabled
+								value={useUtils.formatWithoutHours(transactionData.transaction.date)}
+							/>
+
+
+					</ModalBody>
+					<ModalFooter>
+						{/* <Button color="success" variant="flat" onPress={async ()=>{
+							setLoading2(true)
+							const response = await api.get(`/generatePDF/9/${transactionData.transaction.id}`, {responseType: 'arraybuffer'});
+							const blob = new Blob([response.data], { type: 'application/pdf' }); 
+							const url = window.URL.createObjectURL(blob);
+							
+							const a = document.createElement('a');
+							a.href = url;
+							a.download = `Comprovativo de DP-${transactionData.transaction.id}.pdf`; 
+							a.click();
+							setLoading2(false)
+						}}>
+							{loading2 ? (
+								<TailSpin
+								height="25"
+								width="25"
+								ariaLabel="tail-spin-loading"
+								radius="1"
+								visible={true}
+								/>
+							) : (
+								<TbFileDownload style={{width: "24px", height: "24px"}}/>
+							)}
+							
+						</Button>
+						<Button color="success" disabled={loading3} variant="flat" onPress={async ()=>{
+							setLoading3(true)
+							const response = await api.get(`/sendPDF/9/${transactionData.transaction.id}/${useClient.email}`, {responseType: 'arraybuffer'});
+							if (response.status === 201) {
+							  toast.success("Extrato enviado com sucesso!")
+							}
+							else {
+							  toast.error("Falha ao enviar extrato!")
+							}
+							setLoading3(false)
+						}}>
+							{loading3 ? (
+								<TailSpin
+								height="25"
+								width="25"
+								ariaLabel="tail-spin-loading"
+								radius="1"
+								visible={true}
+								/>
+							) : (
+								<IoMailOutline  style={{width: "24px", height: "24px"}}/>
+							)}
+							
+						</Button> */}
 						<Button color="default" variant="flat" onPress={onClose}>
 							Fechar
 						</Button>
