@@ -128,7 +128,7 @@ export default function TPA() {
 						/>
 					</div>
 					<div className="input_field">
-						<label htmlFor="email">Descrção do Pagamento</label>
+						<label htmlFor="email">Descrição do Pagamento</label>
 						<input type="text" placeholder="Descreva o pagamento" {...register("description")}/>
 						{errors.description && <InfoError message={errors.description.message}/>}
 					</div>

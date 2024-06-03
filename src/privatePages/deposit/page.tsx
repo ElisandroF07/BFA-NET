@@ -329,7 +329,6 @@ export default function Deposit(){
             pattern="[0-9]*" onInput={(event)=>{
               event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
             }}
-            maxLength={6}
             onChange={(e) => setBalance(parseInt(e.target.value))}
             value={balance}
           />
@@ -459,7 +458,6 @@ export default function Deposit(){
                                 pattern="[0-9]*" onInput={(event)=>{
                                   event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/g, '');
                                 }}
-                                maxLength={9}
                                 onChange={(e) => {
                                   if (parseInt(e.target.value) > useAccount.authorized_balance){
                                     toast.warning('O saldo da sua conta é insuficiente!.', {description: "Opte por simular uma aplicação."})
@@ -492,7 +490,7 @@ export default function Deposit(){
                             {
                               balancee = 500000
                             }
-                            else if (selectedDP === 1)
+                            else if (selectedDP === 3)
                             {
                               balancee = 100000
                             }

@@ -135,6 +135,8 @@ export default function Dashbaord({email, biNumber, userData, cardData, accountD
      }
     }
     getCurrencies();
+
+    
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

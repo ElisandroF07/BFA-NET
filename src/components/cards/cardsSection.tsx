@@ -65,12 +65,12 @@ export default function CardsSection() {
             <p>{convertDate(parseInt(useCard.createdAt || ""))}</p>
           </div>
           <div className="multiText">
-            {locked ? (
+            {/* {locked ? (
               <button type="button" onClick={() => setLocked(false)} data-locked="true">Desbloquear <MdOutlineLockOpen /></button>
             ) : (
               <button type="button" onClick={() => setLocked(true)} data-locked="false">Bloquear <MdOutlineLock /></button>
-            )}
-            <button type="button" onClick={updateCard} disabled={loading || !nk}>Salvar</button>
+            )} */}
+            <button type="button" style={{backgroundColor: "var(--color-focus)"}} onClick={updateCard} disabled={loading || !nk}>Salvar</button>
           </div>
         </div>
         <div className="right">

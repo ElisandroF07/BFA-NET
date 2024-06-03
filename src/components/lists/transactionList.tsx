@@ -66,11 +66,48 @@ export default function TransactionList({accountNumber}: IProps) {
   useEffect(()=>{
     if (data) {
       setTransactions(data)
+	  
     }
     if (error) {
       setTransactions({success: false, transactions: []})
     }
   }, [data, error])
+
+  useEffect(()=>{
+
+	async function removeUpMoney(id: number) {
+		try {
+			const response = await api.put(`/cancelUpmoney/${id}}`);
+			if (response.data.success) {
+			  useAccount.updateAuthorizedBalance(response.data.balance.authorized_balance)
+			  useAccount.updateAvailableBalance(response.data.balance.available_balance)
+			  useAccount.updateUpBalance(response.data.balance.up_balance)
+			  toast.warning("Levantamento removido por expiração!")
+			}
+			else {
+			  toast.error(response.data.message)
+			}
+		  }
+		  catch {
+			toast.error("Sem conexão com o servidor!")
+		  }
+	}
+
+	transactions?.transactions.forEach(element => {
+		if (element.transfer_type.type_id === 6) {
+			const tmsLev = parseInt(element.date) + (24 * 60 * 60 * 1000)
+			if (Date.now() > tmsLev) {
+				removeUpMoney(element.id)
+			}		
+		}
+		else if (element.transfer_type.type_id === 10) {
+			const tmsLev = parseInt(element.receptor_description)
+			if (Date.now() > tmsLev) {
+				toast.error("Depósito vencido")
+			}		
+		}
+	});
+  }, [transactions])
 
   function formatTimestamp(timestamp: number) {
     const months = [
