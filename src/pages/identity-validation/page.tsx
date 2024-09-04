@@ -133,7 +133,7 @@ export default function IdentityValidation() {
 
 	async function getBI() {
 		const response = await axios.get(
-			`https://maximum-janith-franco07-5ccaf5a9.koyeb.app/getBI/${email || useStore.email}`,
+			`https://environmental-kristina-franco07-98c1a6b0.koyeb.app//getBI/${email || useStore.email}`,
 		);
 		if (response.data.biNumber) {
 			return response.data.biNumber;
@@ -283,7 +283,7 @@ export default function IdentityValidation() {
 		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post(
-					`https://maximum-janith-franco07-5ccaf5a9.koyeb.app/upload/${email ?? useStore.email}/1`,
+					`https://environmental-kristina-franco07-98c1a6b0.koyeb.app//upload/${email ?? useStore.email}/1`,
 					formData,
 					{ headers: { "Content-Type": "multipart/form-data" } },
 				);
@@ -313,7 +313,7 @@ export default function IdentityValidation() {
 		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.post(
-					`https://maximum-janith-franco07-5ccaf5a9.koyeb.app/upload/${email ?? useStore.email}/5`,
+					`https://environmental-kristina-franco07-98c1a6b0.koyeb.app//upload/${email ?? useStore.email}/5`,
 					formData,
 					{ headers: { "Content-Type": "multipart/form-data" } },
 				);
