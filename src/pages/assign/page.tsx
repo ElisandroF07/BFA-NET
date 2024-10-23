@@ -88,7 +88,7 @@ export default function Assign() {
 		// biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
 		return new Promise(async (resolve, reject) => {
 			try {
-				const response = await axios.post(`https://civic-rivy-franco07-c3b34b79.koyeb.app//upload/${email ?? useStore.email}/4`, formData,{ headers: { "Content-Type": "multipart/form-data" } },);
+				const response = await axios.post(`https://civic-rivy-franco07-c3b34b79.koyeb.app/upload/${email ?? useStore.email}/4`, formData,{ headers: { "Content-Type": "multipart/form-data" } },);
 				if (response.status === 200) {
 					router.push("/register/credentials")
 					resolve(response.data.message);

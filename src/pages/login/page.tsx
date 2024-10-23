@@ -55,7 +55,7 @@ export default function Login() {
 		return new Promise(async (resolve, reject) => {
 			try {
 				setLoading(true);
-				const response = await axios.post("https://environmental-kristina-franco07-98c1a6b0.koyeb.app//login", data, {headers: { "Content-Type": "application/json" }});
+				const response = await axios.post("https://civic-rivy-franco07-c3b34b79.koyeb.app/login", data, {headers: { "Content-Type": "application/json" }});
 				if (response.status === 201) {
 					useStore.updateEmail(response.data.email)
 					if (typeof window !== "undefined") {
@@ -94,7 +94,7 @@ export default function Login() {
 				}
 				}
 				}
-				const response = await axios.get(`https://environmental-kristina-franco07-98c1a6b0.koyeb.app//2fa/${membership_number.toLowerCase()}`,);
+				const response = await axios.get(`https://civic-rivy-franco07-c3b34b79.koyeb.app/2fa/${membership_number.toLowerCase()}`,);
 				if (response.status === 201) {
 					resolve(response.data.message);
 				}

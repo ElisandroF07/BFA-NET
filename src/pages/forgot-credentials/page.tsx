@@ -50,7 +50,7 @@ export default function SetCredentials() {
 	async function APICall(data: any){
 		setLoading(true)
 			try {
-				const response = await axios.post("https://civic-rivy-franco07-c3b34b79.koyeb.app//setAccessCode", data, { headers: { "Content-Type": "application/json" } });
+				const response = await axios.post("https://civic-rivy-franco07-c3b34b79.koyeb.app/setAccessCode", data, { headers: { "Content-Type": "application/json" } });
 				if (response.status === 201) {
 					router.push("/login")
 					toast.success(response.data.message);

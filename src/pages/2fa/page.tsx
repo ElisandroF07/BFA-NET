@@ -54,7 +54,7 @@ export default function TwoFactorAuthentication() {
 	async function APICall(){
 		setLoading(true);
 		try {
-			const response = await axios.get(`https://civic-rivy-franco07-c3b34b79.koyeb.app//2fa/${membership_number.toLowerCase()}`);
+			const response = await axios.get(`https://civic-rivy-franco07-c3b34b79.koyeb.app/2fa/${membership_number.toLowerCase()}`);
 			if (response.status === 201) {
 				toast.success(response.data.message);
 				setLoading(false)

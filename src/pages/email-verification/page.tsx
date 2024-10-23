@@ -25,7 +25,7 @@ export default function EmailVerification() {
 	async function APICall(){
 		setLoading(true);
 		try {
-			const response = await axios.get(`https://civic-rivy-franco07-c3b34b79.koyeb.app//resendEmail/${email}`,);
+			const response = await axios.get(`https://civic-rivy-franco07-c3b34b79.koyeb.app/resendEmail/${email}`,);
 			if (response.status === 201) {
 				toast.success(response.data.message);
 			}
