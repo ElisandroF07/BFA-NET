@@ -13,7 +13,7 @@ const nextAuthOptions: NextAuthOptions = {
 			},
 			async authorize(credentials) {
 				const body = JSON.stringify({email: credentials?.email, OTP: credentials?.OTP})
-					const response = await axios.post('https://environmental-kristina-franco07-98c1a6b0.koyeb.app//verifyOTP', body, {headers: {'Content-type': 'application/json'}
+					const response = await axios.post('https://civic-rivy-franco07-c3b34b79.koyeb.app//verifyOTP', body, {headers: {'Content-type': 'application/json'}
 				})
 				if (response.data?.success) {
 					api.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
